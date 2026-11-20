@@ -131,6 +131,10 @@ android {
         // HarnessUserService.kt), an AGP/lint bug, not a lint finding. Skip
         // the release lint gate until the toolchain bug is fixed.
         checkReleaseBuilds = false
+        // Upstream carries a large pre-existing lint backlog. The baseline
+        // records those findings so lint still fails on any NEW issue while
+        // the APK build is not blocked by inherited debt.
+        baseline = file("lint-baseline.xml")
     }
 
     compileOptions {
