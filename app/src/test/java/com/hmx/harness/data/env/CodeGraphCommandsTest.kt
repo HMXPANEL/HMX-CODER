@@ -73,7 +73,7 @@ class CodeGraphCommandsTest {
         val fresh = CodeGraphProvision.telemetryOffConfig(null, "11111111-2222-3333-4444-555555555555")
         assertTrue(CodeGraphProvision.telemetryIsOff(fresh))
         assertTrue(fresh.contains("11111111-2222-3333-4444-555555555555"))
-        assertTrue(fresh.contains("\"androidharness\""))
+        assertTrue(fresh.contains("\"hmxharness\""))
 
         // An existing id is preserved: a fresh one would read as a new machine.
         val existing = """{"enabled": true, "machine_id": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee"}"""

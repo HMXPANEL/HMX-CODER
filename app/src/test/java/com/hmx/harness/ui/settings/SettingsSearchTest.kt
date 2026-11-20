@@ -105,7 +105,7 @@ class SettingsSearchTest {
      * a shared row that anchors itself.
      */
     @Test fun `every anchor is marked by a control`() {
-        val source = File("src/main/java/com/androidharness/app/ui").walkTopDown()
+        val source = File("src/main/java/com/hmx/harness/ui").walkTopDown()
             .filter { it.extension == "kt" }.joinToString("\n") { it.readText() }
         val names = R.string::class.java.fields.associate { it.getInt(null) to it.name }
         val callers = "SettingsAnchor|settingsAnchor|ToggleRow|SubagentSettingSwitch|BackgroundSwitch|MemoryPreferenceRow|" +
