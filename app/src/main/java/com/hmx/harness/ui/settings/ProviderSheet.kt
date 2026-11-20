@@ -109,6 +109,9 @@ internal val ProviderBrands: List<ProviderBrand?> = listOf(
     ProviderBrand("DeepSeek", ProviderType.OPENAI_COMPAT, "https://api.deepseek.com/v1", true),
     ProviderBrand("Together", ProviderType.OPENAI_COMPAT, "https://api.together.xyz/v1", true),
     ProviderBrand("Mistral", ProviderType.OPENAI_COMPAT, "https://api.mistral.ai/v1", true),
+    ProviderBrand("xAI", ProviderType.OPENAI_COMPAT, "https://api.x.ai/v1", true),
+    ProviderBrand("NVIDIA", ProviderType.OPENAI_COMPAT, "https://integrate.api.nvidia.com/v1", true),
+    ProviderBrand("Fireworks", ProviderType.OPENAI_COMPAT, "https://api.fireworks.ai/inference/v1", true),
     ProviderBrand("Ollama", ProviderType.OPENAI_COMPAT, "http://127.0.0.1:11434/v1", false),
     ProviderBrand("LM Studio", ProviderType.OPENAI_COMPAT, "http://127.0.0.1:1234/v1", false),
     // Custom endpoints get their own tile that reveals the advanced fields.

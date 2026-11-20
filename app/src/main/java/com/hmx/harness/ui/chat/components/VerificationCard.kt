@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hmx.harness.agent.CheckStatus
 import com.hmx.harness.agent.VerificationCheck
+import com.hmx.harness.hmx.HmxTaskVerification
 import com.hmx.harness.ui.theme.defaultEffectsSpec
 import com.hmx.harness.ui.theme.expressiveSpatialSpec
 import com.hmx.harness.ui.theme.fastEffectsSpec
@@ -44,8 +45,9 @@ internal fun VerificationCard(checks: List<VerificationCheck>) {
     val uiContext = androidx.compose.ui.platform.LocalContext.current
     val scheme = MaterialTheme.colorScheme
     var expanded by rememberSaveable(checks) { mutableStateOf(false) }
-    val failed = checks.count { it.status == CheckStatus.FAILED }
-    val passed = checks.isNotEmpty() && checks.all { it.status == CheckStatus.PASSED }
+    val verdict = HmxTaskVerification.assess(checks)
+    val failed = verdict.failed
+    val passed = verdict.isVerified
     val state = when {
         failed > 0 -> WorkState.Failed
         passed -> WorkState.Done
