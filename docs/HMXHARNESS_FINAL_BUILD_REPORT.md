@@ -11,7 +11,7 @@
 | Mirror destination | `https://github.com/HMXPANEL/HMX-CODER` |
 | Development branch | `feature/hmxharness-transformation` |
 | APK build commit | `58880920` (prior commits: `2cb00a3d`, `7af5691`, `3bdec5db`, `5e418195`) |
-| Final HEAD commit | `3c3bda12` (documentation only; rebuilt green in CI) |
+| Final HEAD commit | See repository `main` branch — all commits after the APK build are documentation-only and were rebuilt green in CI |
 | Application ID | `com.hmx.harness` (debug: `com.hmx.harness.debug`) |
 | Application label | `HMXHARNESS` |
 | Namespace | `com.hmx.harness` |
