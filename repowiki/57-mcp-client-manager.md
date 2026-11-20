@@ -55,7 +55,7 @@ Connection identity is `config.name` for app-side servers, or `name + "_ws_" + s
 6. Chat gate: `ChatViewModel` loads the workspace config, computes `approvalFingerprint`, and if `unapprovedWorkspaceServers` is non-empty shows the approve/decline prompt instead of starting the run (`ChatViewModel.kt:1535-L1547`). `approveWorkspaceMcp` re-checks the fingerprint before calling `approveWorkspace` (`ChatViewModel.kt:337-L359`).
 7. Configuration screen: the Project tab reloads `container.configuration.load(fs)`, checks `isWorkspaceApproved` and `approvalFingerprint`, and offers Approve only when the fingerprint still matches (`ConfigurationSection.kt:80-L83`, `ConfigurationSection.kt:178-L190`).
 8. Plugin servers: `PluginMcpServersSection` resolves the same config, keeps only servers with a `serverSources` plugin name, and shows plugin, scope, approval and live status (`PluginMcpServersSection.kt:40-L79`).
-9. Browser callback: `MainActivity.handleMcpOAuth` accepts `androidharness://mcp?code=...&state=...` on launch and on `onNewIntent`, then calls `completeAuthentication` (`MainActivity.kt:94-L95`, `MainActivity.kt:293-L326`).
+9. Browser callback: `MainActivity.handleMcpOAuth` accepts `hmxharness://mcp?code=...&state=...` on launch and on `onNewIntent`, then calls `completeAuthentication` (`MainActivity.kt:94-L95`, `MainActivity.kt:293-L326`).
 10. Headless callers refuse to run with unapproved workspace tools: `TelegramAgentBridge` and `AutomationManager` check `unapprovedWorkspaceServers(...).isEmpty()` (`TelegramAgentBridge.kt:94`, `AutomationManager.kt:228`).
 
 ## Key State and Data Structures

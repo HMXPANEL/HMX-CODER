@@ -2,7 +2,7 @@
 
 > Discovers, merges, validates and applies `harness.json` / `harness.jsonc` so a Code run gets instructions, references, skills, agent profiles, memory paths, MCP servers and plugin hooks.
 
-The package `com.androidharness.app.config` implements a small layered configuration system. `HarnessConfigLoader` reads files from the global app home and the active workspace, merges them through `ConfigDocument`, validates the result with `ConfigValidation`, and returns an immutable `HarnessConfig`. `HarnessConfigRepository` owns the app-private bindings (connected folders, variables, secrets) and the read/save API used by Settings. `ConfigRunContext` carries the resolved config through a run as a coroutine context element so tools, subagents and hooks can read it.
+The package `com.hmx.harness.config` implements a small layered configuration system. `HarnessConfigLoader` reads files from the global app home and the active workspace, merges them through `ConfigDocument`, validates the result with `ConfigValidation`, and returns an immutable `HarnessConfig`. `HarnessConfigRepository` owns the app-private bindings (connected folders, variables, secrets) and the read/save API used by Settings. `ConfigRunContext` carries the resolved config through a run as a coroutine context element so tools, subagents and hooks can read it.
 
 The subsystem never executes shell commands, performs network calls or installs packages while loading. `{secret:...}` reads the encrypted store, `{file:...}` reads a bounded UTF-8 file, and everything else is parsing.
 

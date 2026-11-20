@@ -34,7 +34,7 @@ sequenceDiagram
     Mgr->>O: discover() then registerClient()
     O-->>Mgr: browser URL
     Mgr->>Mgr: pendingAuth = state + verifier
-    Note over Mgr: Custom Tab, redirect androidharness://mcp
+    Note over Mgr: Custom Tab, redirect hmxharness://mcp
     Mgr->>O: exchangeCode() then saveOAuthState()
     Mgr->>Conn: connectionFor() again
     Conn->>T: send initialize
@@ -48,7 +48,7 @@ sequenceDiagram
 
 ### Connection and handshake
 
-`connect(cwd)` chooses the transport from `config.type` (`McpConnection.kt:78-L92`). It launches a collector on the connection scope that feeds every inbound line into `handleLine`, starts the transport, then issues `initialize` with `protocolVersion` equal to `McpProtocol.REMOTE_VERSION` (`2025-06-18`) for remote servers or `2024-11-05` for stdio, empty `capabilities`, and `clientInfo` name `AndroidHarness` version `0.4-alpha` (`McpConnection.kt:104-L118`). It sends `notifications/initialized`, calls `tools/list`, parses the result into `McpToolInfo` objects, and only then sets `ConnectionState.READY`.
+`connect(cwd)` chooses the transport from `config.type` (`McpConnection.kt:78-L92`). It launches a collector on the connection scope that feeds every inbound line into `handleLine`, starts the transport, then issues `initialize` with `protocolVersion` equal to `McpProtocol.REMOTE_VERSION` (`2025-06-18`) for remote servers or `2024-11-05` for stdio, empty `capabilities`, and `clientInfo` name `HMXHARNESS` version `0.4-alpha` (`McpConnection.kt:104-L118`). It sends `notifications/initialized`, calls `tools/list`, parses the result into `McpToolInfo` objects, and only then sets `ConnectionState.READY`.
 
 `handleLine` ignores any message that carries a `method`, which means server-initiated requests and notifications (sampling, roots, elicitation, progress, logging) are dropped rather than answered. Responses are matched by integer `id` into `pending` (`McpConnection.kt:218-L225`).
 
@@ -75,7 +75,7 @@ The shared client is `mcpHttpClient()`: 15 second connect timeout, 5 minute read
 1. `McpOAuth.discover(httpClient, challenge, url)`. Candidate protected-resource metadata URLs are the challenge URL, then the server origin with `/.well-known/oauth-protected-resource<path>`, then the origin root with `/.well-known/oauth-protected-resource`. The first document containing `authorization_servers` wins.
 2. The issuer is the first `authorization_servers` entry. Authorization-server metadata is fetched from `$issuer/.well-known/oauth-authorization-server` and from the same string with the issuer path appended.
 3. `authorization_endpoint` and `token_endpoint` are required; `registration_endpoint` is optional. Scopes come from `scopes_supported` in the resource metadata; `resource` comes from the metadata `resource` field or the server URL.
-4. `McpOAuth.registerClient` posts `client_name`, `redirect_uris: ["androidharness://mcp/oauth"]`, `grant_types: ["authorization_code", "refresh_token"]`, `response_types: ["code"]`, `token_endpoint_auth_method: "none"` and an optional scope, then stores `client_id` and `client_secret`.
+4. `McpOAuth.registerClient` posts `client_name`, `redirect_uris: ["hmxharness://mcp/oauth"]`, `grant_types: ["authorization_code", "refresh_token"]`, `response_types: ["code"]`, `token_endpoint_auth_method: "none"` and an optional scope, then stores `client_id` and `client_secret`.
 5. `createState()` and `createVerifier()` each produce 48 random bytes as base64url without padding; `codeChallenge` is the SHA-256 of the verifier, also base64url.
 6. `authorizationUrl` adds `response_type=code`, `client_id`, `redirect_uri`, `state`, `code_challenge`, `code_challenge_method=S256`, `resource` and optional `scope`, with every value URL-encoded (`McpOAuth.kt:191-L208`).
 
