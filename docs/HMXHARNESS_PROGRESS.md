@@ -21,8 +21,8 @@ Legend: NOT STARTED · IN PROGRESS · COMPLETED · BLOCKED.
 | On-device functional tests | PENDING (owner must install; no emulator available) |
 
 - Current phase: COMPLETE — awaiting owner review
-- Last build commit: `58880920`
-- Successful workflow runs: https://github.com/HMXPANEL/HMX-CODER/actions/runs/44803871182 and https://github.com/HMXPANEL/HMXHARNESS/actions/runs/44803838094
+- APK build commit: `58880920`; final HEAD: `3c3bda12` (docs only, rebuilt green)
+- Successful workflow runs: https://github.com/HMXPANEL/HMX-CODER/actions/runs/44803871182 and https://github.com/HMXPANEL/HMXHARNESS/actions/runs/44803838094; final HEAD green: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/44807862794
 - Build status: SUCCESS (debug + release APKs)
 - APK: https://github.com/HMXPANEL/HMXHARNESS/releases/tag/v4.0-hmx
 - Remaining issues: on-device functional testing; production signing keystore; P2 theme polish; NSC hardening

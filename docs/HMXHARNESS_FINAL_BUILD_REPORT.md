@@ -10,7 +10,8 @@
 | Primary destination | `https://github.com/HMXPANEL/HMXHARNESS` |
 | Mirror destination | `https://github.com/HMXPANEL/HMX-CODER` |
 | Development branch | `feature/hmxharness-transformation` |
-| Final build commit | `58880920` (prior commits: `2cb00a3d`, `7af5691`, `3bdec5db`, `5e418195`) |
+| APK build commit | `58880920` (prior commits: `2cb00a3d`, `7af5691`, `3bdec5db`, `5e418195`) |
+| Final HEAD commit | `3c3bda12` (documentation only; rebuilt green in CI) |
 | Application ID | `com.hmx.harness` (debug: `com.hmx.harness.debug`) |
 | Application label | `HMXHARNESS` |
 | Namespace | `com.hmx.harness` |
@@ -91,6 +92,8 @@ on new ones.
 
 - HMX-CODER (complete green run): https://github.com/HMXPANEL/HMX-CODER/actions/runs/44803871182
 - HMXHARNESS (green run): https://github.com/HMXPANEL/HMXHARNESS/actions/runs/44803838094
+- Final HEAD (`3c3bda12`) green CI: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/44807862794 and https://github.com/HMXPANEL/HMX-CODER/actions/runs/44807886167
+- Release workflow (tag `v4.0-hmx`) green: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/44807301499
 - Artifact: `hmxharness-apks` (artifact id `14662443820` on HMX-CODER run above).
 
 ## APK delivery and verification
