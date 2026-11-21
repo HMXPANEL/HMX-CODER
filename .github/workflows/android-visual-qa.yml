@@ -27,7 +27,10 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - uses: android-actions/setup-android@v3
+      # GitHub-hosted ubuntu runners already ship the Android SDK at
+      # /usr/local/lib/android/sdk (ANDROID_HOME). Do NOT run
+      # android-actions/setup-android here: it tries the removed `tools`
+      # package and fails. The regular CI workflow also builds without it.
 
       - uses: gradle/actions/setup-gradle@v4
 
@@ -44,6 +47,7 @@ jobs:
           disable-animations: false
           emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -camera-back none -camera-front none
           script: |
+            export PATH="$ANDROID_HOME/platform-tools:$PATH"
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
             ./gradlew :app:connectedDebugAndroidTest --tests 'com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest' --no-daemon --stacktrace
@@ -51,7 +55,9 @@ jobs:
       - name: Pull screenshots from emulator
         if: always()
         run: |
+          export PATH="${ANDROID_HOME:-/usr/local/lib/android/sdk}/platform-tools:$PATH"
           mkdir -p screenshots
+          adb devices
           adb pull /sdcard/Android/data/com.hmx.harness.debug/files/liquidglass-screenshots screenshots/ || echo "No screenshots were produced"
           find screenshots -type f -name '*.png' -exec ls -lh {} \;
 
