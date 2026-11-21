@@ -21,6 +21,7 @@ import com.hmx.harness.ui.chat.ChatListTestActivity
 import com.hmx.harness.ui.chat.components.ChatEmptyState
 import com.hmx.harness.ui.common.AppHeader
 import com.hmx.harness.ui.projects.ProjectsScreen
+import com.hmx.harness.ui.settings.ProvidersScreen
 import com.hmx.harness.ui.settings.SettingsScreen
 import com.hmx.harness.ui.theme.HarnessTheme
 import org.junit.Test
@@ -40,7 +41,8 @@ class LiquidGlassScreenshotTest {
         instrumentation.waitForIdleSync()
         Thread.sleep(400)
         val bitmap = instrumentation.uiAutomation.takeScreenshot()
-        val dir = File(container.appContext.getExternalFilesDir(null), "liquidglass-screenshots").apply { mkdirs() }
+        val ctx = instrumentation.targetContext.applicationContext
+        val dir = File(ctx.getExternalFilesDir(null), "liquidglass-screenshots").apply { mkdirs() }
         File(dir, "$name.png").outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
     }
 
@@ -81,6 +83,10 @@ class LiquidGlassScreenshotTest {
             androidx.compose.foundation.layout.Spacer(Modifier.padding(8.dp))
             LiquidGlassButton(onClick = {}) { Text("Glass action") }
         }
+    }
+
+    @Test fun captureProviders() = safely("03-providers") {
+        Box(Modifier.fillMaxSize().safeDrawingPadding()) { ProvidersScreen(container, {}) }
     }
 
     @Test fun captureProjects() = safely("04-projects") {
