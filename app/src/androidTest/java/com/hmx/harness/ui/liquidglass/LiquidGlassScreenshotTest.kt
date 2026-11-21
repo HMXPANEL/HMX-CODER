@@ -21,7 +21,6 @@ import com.hmx.harness.ui.chat.ChatListTestActivity
 import com.hmx.harness.ui.chat.components.ChatEmptyState
 import com.hmx.harness.ui.common.AppHeader
 import com.hmx.harness.ui.projects.ProjectsScreen
-import com.hmx.harness.ui.settings.ProvidersScreen
 import com.hmx.harness.ui.settings.SettingsScreen
 import com.hmx.harness.ui.theme.HarnessTheme
 import org.junit.Test
@@ -82,10 +81,6 @@ class LiquidGlassScreenshotTest {
             androidx.compose.foundation.layout.Spacer(Modifier.padding(8.dp))
             LiquidGlassButton(onClick = {}) { Text("Glass action") }
         }
-    }
-
-    @Test fun captureProviders() = safely("03-providers") {
-        Box(Modifier.fillMaxSize().safeDrawingPadding()) { ProvidersScreen(container, {}) }
     }
 
     @Test fun captureProjects() = safely("04-projects") {
