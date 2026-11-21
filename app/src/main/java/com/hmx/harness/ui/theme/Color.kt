@@ -54,40 +54,49 @@ internal val LightColors = lightColorScheme(
     scrim = Color(0xFF000000),
 )
 
+/**
+ * HMXHARNESS Liquid Glass dark scheme.
+ *
+ * Deep midnight / violet surfaces carry a small alpha so the cinematic ambient
+ * background shows through on every screen. Foreground roles stay near-opaque
+ * and high-contrast: glass must never cost readability.
+ * This replaces the previous Google-blue seeded dark scheme as the default;
+ * dynamic color, custom palettes and AMOLED mode keep their own behavior.
+ */
 internal val DarkColors = darkColorScheme(
-    primary = Color(0xFFA8C7FA),
-    onPrimary = Color(0xFF062168),
-    primaryContainer = Color(0xFF0B57D0),
-    onPrimaryContainer = Color(0xFFD1E4FF),
-    secondary = Color(0xFFBCC7DC),
-    onSecondary = Color(0xFF263141),
-    secondaryContainer = Color(0xFF3C4758),
-    onSecondaryContainer = Color(0xFFD8E3F9),
-    tertiary = Color(0xFFB9C2CD),
-    onTertiary = Color(0xFF232B33),
-    tertiaryContainer = Color(0xFF39424C),
-    onTertiaryContainer = Color(0xFFD8DEE6),
-    error = Color(0xFFFFB4AB),
-    onError = Color(0xFF690005),
-    errorContainer = Color(0xFF93000A),
-    onErrorContainer = Color(0xFFFFDAD6),
-    background = Color(0xFF111318),
-    onBackground = Color(0xFFE2E2E9),
-    surface = Color(0xFF111318),
-    onSurface = Color(0xFFE2E2E9),
-    surfaceVariant = Color(0xFF44474E),
-    onSurfaceVariant = Color(0xFFC4C6D0),
-    outline = Color(0xFF8E9099),
-    outlineVariant = Color(0xFF44474E),
-    surfaceContainerLowest = Color(0xFF0C0E13),
-    surfaceContainerLow = Color(0xFF191C21),
-    surfaceContainer = Color(0xFF1D2025),
-    surfaceContainerHigh = Color(0xFF272A30),
-    surfaceContainerHighest = Color(0xFF32353B),
-    inverseSurface = Color(0xFFE2E2E9),
-    inverseOnSurface = Color(0xFF2E3036),
-    inversePrimary = Color(0xFF0B57D0),
-    scrim = Color(0xFF000000),
+    primary = Color(0xFF9575FF),
+    onPrimary = Color(0xFF120A24),
+    primaryContainer = Color(0xB8332459),
+    onPrimaryContainer = Color(0xFFEEE7FF),
+    secondary = Color(0xFF8FD6FF),
+    onSecondary = Color(0xFF07172A),
+    secondaryContainer = Color(0xB8243554),
+    onSecondaryContainer = Color(0xFFE3F4FF),
+    tertiary = Color(0xFFC4A8FF),
+    onTertiary = Color(0xFF1C1033),
+    tertiaryContainer = Color(0xB8332852),
+    onTertiaryContainer = Color(0xFFF2EAFF),
+    error = Color(0xFFFF9A9A),
+    onError = Color(0xFF3B0710),
+    errorContainer = Color(0xB8672333),
+    onErrorContainer = Color(0xFFFFE2E2),
+    background = Color(0xFF090713),
+    onBackground = Color(0xFFF7F5FF),
+    surface = Color(0xCC151027),
+    onSurface = Color(0xFFF7F5FF),
+    surfaceVariant = Color(0xB82C2447),
+    onSurfaceVariant = Color(0xFFC9C2DE),
+    outline = Color(0xFF6F6689),
+    outlineVariant = Color(0xB8544A6E),
+    surfaceContainerLowest = Color(0xE6090713),
+    surfaceContainerLow = Color(0xCC1B1530),
+    surfaceContainer = Color(0xC4221B3A),
+    surfaceContainerHigh = Color(0xC42C2348),
+    surfaceContainerHighest = Color(0xC4382C56),
+    inverseSurface = Color(0xFFF4F0FF),
+    inverseOnSurface = Color(0xFF1A1330),
+    inversePrimary = Color(0xFF6D4AFF),
+    scrim = Color(0xFF04020C),
 )
 
 /**

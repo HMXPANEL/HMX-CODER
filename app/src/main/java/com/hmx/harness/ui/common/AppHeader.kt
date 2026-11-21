@@ -2,7 +2,11 @@ package com.hmx.harness.ui.common
 
 import com.hmx.harness.ui.theme.*
 import com.hmx.harness.R
+import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
+import com.hmx.harness.ui.liquidglass.liquidGlass
 import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -30,11 +34,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 
 /**
- * The single shared screen header: flat surface, one row, hairline divider.
- *
- * Every screen uses this so chat, terminal, files, settings and providers share
- * the same chrome. [onBack] shows a back arrow, [onMenu] a menu button (never
- * both); [subtitle] is a single muted line under the title.
+ * The single shared screen header: a floating deep-glass bar used by every
+ * screen so chat, terminal, files, settings and providers share the same chrome.
+ * [onBack] shows a back arrow, [onMenu] a menu button (never both); [subtitle]
+ * is a single muted line under the title.
  *
  * The row is `heightIn(min = 60.dp)` rather than a fixed 60 so that a large
  * system font scale grows the header instead of clipping the title line.
@@ -55,7 +58,9 @@ fun AppHeader(
     Column(
         modifier = modifier
             .then(if (glass) Modifier.windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).padding(horizontal = 12.dp, vertical = 8.dp)
-                else Modifier.harnessGlassBar(if (desktop) scheme.surfaceContainerLow else scheme.surface).statusBarsPadding()),
+                else Modifier.statusBarsPadding().padding(horizontal = 12.dp, vertical = 8.dp))
+            .liquidGlass(LiquidGlassLevel.DEEP, RoundedCornerShape(26.dp))
+            .clip(RoundedCornerShape(26.dp)),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -97,6 +102,6 @@ fun AppHeader(
             }
             actions()
         }
-        if (!glass) HorizontalDivider(color = scheme.outlineVariant.copy(alpha = 0.5f))
+        if (!glass) HorizontalDivider(color = scheme.outlineVariant.copy(alpha = 0.28f))
     }
 }

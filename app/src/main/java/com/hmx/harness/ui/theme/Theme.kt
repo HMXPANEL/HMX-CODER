@@ -15,6 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import com.hmx.harness.data.ThemeMode
 import com.hmx.harness.data.ProgressBarStyle
 import com.hmx.harness.data.ThemePalette
+import com.hmx.harness.ui.liquidglass.LiquidGlassAmbientBackground
+import com.hmx.harness.ui.liquidglass.LocalLiquidGlassQuality
+import com.hmx.harness.ui.liquidglass.LiquidGlassQuality
 
 val LocalProgressBarStyle = staticCompositionLocalOf { ProgressBarStyle.FLAT }
 
@@ -69,10 +72,17 @@ fun HarnessTheme(
         glassEnabled && com.hmx.harness.data.FeatureAvailability.HARNESS_GLASS,
         liquidGlass, Build.VERSION.SDK_INT), colorScheme.surface, glassTransparency)
 
+    // Graceful fallback: low-memory devices (e.g. Helio G85 class) get the
+    // lightweight layered-gradient material and skip optional GPU-heavy layers.
+    val glassQuality = remember {
+        if (Runtime.getRuntime().maxMemory() < 320L * 1024 * 1024) LiquidGlassQuality.LITE
+        else LiquidGlassQuality.FULL
+    }
     CompositionLocalProvider(
         LocalStatusColors provides (if (dark) StatusDark else StatusLight),
         LocalProgressBarStyle provides progressBarStyle,
         LocalMotionBlur provides MotionBlurStyle(motionBlurEnabled, motionBlurIntensity),
+        LocalLiquidGlassQuality provides glassQuality,
     ) {
         MaterialTheme(
             colorScheme = if (glass.mode == HarnessGlassMode.OFF) colorScheme else colorScheme.copy(
@@ -82,7 +92,7 @@ fun HarnessTheme(
             typography = HarnessTypography,
             shapes = HarnessShapes,
             motionScheme = MotionScheme.standard(),
-            content = { HarnessGlassRoot(glass, content) },
+            content = { LiquidGlassAmbientBackground { HarnessGlassRoot(glass, content) } },
         )
     }
 }
