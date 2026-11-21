@@ -22,7 +22,7 @@ import com.hmx.harness.ui.liquidglass.LiquidGlassQuality
 import com.styropyr0.prismal.sources.rememberPrismalGlassLayer
 import com.styropyr0.prismal.sources.prismalGlassLayer
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.matchParentSize
+import androidx.compose.foundation.layout.fillMaxSize
 
 val LocalProgressBarStyle = staticCompositionLocalOf { ProgressBarStyle.FLAT }
 
@@ -102,7 +102,7 @@ fun HarnessTheme(
             shapes = HarnessShapes,
             motionScheme = MotionScheme.standard(),
             content = {
-                Box(androidx.compose.ui.Modifier.fillMaxSize()) {
+                Box(Modifier.fillMaxSize()) {
                     LiquidGlassAmbientBackground(
                         androidx.compose.ui.Modifier.matchParentSize().prismalGlassLayer(glassBackdrop))
                     HarnessGlassRoot(glass, content)
