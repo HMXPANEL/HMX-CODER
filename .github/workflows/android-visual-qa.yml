@@ -50,6 +50,7 @@ jobs:
           arch: x86_64
           profile: pixel_5
           disable-animations: false
+          emulator-boot-timeout: 1800
           emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -camera-back none -camera-front none
           script: |
             export PATH="$ANDROID_HOME/platform-tools:$PATH"
