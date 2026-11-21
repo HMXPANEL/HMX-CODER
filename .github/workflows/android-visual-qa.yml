@@ -39,6 +39,11 @@ jobs:
 
       - name: Run screenshot capture on emulator
         uses: reactivecircus/android-emulator-runner@v2
+        env:
+          # GitHub-hosted runners have no /dev/kvm. The action therefore launches
+          # with -accel off, which modern emulator builds refuse unless this
+          # opt-in is set. TCG software emulation is slow but works.
+          ANDROID_I_WANT_MY_TCG: 'yes'
         with:
           api-level: 33
           target: google_apis
