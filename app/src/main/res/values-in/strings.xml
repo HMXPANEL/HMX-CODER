@@ -713,7 +713,6 @@
     <string name="chat_prefill_ideas">"Bantu saya mencari ide untuk"</string>
     <string name="chat_prefill_draft">"Bantu saya menulis pesan yang jelas untuk"</string>
     <string name="chat_prefill_think">"Bantu saya memikirkan"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"Kirim atau hapus lampiran sebelum berganti bagian. Draf tetap disimpan."</string>
     <string name="chat_file_requires_code">"Gunakan Kode untuk berkas ini. Chat dapat membaca gambar, berkas teks, dan PDF dengan teks yang dapat diekstrak."</string>
     <string name="chat_thinking">"Pemikiran"</string>

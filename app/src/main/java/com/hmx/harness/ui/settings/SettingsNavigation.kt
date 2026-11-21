@@ -27,7 +27,7 @@ internal enum class SettingsPage(
 ) {
     LEARN(
         R.string.learn_title, R.string.learn_description, R.string.learn_group,
-        "learn tutorial guide help study getting started how to android harness features instructions",
+        "learn tutorial guide help study getting started how to hmx harness features instructions",
     ),
     LANGUAGE(
         R.string.settings_page_language_title,

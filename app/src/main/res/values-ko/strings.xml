@@ -713,7 +713,6 @@
     <string name="chat_prefill_ideas">"아이디어를 내고 싶은 주제:"</string>
     <string name="chat_prefill_draft">"명확한 메시지를 쓰고 싶은 대상:"</string>
     <string name="chat_prefill_think">"차근차근 생각해 보고 싶은 것:"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"섹션을 전환하기 전에 첨부파일을 보내거나 제거하세요. 초안은 보관됩니다."</string>
     <string name="chat_file_requires_code">"이 파일에는 Code를 사용하십시오. Chat는 추출 가능한 텍스트가 포함된 이미지, 텍스트 파일 및 PDF를 읽을 수 있습니다."</string>
     <string name="chat_thinking">"생각"</string>

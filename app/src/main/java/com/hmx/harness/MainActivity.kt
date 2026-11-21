@@ -154,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                             )
                             Spacer(Modifier.height(16.dp))
                             Text(
-                                getString(R.string.ui_androidharness_is_locked),
+                                getString(R.string.ui_hmxharness_is_locked),
                                 style = MaterialTheme.typography.titleLarge,
                                 textAlign = TextAlign.Center,
                             )
@@ -269,7 +269,7 @@ class MainActivity : AppCompatActivity() {
         promptShownThisResume = true
         BiometricAuth.prompt(
             activity = this,
-            title = getString(R.string.ui_unlock_androidharness),
+            title = getString(R.string.ui_unlock_hmxharness),
             subtitle = getString(R.string.ui_confirm_your_fingerprint_face_or_pin),
             onSuccess = { isUnlocked = true },
             onError = {

@@ -134,6 +134,3 @@ internal fun EmptyState(
         }
     }
 }
-
-// Verified creator profile: Sanuu, creator of HMXHARNESS.
-internal const val DONATION_URL = "https://buymeacoffee.com/sanuj7"

@@ -714,7 +714,6 @@
     <string name="chat_prefill_ideas">"کمکم کن ایده‌هایی برای"</string>
     <string name="chat_prefill_draft">"کمکم کن یک پیام واضح بنویسم برای"</string>
     <string name="chat_prefill_think">"کمکم کن خوب فکر کنم درباره"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"قبل از تغییر بخش، پیوست‌ها را ارسال یا حذف. پیش نویس شما حفظ خواهد شد."</string>
     <string name="chat_file_requires_code">"برای این فایل از کد استفاده کنید. گفتگوی می تواند تصاویر، فایل های متنی و PDF با متن قابل استخراج را بخواند."</string>
     <string name="chat_thinking">"فکر کردن"</string>

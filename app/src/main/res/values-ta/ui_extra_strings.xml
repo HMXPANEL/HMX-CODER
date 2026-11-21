@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 முதல் 59 வரை"</string>
     <string name="ui_preferred">"%1$s · %2$s முன்னுரிமை"</string>
     <string name="ui_blocked">"தடுக்கப்பட்டது"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS பூட்டப்பட்டுள்ளது"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS பூட்டப்பட்டுள்ளது"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"உங்கள் பணியிடங்கள் மற்றும் அரட்டைகளை அணுக, பயோமெட்ரிக் அல்லது சாதன சான்றுகளுடன் திறக்கவும்."</string>
-    <string name="ui_unlock_androidharness">"HMXHARNESS ஐ திறக்கவும்"</string>
+    <string name="ui_unlock_hmxharness">"HMXHARNESS ஐ திறக்கவும்"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"உங்கள் கைரேகை, முகம் அல்லது PIN ஆகியவற்றை உறுதிப்படுத்தவும்"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"முதலில் சாதன அமைப்புகளில் திரைப் பூட்டை (PIN/கைரேகை) அமைக்கவும்"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"இந்தச் சாதனத்தில் பயோமெட்ரிக் அங்கீகாரம் ஆதரிக்கப்படவில்லை"</string>

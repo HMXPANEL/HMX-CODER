@@ -1517,7 +1517,7 @@ internal fun ShizukuCard(
                         when (state) {
                             ShizukuState.NOT_INSTALLED -> uiContext.getString(R.string.ui_not_installed_optional)
                             ShizukuState.NOT_RUNNING -> uiContext.getString(R.string.ui_installed_not_running)
-                            ShizukuState.RUNNING_NO_PERMISSION -> uiContext.getString(R.string.ui_running_grant_androidharness_access)
+                            ShizukuState.RUNNING_NO_PERMISSION -> uiContext.getString(R.string.ui_running_grant_hmxharness_access)
                             ShizukuState.GRANTED -> when (serviceState) {
                                 UserServiceState.BOUND_READY -> uiContext.getString(R.string.ui_connected_shell_privileges_ready)
                                 UserServiceState.COMPAT_READY -> uiContext.getString(R.string.ui_connected_in_compatibility_mode_shell_privileges_ready)
@@ -2899,7 +2899,7 @@ private fun AboutSection(container: AppContainer) {
     SettingsPanel(Modifier.fillMaxWidth()) {
         Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
             Text(
-                uiContext.getString(R.string.ui_androidharness_is_built_on_open_source_work),
+                uiContext.getString(R.string.ui_hmxharness_is_built_on_open_source_work),
                 style = MaterialTheme.typography.bodySmall,
                 color = scheme.onSurfaceVariant,
             )
@@ -2909,7 +2909,7 @@ private fun AboutSection(container: AppContainer) {
         HorizontalDivider(color = scheme.outlineVariant.copy(alpha = 0.4f))
         Column(Modifier.padding(horizontal = 16.dp, vertical = 14.dp)) {
             Text(
-                uiContext.getString(R.string.ui_every_project_keeps_its_own_license_androidharness),
+                uiContext.getString(R.string.ui_every_project_keeps_its_own_license_hmxharness),
                 style = MaterialTheme.typography.bodySmall,
                 color = scheme.onSurfaceVariant,
             )
@@ -2982,7 +2982,7 @@ private fun ChatsBackupSection(container: AppContainer) {
     var restorePreview by remember { mutableStateOf<com.hmx.harness.data.ChatImportPreview?>(null) }
 
     val suggestedName = remember {
-        "androidharness-chats-" +
+        "hmxharness-chats-" +
             java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US).format(java.util.Date()) +
             ".json"
     }

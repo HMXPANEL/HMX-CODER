@@ -714,7 +714,6 @@
     <string name="chat_prefill_ideas">"Tulungan mo akong mag-isip ng mga ideya para sa"</string>
     <string name="chat_prefill_draft">"Tulungan mo akong sumulat ng malinaw na mensahe kay"</string>
     <string name="chat_prefill_think">"Tulungan mo akong pag-isipan ang"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"Magpadala o mag-alis ng mga attachment bago lumipat ng mga seksyon. Itatago ang iyong draft."</string>
     <string name="chat_file_requires_code">"Gamitin ang Code para sa file na ito. Ang Chat ay maaaring magbasa ng mga larawan, text file, at PDF na may na-extract na text."</string>
     <string name="chat_thinking">"Nag-iisip"</string>

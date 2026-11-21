@@ -716,7 +716,6 @@
     <string name="chat_prefill_ideas">"Помоги придумать идеи для"</string>
     <string name="chat_prefill_draft">"Помоги написать понятное сообщение для"</string>
     <string name="chat_prefill_think">"Помоги мне обдумать"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"Перед переключением раздела отправьте или уберите вложения. Черновик сохранится."</string>
     <string name="chat_file_requires_code">"Используйте раздел «Код» для этого файла. Чат может читать изображения, текстовые файлы и PDF с извлекаемым текстом."</string>
     <string name="chat_thinking">"Размышление"</string>

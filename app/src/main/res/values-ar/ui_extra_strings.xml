@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"من 0 إلى 59"</string>
     <string name="ui_preferred">"%1$s · المفضّل %2$s"</string>
     <string name="ui_blocked">"محظور"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS مقفل"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS مقفل"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"افتح القفل بالبصمة أو بيانات قفل الجهاز للوصول إلى مساحات العمل والمحادثات."</string>
-    <string name="ui_unlock_androidharness">"فتح قفل HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"فتح قفل HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"أكّد ببصمة الإصبع أو الوجه أو رمز PIN"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"أعدّ قفل الشاشة (PIN أو بصمة) في إعدادات الجهاز أولاً"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"هذا الجهاز لا يدعم المصادقة بالقياسات الحيوية"</string>

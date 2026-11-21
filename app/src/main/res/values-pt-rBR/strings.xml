@@ -724,7 +724,6 @@
     <string name="chat_prefill_ideas">"Me ajude a ter ideias para"</string>
     <string name="chat_prefill_draft">"Me ajude a escrever uma mensagem clara para"</string>
     <string name="chat_prefill_think">"Me ajude a pensar sobre"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"Envie ou remova anexos antes de trocar de seção. Seu rascunho será mantido."</string>
     <string name="chat_file_requires_code">"Use o Code para este arquivo. O Chat pode ler imagens, arquivos de texto e PDFs com texto extraível."</string>
     <string name="chat_thinking">"Pensando"</string>

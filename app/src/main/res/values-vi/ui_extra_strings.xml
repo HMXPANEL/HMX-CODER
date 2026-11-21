@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 đến 59"</string>
     <string name="ui_preferred">"%1$s · Ưu tiên %2$s"</string>
     <string name="ui_blocked">"Bị chặn"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS đã bị khóa"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS đã bị khóa"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"Mở khóa bằng thông tin xác thực sinh trắc học hoặc thiết bị để truy cập không gian làm việc và các cuộc trò chuyện của bạn."</string>
-    <string name="ui_unlock_androidharness">"Mở khóa HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"Mở khóa HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"Xác nhận dấu vân tay, khuôn mặt hoặc PIN của bạn"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"Trước tiên hãy thiết lập khóa màn hình (PIN/vân tay) trong Cài đặt thiết bị"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"Xác thực sinh trắc học không được hỗ trợ trên thiết bị này"</string>

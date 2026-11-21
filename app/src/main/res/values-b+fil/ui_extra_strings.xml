@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 hanggang 59"</string>
     <string name="ui_preferred">"%1$s · Mas gusto ang %2$s"</string>
     <string name="ui_blocked">"Na-block"</string>
-    <string name="ui_androidharness_is_locked">"Naka-lock ang HMXHARNESS"</string>
+    <string name="ui_hmxharness_is_locked">"Naka-lock ang HMXHARNESS"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"I-unlock gamit ang biometric o mga kredensyal ng device para ma-access ang iyong mga workspace at chat."</string>
-    <string name="ui_unlock_androidharness">"I-unlock ang HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"I-unlock ang HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"Kumpirmahin ang iyong fingerprint, mukha, o PIN"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"I-set up muna ang lock ng screen (PIN/fingerprint) sa Mga Setting ng device"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"Hindi sinusuportahan ang biometric authentication sa device na ito"</string>

@@ -1,9 +1,5 @@
 package com.hmx.harness.ui.chat.components
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.Crossfade
@@ -14,7 +10,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -70,13 +65,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
@@ -106,9 +98,9 @@ private data class StarterAccent(val container: Color, val content: Color, val s
 
 /**
  * New Chat screen. Identity sits in the upper part (mark, headline, agent
- * choice, support links); starters sit at the bottom next to the composer
- * where the thumb already is. With the keyboard up the grid becomes one
- * scrolling row of chips, and it steps aside once the user starts typing.
+ * choice); starters sit at the bottom next to the composer where the thumb
+ * already is. With the keyboard up the grid becomes one scrolling row of
+ * chips, and it steps aside once the user starts typing.
  */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -190,8 +182,6 @@ internal fun ChatEmptyState(
                         Spacer(Modifier.height(16.dp))
                         agentSetup()
                     }
-                    Spacer(Modifier.height(12.dp))
-                    ChatSupportLinks()
                 }
             }
             AnimatedVisibility(
@@ -409,51 +399,4 @@ private fun StarterChips(starters: List<ChatStarter>, onTap: (ChatStarter) -> Un
     }
 }
 
-/** Donation and community stay available but quiet, away from the starters. */
-@Composable
-private fun ChatSupportLinks() {
-    val context = LocalContext.current
-    val noBrowserCoffee = stringResource(R.string.ui_no_browser_available_visit_buymeacoffee_com_sanuj7)
-    val noBrowserDiscord = stringResource(R.string.discord_no_browser)
-    fun open(url: String, fallback: String) {
-        try {
-            context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
-        } catch (_: ActivityNotFoundException) {
-            Toast.makeText(context, fallback, Toast.LENGTH_LONG).show()
-        }
-    }
-    Column(Modifier.fillMaxWidth().widthIn(max = 420.dp), horizontalAlignment = Alignment.CenterHorizontally) {
-        DonationFundingNotice()
-        Row(horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally), modifier = Modifier.fillMaxWidth()) {
-            SupportChip(
-                painterResource(R.drawable.ic_buy_me_a_coffee), Color(0xFFFFDD00), null,
-                stringResource(R.string.ui_donate), stringResource(R.string.ui_open_buy_me_a_coffee),
-            ) { open(DONATION_URL, noBrowserCoffee) }
-            SupportChip(
-                painterResource(R.drawable.ic_discord), DiscordBlurple, Color.White,
-                stringResource(R.string.chat_support_discord), stringResource(R.string.discord_open_invite),
-            ) { open(DISCORD_INVITE_URL, noBrowserDiscord) }
-        }
-    }
-}
 
-@Composable
-private fun SupportChip(icon: Painter, badge: Color, tint: Color?, label: String, clickLabel: String, onClick: () -> Unit) {
-    val scheme = MaterialTheme.colorScheme
-    val shape = RoundedCornerShape(50)
-    Row(
-        Modifier
-            .clip(shape)
-            .clickable(role = Role.Button, onClickLabel = clickLabel, onClick = onClick)
-            .heightIn(min = 44.dp)
-            .padding(start = 8.dp, end = 14.dp),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Box(Modifier.size(24.dp).background(badge, RoundedCornerShape(50)), contentAlignment = Alignment.Center) {
-            if (tint != null) Icon(icon, null, Modifier.size(14.dp), tint = tint)
-            else Image(icon, null, Modifier.size(18.dp))
-        }
-        Spacer(Modifier.width(8.dp))
-        Text(label, style = MaterialTheme.typography.labelLarge, color = scheme.onSurfaceVariant)
-    }
-}

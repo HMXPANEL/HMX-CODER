@@ -255,7 +255,7 @@ internal fun ProjectNavigationSidebar(
                         Row(Modifier.weight(1f).clickable(remember { MutableInteractionSource() }, indication = null,
                             onClickLabel = uiContext.getString(R.string.ui_replay_intro)) { brandReplay++ },
                             verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                            com.hmx.harness.ui.common.SidebarBrandLogo(opened, 30.dp, description = uiContext.getString(R.string.ui_androidharness_icon), replay = brandReplay)
+                            com.hmx.harness.ui.common.SidebarBrandLogo(opened, 30.dp, description = uiContext.getString(R.string.ui_hmxharness_icon), replay = brandReplay)
                             com.hmx.harness.ui.common.SidebarBrandName("HMXHARNESS", opened, MaterialTheme.typography.titleMedium, Modifier.weight(1f), replay = brandReplay)
                         }
                         ExpressiveIconButton(onClick = onCollapse) { Icon(Icons.AutoMirrored.Outlined.MenuOpen, uiContext.getString(R.string.ui_collapse_sidebar), Modifier.size(19.dp)) }

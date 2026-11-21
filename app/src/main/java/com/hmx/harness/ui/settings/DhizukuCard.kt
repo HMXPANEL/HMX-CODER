@@ -24,7 +24,7 @@ internal fun DhizukuCard(manager: DhizukuManager) {
             Text(stringResource(when (connection.status) {
                 DhizukuStatus.NOT_INSTALLED -> R.string.ui_not_installed_optional
                 DhizukuStatus.NOT_RUNNING -> R.string.dhizuku_not_running
-                DhizukuStatus.NEEDS_PERMISSION -> R.string.ui_running_grant_androidharness_access
+                DhizukuStatus.NEEDS_PERMISSION -> R.string.ui_running_grant_hmxharness_access
                 DhizukuStatus.REQUESTING -> R.string.dhizuku_requesting
                 DhizukuStatus.GRANTED -> R.string.dhizuku_connected
                 DhizukuStatus.DENIED -> R.string.dhizuku_denied

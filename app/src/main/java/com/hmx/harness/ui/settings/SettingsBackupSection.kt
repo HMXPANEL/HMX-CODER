@@ -76,7 +76,7 @@ internal fun SettingsBackupSection(container: AppContainer) {
             Text(stringResource(R.string.settings_backup_desc),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { message = null; exportPicker.launch("androidharness-settings.hbackup") }, enabled = !busy) { Text(stringResource(R.string.settings_action_export)) }
+                Button(onClick = { message = null; exportPicker.launch("hmxharness-settings.hbackup") }, enabled = !busy) { Text(stringResource(R.string.settings_action_export)) }
                 OutlinedButton(onClick = { message = null; importPicker.launch(arrayOf("application/octet-stream", "*/*")) }, enabled = !busy) { Text(stringResource(R.string.settings_action_import)) }
             }
             if (busy) ThinLinearProgress(Modifier.fillMaxWidth())

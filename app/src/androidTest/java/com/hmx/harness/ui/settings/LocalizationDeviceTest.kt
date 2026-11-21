@@ -162,7 +162,7 @@ class LocalizationDeviceTest {
         val container = (target.applicationContext as HarnessApp).container
         ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
             scenario.onActivity { activity -> show(activity) { SetupScreen(container, onFinish = {}) } }
-            awaitText(context("zh-CN").getString(R.string.ui_welcome_to_androidharness))
+            awaitText(context("zh-CN").getString(R.string.ui_welcome_to_hmxharness))
             screenshot("chinese-setup.png")
             scenario.onActivity { activity -> show(activity) { StatsScreen(container, onBack = {}) } }
             awaitText(context("zh-CN").getString(R.string.ui_model_activity))
@@ -256,7 +256,7 @@ class LocalizationDeviceTest {
         try {
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> show(activity, locale = "ru") { SetupScreen(container, onFinish = {}) } }
-                awaitText(ru.getString(R.string.ui_welcome_to_androidharness)); screenshot("russian-setup.png")
+                awaitText(ru.getString(R.string.ui_welcome_to_hmxharness)); screenshot("russian-setup.png")
                 scenario.onActivity { activity -> show(activity, locale = "ru") { StatsScreen(container, onBack = {}) } }
                 awaitText(ru.getString(R.string.ui_model_activity)); screenshot("russian-usage.png")
                 scenario.onActivity { activity -> show(activity, locale = "ru") { AutomationScreen(container, onBack = {}, onOpenSession = {}) } }
@@ -320,7 +320,7 @@ class LocalizationDeviceTest {
         try {
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> show(activity, locale = "id") { SetupScreen(container, onFinish = {}) } }
-                awaitText(indo.getString(R.string.ui_welcome_to_androidharness)); screenshot("indonesian-setup.png")
+                awaitText(indo.getString(R.string.ui_welcome_to_hmxharness)); screenshot("indonesian-setup.png")
                 scenario.onActivity { activity -> show(activity, locale = "id") { StatsScreen(container, onBack = {}) } }
                 awaitText(indo.getString(R.string.ui_model_activity)); screenshot("indonesian-usage.png")
                 scenario.onActivity { activity -> show(activity, locale = "id") { AutomationScreen(container, onBack = {}, onOpenSession = {}) } }
@@ -384,7 +384,7 @@ class LocalizationDeviceTest {
         try {
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> show(activity, locale = "ar") { SetupScreen(container, onFinish = {}) } }
-                awaitText(ar.getString(R.string.ui_welcome_to_androidharness)); screenshot("arabic-setup.png")
+                awaitText(ar.getString(R.string.ui_welcome_to_hmxharness)); screenshot("arabic-setup.png")
                 scenario.onActivity { activity -> show(activity, locale = "ar") { StatsScreen(container, onBack = {}) } }
                 awaitText(ar.getString(R.string.ui_model_activity)); screenshot("arabic-usage.png")
                 scenario.onActivity { activity -> show(activity, locale = "ar") { AutomationScreen(container, onBack = {}, onOpenSession = {}) } }
@@ -564,7 +564,7 @@ class LocalizationDeviceTest {
         try {
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> show(activity, locale = locale) { SetupScreen(container, onFinish = {}) } }
-                awaitText(localized.getString(R.string.ui_welcome_to_androidharness)); screenshot("$screenshotPrefix-setup.png")
+                awaitText(localized.getString(R.string.ui_welcome_to_hmxharness)); screenshot("$screenshotPrefix-setup.png")
                 scenario.onActivity { activity -> show(activity, locale = locale) { StatsScreen(container, onBack = {}) } }
                 awaitText(localized.getString(R.string.ui_model_activity)); screenshot("$screenshotPrefix-usage.png")
                 scenario.onActivity { activity -> show(activity, locale = locale) { AutomationScreen(container, onBack = {}, onOpenSession = {}) } }
@@ -628,7 +628,7 @@ class LocalizationDeviceTest {
         try {
             ActivityScenario.launch(ChatListTestActivity::class.java).use { scenario ->
                 scenario.onActivity { activity -> show(activity, locale = "fa") { SetupScreen(container, onFinish = {}) } }
-                awaitText(fa.getString(R.string.ui_welcome_to_androidharness)); screenshot("persian-setup.png")
+                awaitText(fa.getString(R.string.ui_welcome_to_hmxharness)); screenshot("persian-setup.png")
                 scenario.onActivity { activity -> show(activity, locale = "fa") { StatsScreen(container, onBack = {}) } }
                 awaitText(fa.getString(R.string.ui_model_activity)); screenshot("persian-usage.png")
                 scenario.onActivity { activity -> show(activity, locale = "fa") { AutomationScreen(container, onBack = {}, onOpenSession = {}) } }

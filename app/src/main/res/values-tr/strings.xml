@@ -714,7 +714,6 @@
     <string name="chat_prefill_ideas">"Şunun için fikir üretmeme yardım et:"</string>
     <string name="chat_prefill_draft">"Şuna net bir mesaj yazmama yardım et:"</string>
     <string name="chat_prefill_think">"Şunu iyice düşünmeme yardım et:"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"Bölümleri değiştirmeden önce ekleri gönderin veya kaldırın. Taslağınız saklanacaktır."</string>
     <string name="chat_file_requires_code">"Bu dosya için Code kullanın. Chat, görüntüleri, metin dosyalarını ve çıkarılabilir metin içeren PDF\'leri okuyabilir."</string>
     <string name="chat_thinking">"Düşünme"</string>

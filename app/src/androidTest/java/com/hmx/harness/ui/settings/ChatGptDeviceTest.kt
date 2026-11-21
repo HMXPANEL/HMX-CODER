@@ -209,7 +209,7 @@ class ChatGptDeviceTest {
         }
         val root = File(instrumentation.targetContext.cacheDir, "chatgpt-live-check-${System.nanoTime()}").apply { mkdirs() }
         try {
-            File(root, "fixture.txt").writeText("ANDROIDHARNESS_CHATGPT_TOOL_OK")
+            File(root, "fixture.txt").writeText("HMXHARNESS_CHATGPT_TOOL_OK")
             val events = mutableListOf<AgentEvent>()
             withTimeout(180_000) {
                 container.engine.run(sessionId = "chatgpt-live-fixture", turnId = "chatgpt-live-turn", config = config,
@@ -223,8 +223,8 @@ class ChatGptDeviceTest {
             val detail = "model=${config.model}; tools=${events.filterIsInstance<AgentEvent.ToolStarted>().map { it.call.name }}; replies=${events.filterIsInstance<AgentEvent.AssistantCommitted>().map { it.message.text.take(800) }}; stream=${(ProviderFactory.chatGptProvider as? ChatGptProvider)?.lastResponseSummary}; finished=${events.filterIsInstance<AgentEvent.Finished>()}"
             report("CHATGPT_LIVE_RESULT: $detail")
             assertTrue(detail, events.filterIsInstance<AgentEvent.ToolStarted>().any { it.call.name == "read_file" })
-            assertTrue(events.filterIsInstance<AgentEvent.ToolFinished>().any { it.result.ok && it.result.output.contains("ANDROIDHARNESS_CHATGPT_TOOL_OK") })
-            assertTrue(events.filterIsInstance<AgentEvent.AssistantCommitted>().any { it.message.text.contains("ANDROIDHARNESS_CHATGPT_TOOL_OK") })
+            assertTrue(events.filterIsInstance<AgentEvent.ToolFinished>().any { it.result.ok && it.result.output.contains("HMXHARNESS_CHATGPT_TOOL_OK") })
+            assertTrue(events.filterIsInstance<AgentEvent.AssistantCommitted>().any { it.message.text.contains("HMXHARNESS_CHATGPT_TOOL_OK") })
             println("CHATGPT_LIVE_TOOL_OK: model=${config.model}, read_file succeeded, response completed")
         } finally { root.deleteRecursively() }
         } finally { scenario.close() }

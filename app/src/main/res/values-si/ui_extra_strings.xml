@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 දෙවනි 59"</string>
     <string name="ui_preferred">"%1$s · %2$s කැමැත්ත"</string>
     <string name="ui_blocked">"අවහිර කර ඇත"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS ලුහුබැඳෙයි"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS ලුහුබැඳෙයි"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"ඔබගේ වැඩපිළිවෙළ හා චැට් වෙත පිවිසෙන biometric හෝ උපාංග සහතිකයන් සමඟ විවෘත කරන්න."</string>
-    <string name="ui_unlock_androidharness">"විවෘත කිරීම HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"විවෘත කිරීම HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"ඔබගේ ඇඟිලි මුද් රණය සහ මුහුණ, PIN"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"තිරය තිරය (PIN/ ඇඟිලි මුද්රණය) Device settings first in"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"මෙම උපාංගය මත සහාය නැති Biometric Authentication"</string>

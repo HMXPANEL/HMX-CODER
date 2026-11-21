@@ -122,17 +122,17 @@ Globbing is `ConfigGlob.matches` (`ConfigDocument.kt:124-L138`): `**/` matches z
 - The JSON Schema advertises `local` and `remote` MCP types. `ConfigValidation` accepts them, but the loader normalizes any entry with a `url` to `http` (or `sse` when explicitly typed) and everything else to `stdio` (`HarnessConfig.kt:365`), so `local` and `remote` are accepted but not preserved.
 - `ConfigRunContext.pendingInstructions` is drained by the engine but the queue is populated only by hook results; no other code path adds to it.
 
-Sources: [app/src/main/java/com/androidharness/app/config/HarnessConfig.kt](../app/src/main/java/com/androidharness/app/config/HarnessConfig.kt)#L180-L211), [app/src/main/java/com/androidharness/app/config/ConfigValidation.kt](../app/src/main/java/com/androidharness/app/config/ConfigValidation.kt)#L7-L91), [app/src/main/java/com/androidharness/app/config/ConfigDocument.kt](../app/src/main/java/com/androidharness/app/config/ConfigDocument.kt)#L17-L35), [docs/harness.schema.json](../docs/harness.schema.json)#L1-L6), [app/src/main/java/com/androidharness/app/ui/settings/ConfigurationSection.kt](../app/src/main/java/com/androidharness/app/ui/settings/ConfigurationSection.kt)#L41-L88)
+Sources: [app/src/main/java/com/hmx/harness/config/HarnessConfig.kt](../app/src/main/java/com/hmx/harness/config/HarnessConfig.kt)#L180-L211), [app/src/main/java/com/hmx/harness/config/ConfigValidation.kt](../app/src/main/java/com/hmx/harness/config/ConfigValidation.kt)#L7-L91), [app/src/main/java/com/hmx/harness/config/ConfigDocument.kt](../app/src/main/java/com/hmx/harness/config/ConfigDocument.kt)#L17-L35), [docs/harness.schema.json](../docs/harness.schema.json)#L1-L6), [app/src/main/java/com/hmx/harness/ui/settings/ConfigurationSection.kt](../app/src/main/java/com/hmx/harness/ui/settings/ConfigurationSection.kt)#L41-L88)
 
 ## Source files
 
-- `app/src/main/java/com/androidharness/app/config/HarnessConfig.kt`
-- `app/src/main/java/com/androidharness/app/config/HarnessConfigRepository.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigValidation.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigDocument.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigDocumentFs.kt`
-- `app/src/main/java/com/androidharness/app/config/ConfigRunContext.kt`
-- `app/src/main/java/com/androidharness/app/config/PluginHooks.kt`
-- `app/src/main/java/com/androidharness/app/ui/settings/ConfigurationSection.kt`
+- `app/src/main/java/com/hmx/harness/config/HarnessConfig.kt`
+- `app/src/main/java/com/hmx/harness/config/HarnessConfigRepository.kt`
+- `app/src/main/java/com/hmx/harness/config/ConfigValidation.kt`
+- `app/src/main/java/com/hmx/harness/config/ConfigDocument.kt`
+- `app/src/main/java/com/hmx/harness/config/ConfigDocumentFs.kt`
+- `app/src/main/java/com/hmx/harness/config/ConfigRunContext.kt`
+- `app/src/main/java/com/hmx/harness/config/PluginHooks.kt`
+- `app/src/main/java/com/hmx/harness/ui/settings/ConfigurationSection.kt`
 - `docs/harness.schema.json`
 - `docs/configuration/README.md`

@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0～59"</string>
     <string name="ui_preferred">"%1$s · %2$s 優先"</string>
     <string name="ui_blocked">"ブロック済み"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS はロックされています"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS はロックされています"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"生体認証またはデバイスの認証情報でロックを解除し、ワークスペースとチャットにアクセスします。"</string>
-    <string name="ui_unlock_androidharness">"HMXHARNESS のロックを解除"</string>
+    <string name="ui_unlock_hmxharness">"HMXHARNESS のロックを解除"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"指紋、顔、またはPINを確認"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"まずデバイスの設定で画面ロック（PIN/指紋）を設定してください"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"このデバイスでは生体認証に対応していません"</string>

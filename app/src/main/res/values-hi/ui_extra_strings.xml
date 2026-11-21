@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 से 59"</string>
     <string name="ui_preferred">"%1$s · %2$s को प्राथमिकता दी गई"</string>
     <string name="ui_blocked">"अवरुद्ध"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS लॉक है"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS लॉक है"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"अपने कार्यक्षेत्र और चैट तक पहुंचने के लिए बायोमेट्रिक या डिवाइस क्रेडेंशियल के साथ अनलॉक करें।"</string>
-    <string name="ui_unlock_androidharness">"HMXHARNESS अनलॉक करें"</string>
+    <string name="ui_unlock_hmxharness">"HMXHARNESS अनलॉक करें"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"अपने फ़िंगरप्रिंट, चेहरे या PIN की पुष्टि करें"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"सबसे पहले डिवाइस सेटिंग्स में स्क्रीन लॉक (PIN/फिंगरप्रिंट) सेट करें"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"इस डिवाइस पर बायोमेट्रिक प्रमाणीकरण समर्थित नहीं है"</string>

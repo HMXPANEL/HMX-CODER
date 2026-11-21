@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"از ۰ تا ۵۹"</string>
     <string name="ui_preferred">"%1$s · اولویت %2$s"</string>
     <string name="ui_blocked">"مسدود شد"</string>
-    <string name="ui_androidharness_is_locked">"برنامه HMXHARNESS قفل است"</string>
+    <string name="ui_hmxharness_is_locked">"برنامه HMXHARNESS قفل است"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"برای دسترسی به فضاهای کاری و گفتگوها، قفل را با اثر انگشت یا مشخصات امنیتی دستگاه باز کنید."</string>
-    <string name="ui_unlock_androidharness">"باز کردن قفل HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"باز کردن قفل HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"با اثر انگشت، تشخیص چهره یا پین تأیید کنید"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"ابتدا در تنظیمات دستگاه، قفل صفحه (پین یا اثر انگشت) را تنظیم کنید"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"احراز هویت بیومتریک در این دستگاه پشتیبانی نمی‌شود"</string>

@@ -713,7 +713,6 @@
     <string name="chat_prefill_ideas">"ช่วยคิดไอเดียสำหรับ"</string>
     <string name="chat_prefill_draft">"ช่วยเขียนข้อความที่ชัดเจนถึง"</string>
     <string name="chat_prefill_think">"ช่วยฉันคิดเรื่อง"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"ส่งหรือลบไฟล์แนบก่อนเปลี่ยนส่วน ฉบับร่างของคุณจะถูกเก็บไว้"</string>
     <string name="chat_file_requires_code">"ใช้ Code สำหรับไฟล์นี้ Chat สามารถอ่านรูปภาพ ไฟล์ข้อความ และ PDF พร้อมข้อความที่แยกออกมาได้"</string>
     <string name="chat_thinking">"กำลังคิด"</string>

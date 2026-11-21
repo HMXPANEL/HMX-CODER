@@ -718,7 +718,6 @@
     <string name="chat_prefill_ideas">"ساعدني في عصف أفكار حول"</string>
     <string name="chat_prefill_draft">"ساعدني في كتابة رسالة واضحة إلى"</string>
     <string name="chat_prefill_think">"ساعدني في التفكير في"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"أرسل المرفقات أو أزلها قبل تبديل الأقسام. سيُحتفظ بمسودتك."</string>
     <string name="chat_file_requires_code">"استخدم قسم الكود لهذا الملف. تستطيع المحادثة قراءة الصور والملفات النصية وملفات PDF ذات النص القابل للاستخراج."</string>
     <string name="chat_thinking">"التفكير"</string>

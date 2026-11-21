@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 至 59"</string>
     <string name="ui_preferred">"%1$s · 优先使用 %2$s"</string>
     <string name="ui_blocked">"已受阻"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS 已锁定"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS 已锁定"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"使用生物识别或设备凭据解锁，以访问工作区和聊天。"</string>
-    <string name="ui_unlock_androidharness">"解锁 HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"解锁 HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"请确认指纹、人脸或 PIN"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"请先在设备设置中配置屏幕锁定（PIN 或指纹）"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"此设备不支持生物识别验证"</string>

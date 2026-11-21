@@ -91,9 +91,6 @@
     <string name="ui_connect_a_provider">"공급자 연결"</string>
     <string name="ui_start_with_an_idea_or_create_a">"아이디어로 시작하거나 새 프로젝트를 만들어 보세요."</string>
     <string name="ui_add_an_api_key_for_openai_anthropic">"시작하려면 OpenAI, Anthropic 또는 Gemini용 API 키를 추가하세요."</string>
-    <string name="ui_open_buy_me_a_coffee">"Buy Me a Coffee 열기"</string>
-    <string name="ui_no_browser_available_visit_buymeacoffee_com_sanuj7">"사용 가능한 브라우저가 없습니다. buymeacoffee.com/sanuj7을 방문하여 기부하세요."</string>
-    <string name="ui_donate">"기부"</string>
     <string name="ui_help_us_keep_building">"계속해서 구축할 수 있도록 도와주세요"</string>
     <string name="ui_open_navigation">"탐색 열기"</string>
     <string name="ui_forked_session">"포크된 세션"</string>
@@ -636,7 +633,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku가 비활성화되었습니다."</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku는 더 이상 사용할 수 없습니다. 서버가 중지되었거나 종료되었을 수 있습니다. "</string>
     <string name="ui_in_the_background_or_this_app_s">"또는 이 앱의 접근 권한이 취소되었을 수 있습니다. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Shizuku를 시작하고 HMXHARNESS 액세스를 허용하여 다시 사용할 수 있습니다."</string>
+    <string name="ui_start_shizuku_and_allow_hmxharness_access_to">"Shizuku를 시작하고 HMXHARNESS 액세스를 허용하여 다시 사용할 수 있습니다."</string>
     <string name="ui_never_show_this_message_again">"이 메시지를 다시 표시하지 않음"</string>
     <string name="ui_limits_resets">"한도 및 재설정"</string>
     <string name="ui_view_live_limits_in_chatgpt">"ChatGPT에서 실시간 한도 보기"</string>
@@ -1109,7 +1106,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"앱. Linux 환경의 node/python가 필요합니다."</string>
     <string name="ui_not_installed_optional">"설치되지 않음: 선택 사항입니다."</string>
     <string name="ui_installed_not_running">"설치되었으나 실행되지 않습니다."</string>
-    <string name="ui_running_grant_androidharness_access">"실행 중: HMXHARNESS 액세스 권한을 부여합니다."</string>
+    <string name="ui_running_grant_hmxharness_access">"실행 중: HMXHARNESS 액세스 권한을 부여합니다."</string>
     <string name="ui_connected_shell_privileges_ready">"연결됨: 쉘 권한이 준비되었습니다."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"호환 모드로 연결됨: 쉘 권한이 준비되었습니다."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"액세스 권한이 부여되었습니다. 쉘 러너에 연결 중…"</string>
@@ -1156,10 +1153,10 @@
     <string name="ui_open_source">"오픈 소스"</string>
     <string name="ui_use_it_change_it_ship_it_even">"상용 앱 내에서도 사용하고, 변경하고, 배송하세요. 조건 중 하나는 "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"저작권 표시 및 라이센스 텍스트는 코드와 함께 이동됩니다. 보증은 제공되지 않습니다."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"HMXHARNESS는 오픈 소스 작업을 기반으로 구축되었으며 이전 에이전트의 아이디어를 차용했습니다."</string>
+    <string name="ui_hmxharness_is_built_on_open_source_work">"HMXHARNESS는 오픈 소스 작업을 기반으로 구축되었으며 이전 에이전트의 아이디어를 차용했습니다."</string>
     <string name="ui_built_with">"다음으로 제작됨"</string>
     <string name="ui_inspired_by">"영감을 받은 것"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"모든 프로젝트는 자체 라이센스를 유지합니다. HMXHARNESS는 그들과 제휴하지 않습니다."</string>
+    <string name="ui_every_project_keeps_its_own_license_hmxharness">"모든 프로젝트는 자체 라이센스를 유지합니다. HMXHARNESS는 그들과 제휴하지 않습니다."</string>
     <string name="ui_exported_chats_messages">"%1$s 채팅을 내보냈습니다(%2$s 메시지, %3$s 메모리)."</string>
     <string name="ui_export_failed">"내보내기에 실패했습니다."</string>
     <string name="ui_export_failed_1230">"내보내기 실패: %1$s"</string>
@@ -1248,7 +1245,7 @@
     <string name="ui_status">"상태"</string>
     <string name="ui_retry_resume">"재시도/재개"</string>
     <string name="ui_pause_telegram">"일시중지 Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"HMXHARNESS에 오신 것을 환영합니다"</string>
+    <string name="ui_welcome_to_hmxharness">"HMXHARNESS에 오신 것을 환영합니다"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"코딩을 시작하려면 저장소 액세스 권한을 부여하세요. 알림 및 기타 도구는 선택 사항입니다."</string>
     <string name="ui_device_storage_access_granted">"기기 저장소 액세스 권한이 부여되었습니다."</string>
     <string name="ui_required_allow_access_to_device_files_and">"필수: 장치 파일 및 폴더에 대한 액세스를 허용합니다."</string>
@@ -1586,7 +1583,7 @@
     <string name="ui_access_mode">"액세스 모드: %1$s"</string>
     <string name="ui_scheduled_tasks">"예약된 작업"</string>
     <string name="ui_project_and_chat_sidebar">"프로젝트 및 채팅 사이드바"</string>
-    <string name="ui_androidharness_icon">"HMXHARNESS 아이콘"</string>
+    <string name="ui_hmxharness_icon">"HMXHARNESS 아이콘"</string>
     <string name="ui_collapse_sidebar">"사이드바 접기"</string>
     <string name="ui_search_chats_and_messages">"채팅 및 메시지 검색"</string>
     <string name="ui_search_chats">"채팅 검색"</string>
@@ -1636,8 +1633,6 @@
         <item quantity="other">"%1$d 행"</item>
     </plurals>
     <string name="voice_transcribing">"스크립트 작성 중…"</string>
-    <string name="donate_funding_message">"HMXHARNESS 개발을 계속 진행하기 위한 자금이 부족합니다. 귀하의 지원은 우리가 계속해서 발전하는 데 도움이 됩니다."</string>
-    <string name="donate_dismiss_message">"기부 메시지 닫기"</string>
     <string name="background_settings_title">"배경 및 알림"</string>
     <string name="background_settings_description">"백그라운드 작업 및 알림을 관리합니다."</string>
     <string name="background_run_title">"백그라운드에서 실행"</string>
@@ -1805,8 +1800,4 @@
     <string name="local_thinking_on">"사고 모델 · 요청 추론"</string>
     <string name="local_thinking_direct">"무사고 모델 · 직접 답변"</string>
     <string name="local_thinking_help">"사고 모델은 모델 템플릿에서 추론을 요청합니다. 자동은 채팅의 사고 전환을 따릅니다. 생각하지 않는 것은 직접적인 대답을 요구합니다. 일부 모델은 이 요청을 무시할 수 있습니다. 인식된 사고 표시는 여전히 별도로 표시됩니다."</string>
-    <string name="discord_join_title">"Discord 커뮤니티에 참여하세요"</string>
-    <string name="discord_join_subtitle">"도움을 받고 의견을 나누며 다른 사용자를 만나 보세요"</string>
-    <string name="discord_open_invite">"Discord 초대 열기"</string>
-    <string name="discord_no_browser">"사용할 수 있는 브라우저가 없습니다. 참여하려면 discord.gg/NdC5K3XeWF를 방문하세요."</string>
-</resources>
+    </resources>

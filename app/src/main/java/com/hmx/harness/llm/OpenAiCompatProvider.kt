@@ -457,7 +457,7 @@ class OpenAiCompatProvider(
         }
         if ("openrouter.ai" in host) {
             requestBuilder.header("HTTP-Referer", "https://github.com/HMXPANEL/HMXHARNESS")
-            requestBuilder.header("X-Title", "Android Harness")
+            requestBuilder.header("X-Title", "HMXHARNESS")
         }
         return ProviderHeaders.apply(requestBuilder, config, options.debugAttempt, options.debugKeySlot, options.debugGroup, options.cacheKey).post(body).build()
     }

@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 ถึง 59"</string>
     <string name="ui_preferred">"ต้องการ %1$s · %2$s"</string>
     <string name="ui_blocked">"ถูกบล็อก"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS ถูกล็อค"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS ถูกล็อค"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"ปลดล็อคด้วยข้อมูลประจำตัวไบโอเมตริกซ์หรืออุปกรณ์เพื่อเข้าถึงพื้นที่ทำงานและแชทของคุณ"</string>
-    <string name="ui_unlock_androidharness">"ปลดล็อค HMXHARNESS"</string>
+    <string name="ui_unlock_hmxharness">"ปลดล็อค HMXHARNESS"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"ยืนยันลายนิ้วมือ ใบหน้า หรือ PIN ของคุณ"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"ตั้งค่าการล็อกหน้าจอ (PIN/ลายนิ้วมือ) ในการตั้งค่าอุปกรณ์ก่อน"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"ไม่รองรับการรับรองความถูกต้องด้วยไบโอเมตริกบนอุปกรณ์นี้"</string>

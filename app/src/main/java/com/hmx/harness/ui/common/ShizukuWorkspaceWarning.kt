@@ -48,7 +48,7 @@ internal fun ShizukuDisabledWarning(controller: ShizukuWarningController) {
                 Text(
                     uiContext.getString(R.string.ui_shizuku_is_no_longer_available_its_server) +
                         uiContext.getString(R.string.ui_in_the_background_or_this_app_s) +
-                        uiContext.getString(R.string.ui_start_shizuku_and_allow_androidharness_access_to),
+                        uiContext.getString(R.string.ui_start_shizuku_and_allow_hmxharness_access_to),
                 )
                 Row(
                     verticalAlignment = Alignment.CenterVertically,

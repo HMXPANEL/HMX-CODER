@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0~59"</string>
     <string name="ui_preferred">"%1$s · %2$s 선호"</string>
     <string name="ui_blocked">"차단됨"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS가 잠겨 있습니다."</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS가 잠겨 있습니다."</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"작업 공간과 채팅에 액세스하려면 생체 인식 또는 장치 자격 증명으로 잠금을 해제하세요."</string>
-    <string name="ui_unlock_androidharness">"HMXHARNESS 잠금 해제"</string>
+    <string name="ui_unlock_hmxharness">"HMXHARNESS 잠금 해제"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"지문, 얼굴 또는 PIN를 확인하세요."</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"먼저 기기 설정에서 화면 잠금(PIN/지문)을 설정하세요."</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"이 기기에서는 생체 인증이 지원되지 않습니다."</string>

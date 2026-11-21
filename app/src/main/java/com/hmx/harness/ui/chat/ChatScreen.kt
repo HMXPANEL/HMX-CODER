@@ -2270,7 +2270,7 @@ private fun ChatScreenContent(
                                                     }
                                                 }
                                                 if (message.text.isNotBlank()) {
-                                                    Text("ANDROIDHARNESS", style = MaterialTheme.typography.labelSmall,
+                                                    Text("HMXHARNESS", style = MaterialTheme.typography.labelSmall,
                                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                                         modifier = Modifier.padding(top = 4.dp, bottom = 8.dp))
                                                 }

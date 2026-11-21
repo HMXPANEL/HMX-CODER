@@ -770,7 +770,6 @@
     <string name="chat_prefill_ideas">Help me brainstorm ideas for</string>
     <string name="chat_prefill_draft">Help me write a clear message to</string>
     <string name="chat_prefill_think">Help me think through</string>
-    <string name="chat_support_discord">Discord</string>
     <string name="chat_switch_attachments">Send or remove attachments before switching sections. Your draft will be kept.</string>
     <string name="chat_file_requires_code">Use Code for this file. Chat can read images, text files, and PDFs with extractable text.</string>
     <string name="chat_thinking">Thinking</string>

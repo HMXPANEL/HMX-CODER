@@ -181,12 +181,12 @@ class PluginDownloads(
     /** Any npm package can be checked; plugin, skill and MCP keywords rank first. */
     suspend fun searchNpm(query: String, page: Int = 0): List<PluginListing> {
         require(query.length <= 160)
-        val text = query.trim().ifBlank { "keywords:claude-code-plugin,claude-skill,agent-skills,mcp-server,androidharness-plugin" }
+        val text = query.trim().ifBlank { "keywords:claude-code-plugin,claude-skill,agent-skills,mcp-server,hmxharness-plugin,androidharness-plugin" }
         val url = npmRegistry.toHttpUrl().newBuilder().addPathSegments("-/v1/search")
             .addQueryParameter("text", text).addQueryParameter("size", "40").addQueryParameter("from", (page * 40).toString()).build()
         val data = metadata(url.toString())
         val relevant = setOf("mcp", "mcp-server", "modelcontextprotocol", "claude", "claude-code", "claude-skill", "claude-plugin", "skill", "skills",
-            "agent-skills", "androidharness-plugin", "cursor", "ai-agent")
+            "agent-skills", "hmxharness-plugin", "androidharness-plugin", "cursor", "ai-agent")
         return data["objects"]?.jsonArray.orEmpty().mapNotNull { item ->
             val pkg = item.jsonObject["package"]?.jsonObject ?: return@mapNotNull null
             val name = pkg["name"]?.jsonPrimitive?.content ?: return@mapNotNull null

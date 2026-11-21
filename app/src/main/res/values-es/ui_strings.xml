@@ -91,9 +91,6 @@
     <string name="ui_connect_a_provider">"Conectar un proveedor"</string>
     <string name="ui_start_with_an_idea_or_create_a">"Empieza con una idea o crea un proyecto nuevo."</string>
     <string name="ui_add_an_api_key_for_openai_anthropic">"Añade una clave API de OpenAI, Anthropic o Gemini para empezar."</string>
-    <string name="ui_open_buy_me_a_coffee">"Abrir Buy Me a Coffee"</string>
-    <string name="ui_no_browser_available_visit_buymeacoffee_com_sanuj7">"No hay navegador disponible. Visita buymeacoffee.com/sanuj7 para donar."</string>
-    <string name="ui_donate">"Donar"</string>
     <string name="ui_help_us_keep_building">"Ayúdanos a seguir creando"</string>
     <string name="ui_open_navigation">"Abrir navegación"</string>
     <string name="ui_forked_session">"Sesión derivada"</string>
@@ -636,7 +633,7 @@
     <string name="ui_shizuku_is_disabled">"Shizuku está deshabilitado"</string>
     <string name="ui_shizuku_is_no_longer_available_its_server">"Shizuku ya no está disponible. Su servidor puede haber detenido o sido terminado "</string>
     <string name="ui_in_the_background_or_this_app_s">"en segundo plano, o el acceso de esta aplicación puede haber sido revocado. "</string>
-    <string name="ui_start_shizuku_and_allow_androidharness_access_to">"Inicia Shizuku y permite que HMXHARNESS acceda para usarlo de nuevo."</string>
+    <string name="ui_start_shizuku_and_allow_hmxharness_access_to">"Inicia Shizuku y permite que HMXHARNESS acceda para usarlo de nuevo."</string>
     <string name="ui_never_show_this_message_again">"Nunca mostrar este mensaje de nuevo"</string>
     <string name="ui_limits_resets">"Límites y reinicios"</string>
     <string name="ui_view_live_limits_in_chatgpt">"Ver límites en vivo en ChatGPT"</string>
@@ -1109,7 +1106,7 @@
     <string name="ui_the_app_needs_node_python_from_the">"la app. Necesita node/python del entorno Linux."</string>
     <string name="ui_not_installed_optional">"No instalado: opcional."</string>
     <string name="ui_installed_not_running">"Instalado, no ejecutándose."</string>
-    <string name="ui_running_grant_androidharness_access">"En ejecución: concede acceso a HMXHARNESS."</string>
+    <string name="ui_running_grant_hmxharness_access">"En ejecución: concede acceso a HMXHARNESS."</string>
     <string name="ui_connected_shell_privileges_ready">"Conectado: privilegios de shell listos."</string>
     <string name="ui_connected_in_compatibility_mode_shell_privileges_ready">"Conectado en modo de compatibilidad: privilegios de shell listos."</string>
     <string name="ui_access_granted_connecting_to_the_shell_runner">"Acceso concedido. Conectando al ejecutor de shell…"</string>
@@ -1156,10 +1153,10 @@
     <string name="ui_open_source">"Código abierto"</string>
     <string name="ui_use_it_change_it_ship_it_even">"Úsalo, cámbialo, distribúyelo, incluso dentro de una app comercial. La única condición es que el "</string>
     <string name="ui_copyright_notice_and_the_license_text_travel">"aviso de copyright y el texto de la licencia viajen con el código. No viene con garantía."</string>
-    <string name="ui_androidharness_is_built_on_open_source_work">"HMXHARNESS está construido sobre trabajo de código abierto y toma ideas de los agentes que lo precedieron."</string>
+    <string name="ui_hmxharness_is_built_on_open_source_work">"HMXHARNESS está construido sobre trabajo de código abierto y toma ideas de los agentes que lo precedieron."</string>
     <string name="ui_built_with">"Construido con"</string>
     <string name="ui_inspired_by">"Inspirado en"</string>
-    <string name="ui_every_project_keeps_its_own_license_androidharness">"Cada proyecto mantiene su propia licencia. HMXHARNESS no está afiliado a ellos."</string>
+    <string name="ui_every_project_keeps_its_own_license_hmxharness">"Cada proyecto mantiene su propia licencia. HMXHARNESS no está afiliado a ellos."</string>
     <string name="ui_exported_chats_messages">"Exportados %1$s chats (%2$s mensajes, %3$s recuerdos)."</string>
     <string name="ui_export_failed">"Exportación fallida."</string>
     <string name="ui_export_failed_1230">"Exportación fallida: %1$s"</string>
@@ -1248,7 +1245,7 @@
     <string name="ui_status">"Estado"</string>
     <string name="ui_retry_resume">"Reintentar / reanudar"</string>
     <string name="ui_pause_telegram">"Pausar Telegram"</string>
-    <string name="ui_welcome_to_androidharness">"Bienvenido a HMXHARNESS"</string>
+    <string name="ui_welcome_to_hmxharness">"Bienvenido a HMXHARNESS"</string>
     <string name="ui_grant_storage_access_to_start_coding_notifications">"Concede acceso a almacenamiento para comenzar a programar. Las notificaciones y otras herramientas son opcionales."</string>
     <string name="ui_device_storage_access_granted">"Acceso a almacenamiento del dispositivo concedido"</string>
     <string name="ui_required_allow_access_to_device_files_and">"Requerido: permitir acceso a archivos y carpetas del dispositivo"</string>
@@ -1586,7 +1583,7 @@
     <string name="ui_access_mode">"Modo de acceso: %1$s"</string>
     <string name="ui_scheduled_tasks">"Tareas programadas"</string>
     <string name="ui_project_and_chat_sidebar">"Barra lateral de proyectos y chats"</string>
-    <string name="ui_androidharness_icon">"Icono de HMXHARNESS"</string>
+    <string name="ui_hmxharness_icon">"Icono de HMXHARNESS"</string>
     <string name="ui_collapse_sidebar">"Contraer barra lateral"</string>
     <string name="ui_search_chats_and_messages">"Buscar chats y mensajes"</string>
     <string name="ui_search_chats">"Buscar chats"</string>
@@ -1635,8 +1632,6 @@
         <item quantity="other">"%1$d filas"</item>
     </plurals>
     <string name="voice_transcribing">"Transcribiendo…"</string>
-    <string name="donate_funding_message">"Nos faltan fondos para seguir desarrollando HMXHARNESS. Tu apoyo nos ayuda a continuar."</string>
-    <string name="donate_dismiss_message">"Descartar mensaje de donación"</string>
     <string name="background_settings_title">Segundo plano y notificaciones</string>
     <string name="background_settings_description">Gestiona el trabajo en segundo plano y los avisos.</string>
     <string name="background_run_title">Ejecutar en segundo plano</string>
@@ -1807,8 +1802,4 @@
     <string name="local_thinking_on">Modelo de razonamiento · solicitar razonamiento</string>
     <string name="local_thinking_direct">Modelo sin razonamiento · respuestas directas</string>
     <string name="local_thinking_help">El modelo de razonamiento pide razonamiento a la plantilla del modelo. Auto sigue el interruptor de razonamiento del chat. Sin razonamiento se pide una respuesta directa. Algunos modelos pueden ignorar esta solicitud; las marcas de razonamiento reconocidas se siguen mostrando por separado.</string>
-    <string name="discord_join_title">"Únete a nuestra comunidad de Discord"</string>
-    <string name="discord_join_subtitle">"Obtén ayuda, comparte comentarios y conoce a otros usuarios"</string>
-    <string name="discord_open_invite">"Abrir invitación de Discord"</string>
-    <string name="discord_no_browser">"No hay ningún navegador disponible. Visita discord.gg/NdC5K3XeWF para unirte."</string>
-</resources>
+    </resources>

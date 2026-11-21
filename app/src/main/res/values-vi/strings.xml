@@ -713,7 +713,6 @@
     <string name="chat_prefill_ideas">"Giúp tôi nghĩ ý tưởng cho"</string>
     <string name="chat_prefill_draft">"Giúp tôi viết một tin nhắn rõ ràng cho"</string>
     <string name="chat_prefill_think">"Giúp tôi suy nghĩ kỹ về"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"Gửi hoặc xóa tệp đính kèm trước khi chuyển đổi phần. Bản nháp của bạn sẽ được giữ lại."</string>
     <string name="chat_file_requires_code">"Sử dụng Code cho tệp này. Chat có thể đọc hình ảnh, tệp văn bản và tệp PDF có văn bản có thể trích xuất được."</string>
     <string name="chat_thinking">"Suy nghĩ"</string>

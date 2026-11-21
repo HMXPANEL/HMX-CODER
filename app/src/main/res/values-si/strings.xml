@@ -714,7 +714,6 @@
     <string name="chat_prefill_ideas">"මේ සඳහා අදහස් සොයා ගැනීමට උදව් කරන්න"</string>
     <string name="chat_prefill_draft">"පැහැදිලි පණිවිඩයක් ලිවීමට උදව් කරන්න:"</string>
     <string name="chat_prefill_think">"සිතා බැලීමට උදව් කරන්න:"</string>
-    <string name="chat_support_discord">"Discord"</string>
     <string name="chat_switch_attachments">"කොටස් මාරු කිරීමට පෙර ඇදවුම් යැවීම හෝ ඉවත් කරන්න.ඔබේ ව්‍යාපෘතිය ඉතිරි කරනු ඇත."</string>
     <string name="chat_file_requires_code">"මෙම ගොනු සඳහා කේතය භාවිතා කරන්න. චැට් ඡායාරූප, පෙළ ගොනු, සහ ඉවත් කළ හැකි පෙළ සමඟ PDF ගොනු කියවිය හැකිය."</string>
     <string name="chat_thinking">"සිතමින්"</string>

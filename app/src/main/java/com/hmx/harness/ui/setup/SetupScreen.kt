@@ -129,7 +129,7 @@ fun SetupScreen(
             ) {
                 HarnessMark(size = 44.dp)
                 Spacer(Modifier.size(2.dp))
-                Text(uiContext.getString(R.string.ui_welcome_to_androidharness), style = MaterialTheme.typography.headlineSmall)
+                Text(uiContext.getString(R.string.ui_welcome_to_hmxharness), style = MaterialTheme.typography.headlineSmall)
                 Text(
                     uiContext.getString(R.string.ui_grant_storage_access_to_start_coding_notifications),
                     style = MaterialTheme.typography.bodyMedium,

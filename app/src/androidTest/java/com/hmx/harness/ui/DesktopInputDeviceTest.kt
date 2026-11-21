@@ -99,7 +99,6 @@ class DesktopInputDeviceTest {
         await { find("What do you want to build?") != null }
         assertNotNull(find("Create a Python hello world and run it"))
         assertNotNull(find("Build a simple HTML landing page"))
-        assertNotNull(find("Donate"))
         assertNotNull(find("Native other chat"))
     }
 

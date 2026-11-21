@@ -104,9 +104,9 @@
     <string name="ui_0_to_59">"0 bis 59"</string>
     <string name="ui_preferred">"%1$s · %2$s bevorzugt"</string>
     <string name="ui_blocked">"Blockiert"</string>
-    <string name="ui_androidharness_is_locked">"HMXHARNESS ist gesperrt"</string>
+    <string name="ui_hmxharness_is_locked">"HMXHARNESS ist gesperrt"</string>
     <string name="ui_unlock_with_biometric_or_device_credentials_to">"Entsperre mit Biometrie oder Geräteanmeldedaten, um auf deine Arbeitsbereiche und Chats zuzugreifen."</string>
-    <string name="ui_unlock_androidharness">"HMXHARNESS entsperren"</string>
+    <string name="ui_unlock_hmxharness">"HMXHARNESS entsperren"</string>
     <string name="ui_confirm_your_fingerprint_face_or_pin">"Bestätige deinen Fingerabdruck, dein Gesicht oder deine PIN"</string>
     <string name="ui_set_up_screen_lock_pin_fingerprint_in">"Richte zuerst die Bildschirmsperre (PIN/Fingerabdruck) in den Geräteeinstellungen ein"</string>
     <string name="ui_biometric_authentication_not_supported_on_this_device">"Biometrische Authentifizierung wird auf diesem Gerät nicht unterstützt"</string>
