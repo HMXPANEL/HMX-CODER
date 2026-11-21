@@ -102,8 +102,12 @@ GitHub Release: https://github.com/HMXPANEL/HMXHARNESS/releases/tag/v4.0-hmx
 
 | APK | Direct download | Size | Package | Signature |
 |---|---|---|---|---|
-| Release (primary) | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-release.apk | 38,422,863 bytes | `com.hmx.harness` | v2 scheme valid; CN=Android Debug, SHA-256 `39125abd…e8ad2592e380e8` |
-| Debug | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-debug.apk | 76,093,782 bytes | `com.hmx.harness.debug` | v2 scheme valid, same debug key |
+| Release (primary) | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-release.apk | 38,386,431 bytes | `com.hmx.harness` | v2 scheme valid; CN=Android Debug, SHA-256 `f7521b5e…4743` |
+| Debug | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-debug.apk | 76,020,215 bytes | `com.hmx.harness.debug` | v2 scheme valid, same debug key |
+
+The APKs above were refreshed after the Donate/Discord removal and final
+rebrand (commit `15216622`, green CI run `44925864589`). See
+`docs/HMXHARNESS_UI_AND_REBRANDING_REPORT.md` for the component-level detail.
 
 Verification performed with `aapt2 dump badging`, `unzip -t`, and `apksigner verify
 --verbose --print-certs` on the downloaded artifacts:
