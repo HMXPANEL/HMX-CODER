@@ -64,15 +64,11 @@ jobs:
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
             ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest --no-daemon --stacktrace
-
-      - name: Pull screenshots from emulator
-        if: always()
-        run: |
-          export PATH="${ANDROID_HOME:-/usr/local/lib/android/sdk}/platform-tools:$PATH"
-          mkdir -p screenshots
-          adb devices
-          adb pull /sdcard/Android/data/com.hmx.harness.debug/files/liquidglass-screenshots screenshots/ || echo "No screenshots were produced"
-          find screenshots -type f -name '*.png' -exec ls -lh {} \;
+            # Pull BEFORE the action tears down the emulator.
+            mkdir -p screenshots
+            adb shell ls -la /sdcard/Android/data/com.hmx.harness.debug/files/liquidglass-screenshots || true
+            adb pull /sdcard/Android/data/com.hmx.harness.debug/files/liquidglass-screenshots screenshots/ || echo "No screenshots were produced"
+            find screenshots -type f -name '*.png' -exec ls -lh {} \;
 
       - name: Upload screenshots
         if: always()
