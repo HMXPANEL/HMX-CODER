@@ -9,7 +9,10 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        maven("https://jitpack.io") { content { includeGroup("com.github.topjohnwu.libsu") } }
+        maven("https://jitpack.io") { content {
+            includeGroup("com.github.topjohnwu.libsu")
+            includeGroup("com.github.styropyr0") // PrismalAGSL liquid glass
+        } }
     }
 }
 rootProject.name = "HMXHARNESS"
