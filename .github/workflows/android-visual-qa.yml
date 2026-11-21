@@ -63,7 +63,7 @@ jobs:
             export PATH="$ANDROID_HOME/platform-tools:$PATH"
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
-            ./gradlew :app:connectedDebugAndroidTest --tests 'com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest' --no-daemon --stacktrace
+            ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest --no-daemon --stacktrace
 
       - name: Pull screenshots from emulator
         if: always()
