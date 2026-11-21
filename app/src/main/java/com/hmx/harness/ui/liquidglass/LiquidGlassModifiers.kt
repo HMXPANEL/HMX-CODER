@@ -1,9 +1,19 @@
 package com.hmx.harness.ui.liquidglass
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.platform.LocalDensity
+import com.styropyr0.prismal.PrismalGlass
+import com.styropyr0.prismal.depth.PrismalDepthShadow
+import com.styropyr0.prismal.drawPrismalGlass
+import com.styropyr0.prismal.effects.applyPrismalGlassEffects
+import com.styropyr0.prismal.shapes.PrismalCapsule
+import com.styropyr0.prismal.shapes.PrismalRoundedRectangle
+import com.styropyr0.prismal.sources.PrismalGlassLayer
+import com.styropyr0.prismal.specular.PrismalSpecular
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
@@ -23,6 +33,9 @@ import androidx.compose.ui.unit.dp
 /** Injected by the app root; defaults to FULL. Set LITE for low-RAM devices. */
 val LocalLiquidGlassQuality = staticCompositionLocalOf { LiquidGlassQuality.FULL }
 
+/** The app's sampled backdrop, provided once at the theme root (PrismalAGSL). */
+val LocalHmxGlassBackdrop = staticCompositionLocalOf<PrismalGlassLayer?> { null }
+
 /**
  * Lightweight, always-on glass material.
  *
@@ -38,11 +51,74 @@ fun Modifier.liquidGlass(
     shape: Shape,
     accent: Color = Color.Unspecified,
     elevation: Dp? = null,
+    cornerRadius: Dp = 20.dp,
 ): Modifier = composed {
+    val backdrop = LocalHmxGlassBackdrop.current
+    val density = LocalDensity.current
     val depth = depthOf(level)
     val tint = accent.takeOrElse { LiquidGlassPalette.GlassWhite }
     val lift = elevation ?: depth.elevation.dp
     val quality = LocalLiquidGlassQuality.current
+
+    // REAL LIQUID GLASS — PrismalAGSL samples the recorded backdrop, applies a
+    // backdrop blur, an edge lens (optical refraction + chromatic dispersion)
+    // and specular/depth layers. It degrades automatically on older APIs.
+    if (backdrop != null && PrismalGlass.isSupported()) {
+        val glassShape: () -> androidx.compose.ui.graphics.Shape =
+            if (shape == CircleShape) ({ PrismalCapsule() })
+            else ({ PrismalRoundedRectangle(cornerRadius) })
+        val blurPx = when (level) {
+            LiquidGlassLevel.LIGHT -> 6.dp
+            LiquidGlassLevel.STANDARD -> 12.dp
+            LiquidGlassLevel.DEEP -> 16.dp
+            LiquidGlassLevel.FOCUS -> 10.dp
+        }
+        val lensHeight = when (level) {
+            LiquidGlassLevel.LIGHT -> 8.dp
+            LiquidGlassLevel.STANDARD -> 14.dp
+            LiquidGlassLevel.DEEP -> 18.dp
+            LiquidGlassLevel.FOCUS -> 20.dp
+        }
+        val lensAmount = when (level) {
+            LiquidGlassLevel.LIGHT -> 14.dp
+            LiquidGlassLevel.STANDARD -> 26.dp
+            LiquidGlassLevel.DEEP -> 32.dp
+            LiquidGlassLevel.FOCUS -> 38.dp
+        }
+        val dispersion = if (level == LiquidGlassLevel.FOCUS) 0.32f else 0.18f
+        val surfaceAlpha = when (level) {
+            LiquidGlassLevel.LIGHT -> .05f
+            LiquidGlassLevel.STANDARD -> .08f
+            LiquidGlassLevel.DEEP -> .14f
+            LiquidGlassLevel.FOCUS -> .18f
+        }
+        return@composed this.drawPrismalGlass(
+            backdrop = backdrop,
+            shape = glassShape,
+            effects = {
+                applyPrismalGlassEffects(
+                    density = density,
+                    adaptiveLuminance = false,
+                    luminance = .5f,
+                    blurRadiusPx = with(density) { blurPx.toPx() },
+                    refractionHeightPx = with(density) { lensHeight.toPx() },
+                    refractionAmountPx = with(density) { lensAmount.toPx() },
+                    chromaticAberration = dispersion,
+                    brightness = .06f,
+                    saturation = 1.35f,
+                )
+            },
+            specular = { PrismalSpecular.Default },
+            depthShadow = { PrismalDepthShadow.Default },
+            onDrawSurface = {
+                val overlay = if (accent == Color.Unspecified) tint else accent
+                drawRect(overlay.copy(alpha = surfaceAlpha))
+            },
+        )
+    }
+
+    // FALLBACK — lightweight layered gradient material for devices or contexts
+    // without an available backdrop (no offscreen texture, no shader).
     this
         .shadow(lift, shape, clip = false,
             ambientColor = LiquidGlassPalette.Shadow.copy(alpha = .45f),

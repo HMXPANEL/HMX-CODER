@@ -257,6 +257,10 @@ dependencies {
     implementation(libs.shizuku.provider)
     // In-app code editor (gutter, undo/redo, search engine) for the file manager.
     implementation(libs.sora.editor)
+    // Real Liquid Glass rendering: backdrop sampling, blur, AGSL refraction and
+    // specular highlights. MIT licensed; compatible with our Kotlin/Compose
+    // versions and minSdk 26 (library minSdk 25, automatic tier degradation).
+    implementation(libs.prismal.glass)
 
     testImplementation(libs.junit)
 

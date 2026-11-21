@@ -37,11 +37,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-/** Cinematic, static background. No continuous animation: cheap on low-end GPUs. */
+/**
+ * Cinematic, static background layer. No continuous animation: cheap on low-end
+ * GPUs. This is background-only so Prismal can record it as the glass backdrop;
+ * app content is drawn as a sibling above it.
+ */
 @Composable
 fun LiquidGlassAmbientBackground(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
 ) {
     Box(modifier.fillMaxSize().drawBehind {
         val w = size.width
@@ -57,7 +60,7 @@ fun LiquidGlassAmbientBackground(
         drawRect(Brush.radialGradient(
             listOf(LiquidGlassPalette.SoftPurple.copy(alpha = .12f), Color.Transparent),
             center = Offset(w * .55f, h * 1.02f), radius = maxOf(w, h) * .6f))
-    }) { content() }
+    })
 }
 
 /** Base glass container. Presentation only — no state, no callbacks. */

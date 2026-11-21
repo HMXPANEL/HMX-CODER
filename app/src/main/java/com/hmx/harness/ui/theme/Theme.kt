@@ -17,7 +17,12 @@ import com.hmx.harness.data.ProgressBarStyle
 import com.hmx.harness.data.ThemePalette
 import com.hmx.harness.ui.liquidglass.LiquidGlassAmbientBackground
 import com.hmx.harness.ui.liquidglass.LocalLiquidGlassQuality
+import com.hmx.harness.ui.liquidglass.LocalHmxGlassBackdrop
 import com.hmx.harness.ui.liquidglass.LiquidGlassQuality
+import com.styropyr0.prismal.sources.rememberPrismalGlassLayer
+import com.styropyr0.prismal.sources.prismalGlassLayer
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.matchParentSize
 
 val LocalProgressBarStyle = staticCompositionLocalOf { ProgressBarStyle.FLAT }
 
@@ -78,11 +83,15 @@ fun HarnessTheme(
         if (Runtime.getRuntime().maxMemory() < 320L * 1024 * 1024) LiquidGlassQuality.LITE
         else LiquidGlassQuality.FULL
     }
+    // PrismalAGSL records ONLY this background layer. Glass surfaces sample it;
+    // app content is a sibling above, so glass never samples itself.
+    val glassBackdrop = rememberPrismalGlassLayer()
     CompositionLocalProvider(
         LocalStatusColors provides (if (dark) StatusDark else StatusLight),
         LocalProgressBarStyle provides progressBarStyle,
         LocalMotionBlur provides MotionBlurStyle(motionBlurEnabled, motionBlurIntensity),
         LocalLiquidGlassQuality provides glassQuality,
+        LocalHmxGlassBackdrop provides glassBackdrop,
     ) {
         MaterialTheme(
             colorScheme = if (glass.mode == HarnessGlassMode.OFF) colorScheme else colorScheme.copy(
@@ -92,7 +101,13 @@ fun HarnessTheme(
             typography = HarnessTypography,
             shapes = HarnessShapes,
             motionScheme = MotionScheme.standard(),
-            content = { LiquidGlassAmbientBackground { HarnessGlassRoot(glass, content) } },
+            content = {
+                Box(androidx.compose.ui.Modifier.fillMaxSize()) {
+                    LiquidGlassAmbientBackground(
+                        androidx.compose.ui.Modifier.matchParentSize().prismalGlassLayer(glassBackdrop))
+                    HarnessGlassRoot(glass, content)
+                }
+            },
         )
     }
 }
