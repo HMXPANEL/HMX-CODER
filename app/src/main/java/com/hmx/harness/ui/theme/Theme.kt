@@ -12,6 +12,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.Modifier
 import com.hmx.harness.data.ThemeMode
 import com.hmx.harness.data.ProgressBarStyle
 import com.hmx.harness.data.ThemePalette
