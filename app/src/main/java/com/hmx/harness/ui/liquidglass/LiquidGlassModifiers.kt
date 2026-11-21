@@ -11,7 +11,9 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.takeOrElse
@@ -76,7 +78,7 @@ fun Modifier.liquidGlass(
 
             // 5. Inner hairline: a second, tighter reflection.
             if (quality == LiquidGlassQuality.FULL) {
-                drawRoundShape(shape, LiquidGlassPalette.Specular.copy(alpha = depth.highlightAlpha * .35f),
+                drawRoundShape(shape, SolidColor(LiquidGlassPalette.Specular.copy(alpha = depth.highlightAlpha * .35f)),
                     stroke = Stroke(width = .6f), inset = 1.5f)
             }
         }

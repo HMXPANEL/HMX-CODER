@@ -1,6 +1,8 @@
 package com.hmx.harness.ui.chat.components
 
 import com.hmx.harness.ui.theme.*
+import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
+import com.hmx.harness.ui.liquidglass.liquidGlass
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.safeDrawing
@@ -160,7 +162,9 @@ internal fun MainHeader(
     Column(
         Modifier
             .then(if (glass) Modifier.windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Top + WindowInsetsSides.Horizontal)).padding(horizontal = 12.dp, vertical = 8.dp)
-                else Modifier.harnessGlassBar(scheme.surface).statusBarsPadding()),
+                else Modifier.statusBarsPadding().padding(horizontal = 12.dp, vertical = 8.dp))
+            .liquidGlass(LiquidGlassLevel.DEEP, RoundedCornerShape(26.dp))
+            .clip(RoundedCornerShape(26.dp)),
     ) {
         Column(Modifier.fillMaxWidth()) {
             Column {

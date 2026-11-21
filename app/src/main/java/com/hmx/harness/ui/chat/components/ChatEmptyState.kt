@@ -82,6 +82,8 @@ import com.hmx.harness.ui.theme.expressiveEffectsSpec
 import com.hmx.harness.ui.theme.expressiveSpatialSpec
 import com.hmx.harness.ui.theme.fastEffectsSpec
 import com.hmx.harness.ui.theme.harnessGlass
+import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
+import com.hmx.harness.ui.liquidglass.liquidGlass
 import kotlinx.coroutines.delay
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.FastOutSlowInEasing
@@ -350,6 +352,8 @@ private fun StarterCard(starter: ChatStarter, accent: StarterAccent, modifier: M
             .graphicsLayer { scaleX = scale; scaleY = scale }
             .clip(shape)
             .harnessGlass(scheme.surfaceContainerHigh, shape)
+            .liquidGlass(LiquidGlassLevel.STANDARD, shape,
+                accent = com.hmx.harness.ui.liquidglass.LiquidGlassPalette.GlassLavender)
             .clickable(interactionSource = interaction, indication = ripple(), role = Role.Button) {
                 haptic.performHapticFeedback(HapticFeedbackType.ContextClick)
                 onClick()

@@ -33,6 +33,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
+import com.hmx.harness.ui.liquidglass.liquidGlass
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.Terminal
@@ -622,7 +624,9 @@ fun AppNav(container: AppContainer) {
             if (!desktopNavigation) ModalDrawerSheet(
                 drawerState = drawerState,
                 modifier = if (glass) Modifier.onSizeChanged { glassDrawerWidth = it.width }
-                    .padding(horizontal = 10.dp).statusBarsPadding().navigationBarsPadding().padding(vertical = 8.dp) else Modifier,
+                    .padding(horizontal = 10.dp).statusBarsPadding().navigationBarsPadding().padding(vertical = 8.dp)
+                    .liquidGlass(LiquidGlassLevel.DEEP, RoundedCornerShape(32.dp))
+                    else Modifier.liquidGlass(LiquidGlassLevel.DEEP, RoundedCornerShape(32.dp)),
                 drawerShape = if (glass) androidx.compose.foundation.shape.RoundedCornerShape(32.dp) else androidx.compose.material3.DrawerDefaults.shape,
                 drawerContainerColor = if (glass) androidx.compose.ui.graphics.Color.Transparent else MaterialTheme.colorScheme.surface,
                 windowInsets = if (glass) androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0) else androidx.compose.material3.DrawerDefaults.windowInsets,

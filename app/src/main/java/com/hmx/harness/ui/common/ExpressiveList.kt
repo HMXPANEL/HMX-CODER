@@ -52,6 +52,8 @@ import com.hmx.harness.ui.settings.SettingsOuterCorner
 import com.hmx.harness.ui.settings.settingsHeroShape
 import com.hmx.harness.ui.settings.settingsPanelBorder
 import com.hmx.harness.ui.theme.HarnessGlassSurface
+import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
+import com.hmx.harness.ui.liquidglass.liquidGlass
 import com.hmx.harness.ui.theme.expressiveDefaultSpatialSpec
 import com.hmx.harness.ui.theme.expressiveEffectsSpec
 import com.hmx.harness.ui.theme.expressiveSpatialSpec
@@ -102,7 +104,9 @@ internal fun ExpressiveListRow(
     val shape = RoundedCornerShape(topStart = t, topEnd = t, bottomStart = b, bottomEnd = b)
     val fill by animateColorAsState(if (selected) scheme.secondaryContainer else color, expressiveEffectsSpec(), label = "rowFill")
     val onFill by animateColorAsState(if (selected) scheme.onSecondaryContainer else scheme.onSurface, expressiveEffectsSpec(), label = "rowContent")
-    HarnessGlassSurface(modifier = modifier.fillMaxWidth(), shape = shape, color = fill, contentColor = onFill, border = settingsPanelBorder()) {
+    HarnessGlassSurface(modifier = modifier.fillMaxWidth().liquidGlass(
+        if (selected) LiquidGlassLevel.FOCUS else LiquidGlassLevel.LIGHT, shape, elevation = 0.dp),
+        shape = shape, color = fill, contentColor = onFill, border = settingsPanelBorder()) {
         Row(
             Modifier.fillMaxWidth().clip(shape)
                 .then(if (onClick != null || onLongClick != null) Modifier.combinedClickable(
