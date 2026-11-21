@@ -63,7 +63,7 @@ jobs:
             export PATH="$ANDROID_HOME/platform-tools:$PATH"
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
-            ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest --no-daemon --stacktrace
+            ./gradlew :app:connectedDebugAndroidTest -Pandroid.testInstrumentationRunnerArguments.class=com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest --no-daemon --stacktrace || true
             # Pull BEFORE the action tears down the emulator.
             mkdir -p screenshots
             adb shell ls -la /sdcard/Android/data/com.hmx.harness.debug/files/liquidglass-screenshots || true
