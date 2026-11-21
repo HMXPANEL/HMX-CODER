@@ -1,0 +1,85 @@
+name: HMXHARNESS Visual QA (cloud emulator screenshots)
+
+# Captures real rendered screens with UiAutomation on a cloud Android emulator.
+# All compilation happens here; no device or local Android Studio is required.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/hmxharness-liquid-glass-ui
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hmxharness-visual-qa-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: android-actions/setup-android@v3
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build debug APK and instrumentation APK
+        run: ./gradlew :app:assembleDebug :app:assembleDebugAndroidTest --no-daemon --stacktrace
+
+      - name: Run screenshot capture on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          disable-animations: false
+          emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -camera-back none -camera-front none
+          script: |
+            adb wait-for-device
+            adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
+            ./gradlew :app:connectedDebugAndroidTest --tests 'com.hmx.harness.ui.liquidglass.LiquidGlassScreenshotTest' --no-daemon --stacktrace
+
+      - name: Pull screenshots from emulator
+        if: always()
+        run: |
+          mkdir -p screenshots
+          adb pull /sdcard/Android/data/com.hmx.harness.debug/files/liquidglass-screenshots screenshots/ || echo "No screenshots were produced"
+          find screenshots -type f -name '*.png' -exec ls -lh {} \;
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmxharness-liquidglass-screenshots
+          path: screenshots/**
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Upload debug APK
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmxharness-liquidglass-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Publish summary
+        if: always()
+        run: |
+          {
+            echo "## HMXHARNESS Liquid Glass visual QA"
+            echo ""
+            echo "- Commit: \`${GITHUB_SHA}\`"
+            echo "- Screenshots: artifact \`hmxharness-liquidglass-screenshots\`"
+            echo "- APK: artifact \`hmxharness-liquidglass-apk\`"
+          } >> "$GITHUB_STEP_SUMMARY"
