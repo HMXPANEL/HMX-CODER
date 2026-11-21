@@ -888,7 +888,17 @@ class ChatExperienceDeviceTest {
                         val state by vm.state.collectAsState()
                         androidx.compose.material3.Surface(Modifier.fillMaxSize()) {
                             Column(Modifier.fillMaxSize().statusBarsPadding().padding(16.dp)) {
-                                com.hmx.harness.ui.chat.components.ChatAttachmentReadiness(state, vm::removeAttachment, vm::removeFileAttachment, vm::removeAttachmentImport)
+                                com.hmx.harness.ui.chat.components.ComposerAttachmentTray(
+                                    images = state.attachments,
+                                    files = state.fileAttachments,
+                                    imports = state.attachmentImports,
+                                    imageDir = vm.container.images.imagesDir,
+                                    imageSupport = true,
+                                    onRemoveImage = vm::removeAttachment,
+                                    onRemoveFile = vm::removeFileAttachment,
+                                    onRemoveImport = vm::removeAttachmentImport,
+                                    onOpenImage = { _, _ -> },
+                                )
                             }
                         }
                     } }
