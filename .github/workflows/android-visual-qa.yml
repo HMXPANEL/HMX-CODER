@@ -69,6 +69,7 @@ jobs:
             export PATH="$ANDROID_HOME/platform-tools:$PATH"
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
             mkdir -p screenshots
             # Launch the REAL installed app, no test harness / mockups.
             adb shell am start -n com.hmx.harness.debug/com.hmx.harness.MainActivity || true
