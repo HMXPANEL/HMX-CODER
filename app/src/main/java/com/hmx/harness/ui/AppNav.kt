@@ -171,7 +171,9 @@ fun AppNav(container: AppContainer, initialDrawerOpen: Boolean = false) {
             // phone sheet comes back after a rotation. Wait for the sheet to measure, then shut it.
             androidx.compose.runtime.withFrameNanos { }
             androidx.compose.runtime.withFrameNanos { }
-            drawerState.snapTo(DrawerValue.Closed)
+            // Debug visual QA opens the drawer through the shipped state; real
+            // callers keep the original closed-on-first-frame behaviour.
+            if (initialDrawerOpen) drawerState.open() else drawerState.snapTo(DrawerValue.Closed)
         }
     }
 
