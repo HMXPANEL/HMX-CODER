@@ -49,6 +49,34 @@ jobs:
           sudo udevadm trigger --name-match=kvm
           ls -l /dev/kvm || echo "KVM device still unavailable"
 
+      # The first cold SwiftShader boot compiles the glass shaders and is
+      # unstable; this disposable emulator warms the AVD shader cache before
+      # either theme is captured.
+      - name: Warm up emulator shader cache
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          ANDROID_I_WANT_MY_TCG: 'yes'
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          cores: 2
+          ram-size: 4096M
+          apk-path: app/build/outputs/apk/debug/app-debug.apk
+          disable-animations: false
+          emulator-boot-timeout: 1800
+          emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -camera-back none -camera-front none
+          script: |
+            export PATH="$ANDROID_HOME/platform-tools:$PATH"
+            timeout 60 adb wait-for-device || true
+            timeout 900 adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done' || true
+            timeout 180 adb install -r app/build/outputs/apk/debug/app-debug.apk || true
+            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen home >/dev/null || true
+            sleep 8
+            timeout 30 adb emu screenrecord screenshot /tmp/hmx-warmup.png || true
+            timeout 20 adb shell am force-stop com.hmx.harness.debug || true
+
       # Two fresh emulator instances: SwiftShader gradually leaks GPU memory
       # across repeated Compose launches, so each theme gets its own emulator.
       - name: Capture dark theme screenshots
@@ -71,7 +99,7 @@ jobs:
             timeout 60 adb wait-for-device || true
             timeout 900 adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done' || true
             timeout 180 adb install -r app/build/outputs/apk/debug/app-debug.apk || true
-            timeout 30 adb shell cmd uimode night yes || true
+            timeout 30 adb shell cmd uimode night no || true
             timeout 30 adb shell settings put global window_animation_scale 0 || true
             timeout 30 adb shell settings put global transition_animation_scale 0 || true
             timeout 30 adb shell settings put global animator_duration_scale 0 || true
@@ -83,7 +111,7 @@ jobs:
             # `adb emu screenrecord screenshot` grabs the host-side framebuffer;
             # guest `screencap` killed SwiftShader with "bad color buffer handle".
 
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.MainActivity >/dev/null || true
+            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen onboarding --es theme dark >/dev/null || true
             sleep 12
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/06-onboarding-dark.png" || true
             sleep 2
