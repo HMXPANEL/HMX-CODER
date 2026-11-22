@@ -83,6 +83,8 @@ jobs:
             adb shell input keyevent 4 || true
             sleep 2
             adb exec-out screencap -p > screenshots/03-home-settled.png
+            echo "=== LOGCAT ERRORS ==="
+            adb logcat -d -v threadtime | grep -iE 'FATAL|AndroidRuntime|Exception|prismal|hmx.harness' | tail -80 || true
             find screenshots -type f -name '*.png' -exec ls -lh {} \;
 
       - name: Upload screenshots
