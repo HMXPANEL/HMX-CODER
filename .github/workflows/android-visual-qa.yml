@@ -10,7 +10,7 @@ on:
         required: true
         default: all
         type: choice
-        options: [all, dark, light]
+        options: [all, dark, light, drawer]
       source_run_id:
         description: 'Optional run id to reuse its APK artifact (skips the build)'
         required: false
@@ -107,7 +107,7 @@ jobs:
       # Two fresh emulator instances: SwiftShader gradually leaks GPU memory
       # across repeated Compose launches, so each theme gets its own emulator.
       - name: Capture dark theme screenshots
-        if: github.event_name != 'workflow_dispatch' || github.event.inputs.scope != 'light'
+        if: github.event_name != 'workflow_dispatch' || (github.event.inputs.scope != 'light' && github.event.inputs.scope != 'drawer')
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_I_WANT_MY_TCG: 'yes'
@@ -186,7 +186,7 @@ jobs:
             find screenshots -type f -name '*.png' -exec ls -lh {} \; || true
 
       - name: Capture light theme screenshots
-        if: github.event_name != 'workflow_dispatch' || github.event.inputs.scope != 'dark'
+        if: github.event_name != 'workflow_dispatch' || (github.event.inputs.scope != 'dark' && github.event.inputs.scope != 'drawer')
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_I_WANT_MY_TCG: 'yes'
@@ -262,6 +262,43 @@ jobs:
 
 
             timeout 30 adb logcat -d -v threadtime -t 1200 > logs/capture-light.txt || true
+            find screenshots -type f -name '*.png' -exec ls -lh {} \; || true
+
+      - name: Capture navigation drawer only (light)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.scope == 'drawer'
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          ANDROID_I_WANT_MY_TCG: 'yes'
+        with:
+          api-level: 33
+          target: google_apis
+          arch: x86_64
+          profile: pixel_5
+          cores: 2
+          ram-size: 4096M
+          apk-path: app/build/outputs/apk/debug/app-debug.apk
+          disable-animations: false
+          emulator-boot-timeout: 1800
+          emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -camera-back none -camera-front none
+          script: |
+            export PATH="$ANDROID_HOME/platform-tools:$PATH"
+            timeout 60 adb wait-for-device || true
+            timeout 900 adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done' || true
+            timeout 180 adb install -r app/build/outputs/apk/debug/app-debug.apk || true
+            timeout 30 adb shell cmd uimode night no || true
+            timeout 30 adb shell settings put global window_animation_scale 0 || true
+            timeout 30 adb shell settings put global transition_animation_scale 0 || true
+            timeout 30 adb shell settings put global animator_duration_scale 0 || true
+            timeout 30 adb shell appops set com.hmx.harness.debug MANAGE_EXTERNAL_STORAGE allow || true
+            timeout 30 adb shell pm grant com.hmx.harness.debug android.permission.POST_NOTIFICATIONS || true
+            mkdir -p screenshots logs
+            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen appnav --es theme light --es drawer open >/dev/null || true
+            sleep 14
+            timeout 20 adb shell uiautomator dump /sdcard/hmx-ui.xml >/dev/null || true
+            timeout 10 adb shell grep -q 'Wait' /sdcard/hmx-ui.xml && timeout 10 adb shell input tap 330 1330 || true
+            timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/02-navigation-drawer-light.png" || true
+            sleep 2
+            timeout 30 adb logcat -d -v threadtime -t 1200 > logs/capture-drawer.txt || true
             find screenshots -type f -name '*.png' -exec ls -lh {} \; || true
 
       - name: Verify screenshots exist
