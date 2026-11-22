@@ -1,10 +1,15 @@
 package com.hmx.harness.ui.showcase
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.core.content.ContextCompat
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import java.io.File
@@ -22,6 +27,7 @@ import com.hmx.harness.HarnessApp
 import com.hmx.harness.core.ChatMessage
 import com.hmx.harness.core.Role
 import com.hmx.harness.data.AppSettings
+import com.hmx.harness.data.ThemeMode
 import com.hmx.harness.ui.AppNav
 import com.hmx.harness.ui.chat.ChatScreen
 import com.hmx.harness.ui.chat.ChatViewModel
@@ -40,19 +46,42 @@ import java.util.UUID
  * It is never part of a release build.
  */
 class GlassShowcaseActivity : ComponentActivity() {
+    // A single process stays alive while the cloud script broadcasts screen
+    // changes. Relaunching the activity for every screenshot churns GPU layers
+    // and kills the software emulator after a few captures.
+    private val screenState = mutableStateOf(SCREEN_HOME)
+    private val themeState = mutableStateOf<ThemeMode?>(null)
+    private val drawerState = mutableStateOf(false)
+    private var receiverRegistered = false
+
+    private val screenReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            intent.getStringExtra(EXTRA_SCREEN)?.let { screenState.value = it }
+            intent.getStringExtra(EXTRA_THEME)?.let { value ->
+                themeState.value = runCatching { ThemeMode.valueOf(value.uppercase()) }.getOrNull()
+            }
+            drawerState.value = intent.getStringExtra(EXTRA_DRAWER) == "open"
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val container = (application as HarnessApp).container
-        val screen = intent.getStringExtra(EXTRA_SCREEN) ?: SCREEN_HOME
-        val capture = intent.getStringExtra(EXTRA_CAPTURE)
-        val forcedTheme = intent.getStringExtra(EXTRA_THEME)?.let {
-            runCatching { com.hmx.harness.data.ThemeMode.valueOf(it.uppercase()) }.getOrNull()
+        screenState.value = intent.getStringExtra(EXTRA_SCREEN) ?: SCREEN_HOME
+        themeState.value = intent.getStringExtra(EXTRA_THEME)?.let {
+            runCatching { ThemeMode.valueOf(it.uppercase()) }.getOrNull()
         }
+        drawerState.value = intent.getStringExtra(EXTRA_DRAWER) == "open"
+        ContextCompat.registerReceiver(this, screenReceiver, IntentFilter(ACTION_SET_SCREEN),
+            ContextCompat.RECEIVER_EXPORTED)
+        receiverRegistered = true
+        val capture = intent.getStringExtra(EXTRA_CAPTURE)
         setContent {
             val settings by container.settings.settings.collectAsStateWithLifecycle(initialValue = AppSettings())
-            val themeMode = forcedTheme ?: settings.themeMode
+            val screen = screenState.value
+            val themeMode = themeState.value ?: settings.themeMode
             val dark = when (themeMode) {
                 com.hmx.harness.data.ThemeMode.LIGHT -> false
                 com.hmx.harness.data.ThemeMode.DARK,
@@ -81,7 +110,7 @@ class GlassShowcaseActivity : ComponentActivity() {
                         SCREEN_SETTINGS -> SettingsScreen(container, onBack = {})
                         SCREEN_PROVIDERS -> ProvidersScreen(container, onBack = {})
                         SCREEN_CHAT -> ChatShowcase(container, seeded = true)
-                        SCREEN_NAV -> AppNavShowcase(container, openDrawer = intent.getStringExtra(EXTRA_DRAWER) == "open")
+                        SCREEN_NAV -> AppNavShowcase(container, openDrawer = drawerState.value)
                         else -> ChatShowcase(container, seeded = false)
                     }
                 }
@@ -106,7 +135,14 @@ class GlassShowcaseActivity : ComponentActivity() {
         }
     }
 
+    override fun onDestroy() {
+        if (receiverRegistered) unregisterReceiver(screenReceiver)
+        receiverRegistered = false
+        super.onDestroy()
+    }
+
     companion object {
+        const val ACTION_SET_SCREEN = "com.hmx.harness.SET_GLASS_SCREEN"
         const val EXTRA_SCREEN = "screen"
         const val EXTRA_CAPTURE = "capture"
         const val EXTRA_THEME = "theme"

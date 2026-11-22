@@ -133,41 +133,36 @@ jobs:
             timeout 30 adb shell pm grant com.hmx.harness.debug android.permission.POST_NOTIFICATIONS || true
             mkdir -p screenshots logs
 
-            # Each line runs in its own /bin/sh -c. Host-side framebuffer grabs
-            # avoid the guest `screencap` SwiftShader crash. The theme is forced
-            # through the debug host so both palettes use the shipped composables.
+            # One debug process stays alive; broadcasts switch the shipped screen
+            # composables without relaunching (which churns GPU layers and kills
+            # SwiftShader). Host-side grabs avoid the guest screencap crash.
 
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen onboarding --es theme dark >/dev/null || true
             sleep 12
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/06-onboarding-dark.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen chat --es theme dark >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen chat --es theme dark >/dev/null || true
             sleep 14
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/05-ai-chat-dark.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen home --es theme dark >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen home --es theme dark >/dev/null || true
             sleep 10
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/01-home-dark.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen appnav --es theme dark --es drawer open >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen appnav --es theme dark --es drawer open >/dev/null || true
             sleep 12
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/02-navigation-drawer-dark.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen settings --es theme dark >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen settings --es theme dark >/dev/null || true
             sleep 10
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/03-settings-dark.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen providers --es theme dark >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen providers --es theme dark >/dev/null || true
             sleep 10
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/04-providers-dark.png" || true
             sleep 2
@@ -204,41 +199,36 @@ jobs:
             timeout 30 adb shell pm grant com.hmx.harness.debug android.permission.POST_NOTIFICATIONS || true
             mkdir -p screenshots logs
 
-            # Each line runs in its own /bin/sh -c. Host-side framebuffer grabs
-            # avoid the guest `screencap` SwiftShader crash. The theme is forced
-            # through the debug host so both palettes use the shipped composables.
+            # One debug process stays alive; broadcasts switch the shipped screen
+            # composables without relaunching (which churns GPU layers and kills
+            # SwiftShader). Host-side grabs avoid the guest screencap crash.
 
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen onboarding --es theme light >/dev/null || true
             sleep 12
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/06-onboarding-light.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen chat --es theme light >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen chat --es theme light >/dev/null || true
             sleep 14
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/05-ai-chat-light.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen home --es theme light >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen home --es theme light >/dev/null || true
             sleep 10
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/01-home-light.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen appnav --es theme light --es drawer open >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen appnav --es theme light --es drawer open >/dev/null || true
             sleep 12
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/02-navigation-drawer-light.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen settings --es theme light >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen settings --es theme light >/dev/null || true
             sleep 10
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/03-settings-light.png" || true
             sleep 2
 
-            timeout 45 adb shell am force-stop com.hmx.harness.debug || true
-            timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen providers --es theme light >/dev/null || true
+            timeout 30 adb shell am broadcast -a com.hmx.harness.SET_GLASS_SCREEN --es screen providers --es theme light >/dev/null || true
             sleep 10
             timeout 30 adb emu screenrecord screenshot "$GITHUB_WORKSPACE/screenshots/04-providers-light.png" || true
             sleep 2
