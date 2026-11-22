@@ -64,7 +64,9 @@ jobs:
           apk-path: app/build/outputs/apk/debug/app-debug.apk
           disable-animations: false
           emulator-boot-timeout: 1800
-          emulator-options: -no-window -no-snapshot -gpu swiftshader_indirect -camera-back none -camera-front none
+          # SwiftShader's Vulkan backend crashes when the glass shaders render;
+          # the GL SwiftShader backend is slower but stable for capture.
+          emulator-options: -no-window -no-snapshot -gpu swiftshader -camera-back none -camera-front none
           script: |
             export PATH="$ANDROID_HOME/platform-tools:$PATH"
             timeout 60 adb wait-for-device || true
@@ -85,38 +87,38 @@ jobs:
             # a software GPU must never be able to hang the whole job again.
 
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.MainActivity >/dev/null || true
-            sleep 20
+            sleep 10
             timeout 25 adb logcat -d -v threadtime -t 400 > logs/startup.txt || true
             timeout 30 adb shell screencap -p /sdcard/hmx-shot.png || true
             timeout 60 adb pull /sdcard/hmx-shot.png screenshots/06-onboarding.png || true
 
             timeout 45 adb shell am force-stop com.hmx.harness.debug || true
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen home >/dev/null || true
-            sleep 14
+            sleep 10
             timeout 30 adb shell screencap -p /sdcard/hmx-shot.png || true
             timeout 60 adb pull /sdcard/hmx-shot.png screenshots/01-home.png || true
 
             timeout 45 adb shell am force-stop com.hmx.harness.debug || true
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen settings >/dev/null || true
-            sleep 14
+            sleep 10
             timeout 30 adb shell screencap -p /sdcard/hmx-shot.png || true
             timeout 60 adb pull /sdcard/hmx-shot.png screenshots/03-settings.png || true
 
             timeout 45 adb shell am force-stop com.hmx.harness.debug || true
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen providers >/dev/null || true
-            sleep 14
+            sleep 10
             timeout 30 adb shell screencap -p /sdcard/hmx-shot.png || true
             timeout 60 adb pull /sdcard/hmx-shot.png screenshots/04-providers.png || true
 
             timeout 45 adb shell am force-stop com.hmx.harness.debug || true
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen chat >/dev/null || true
-            sleep 18
+            sleep 10
             timeout 30 adb shell screencap -p /sdcard/hmx-shot.png || true
             timeout 60 adb pull /sdcard/hmx-shot.png screenshots/05-ai-chat.png || true
 
             timeout 45 adb shell am force-stop com.hmx.harness.debug || true
             timeout 45 adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen appnav >/dev/null || true
-            sleep 16
+            sleep 10
             timeout 30 adb shell input swipe 4 900 820 900 420 || true
             sleep 4
             timeout 30 adb shell screencap -p /sdcard/hmx-shot.png || true
