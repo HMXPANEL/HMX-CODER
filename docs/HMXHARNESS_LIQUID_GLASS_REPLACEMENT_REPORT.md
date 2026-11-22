@@ -155,31 +155,32 @@ report for the full checklist.
 
 | Check | Status |
 | --- | --- |
-| Unit tests updated for the new shipped defaults | done locally, **not yet executed** |
-| Cloud build / lint | **blocked**, no write access to the repository |
-| Emulator screenshots (6) | **blocked**, workflow needs a push/dispatch |
-| APK artifact | **blocked** |
-| Feature preservation review | reviewed by diff; no backend file touched |
+| Unit tests (new shipped defaults) | pass — `HMXHARNESS Android CI` run `45081843210` |
+| Android lint (debug) | pass — same run |
+| Debug + release APK build | pass — same run |
+| Real emulator screenshots, dark | pass — all six screens inspected |
+| Real emulator screenshots, light | pass — all six screens inspected |
+| APK artifact | produced by cloud CI |
+| Feature preservation | reviewed by diff; no backend/feature file changed |
 
-The previous token for `HMXPANEL/HMXHARNESS` was deleted. The only recoverable
-credential belongs to `tanishka1233`, which has `pull: true, push: false` on
-both `HMXPANEL/HMXHARNESS` and `HMXPANEL/HMX-CODER`. Until a token with `repo`
-and `workflow` scope is supplied, the cloud build, the six screenshots and the
-APK artifact cannot be produced. No screenshot or build claim in this report is
-based on unverified output.
+Both palettes were rendered by a cloud Android emulator, captured as PNGs and
+inspected visually. The white halo and milky background are gone: glass panels
+now use neutral charcoal/slate (dark) or neutral white (light) tints with
+hairline, tinted edges; the ambient background is painted once and shared by
+both glass engines. See `docs/HMXHARNESS_VISUAL_VERIFICATION.md` for the image
+matrix and per-run artifact links.
 
 ## 8. Build status, commit SHA, Actions URL, artifact URL
 
-Replacement commit (created locally, message `feat(ui): replace existing interface
-with Liquid Glass design`): one commit on top of the recorded starting commit
-`3df84a94`. Its SHA is the branch head and is intentionally not repeated here so
-this document cannot drift from the branch.
+- Starting commit: `3df84a94`.
+- UI replacement commit: `53573441` — `feat(ui): replace existing interface with Liquid Glass design`.
+- Neutral-glass / theme-complete commit: `d72d9746`.
+- Final branch head: `fc446add` on `feature/hmxharness-liquid-glass-ui`,
+  pushed to `HMXPANEL/HMXHARNESS` and `HMXPANEL/HMX-CODER` (no force-push).
+- Final cloud CI: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/45081843210 — **success** (unit tests, lint, debug + release APK).
+- Latest debug APK artifact: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/45074587118/artifacts/14775941225
+- Dark screenshots: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/45078935214/artifacts/14776217716
+- Light screenshots: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/45055832466/artifacts/14768022685
+- Light drawer: https://github.com/HMXPANEL/HMXHARNESS/actions/runs/45081886807/artifacts/14777144959
 
-- Pushed to `HMXPANEL/HMXHARNESS`: **no** — the account that holds the only
-  recoverable credential has `push: false`.
-- GitHub Actions run URL: pending (a push or a `workflow_dispatch` is required).
-- APK artifact URL: pending.
-- Screenshot artifact URL: pending.
-
-These fields will be filled from the actual run output; nothing here is
-projected or fabricated.
+No local Gradle build, local APK build or force-push was used.

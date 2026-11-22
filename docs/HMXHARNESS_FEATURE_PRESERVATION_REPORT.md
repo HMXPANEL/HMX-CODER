@@ -84,16 +84,22 @@ The following were not opened for modification:
 These are updates to expectations that encoded "glass is hidden". They are
 shipped-product expectations, not a way to hide failures.
 
-## 6. Known residual risk (not yet exercised)
+## 6. Final verification
 
-- The six screens have not been compiled or rendered since these edits; the
-  cloud build is blocked by missing repository write access.
-- `GlassShowcaseActivity` is new debug code and has not been compiled yet.
-- Visual contrast of glass panels against light themes will be inspected from
-  the emulator screenshots before the reports are finalised.
+- All screens were compiled and rendered in GitHub Actions. Final CI run
+  `45081843210` passed unit tests, lint and both APK builds.
+- `GlassShowcaseActivity` is debug-only and is absent from release builds.
+- Both light and dark palettes were inspected in real emulator screenshots;
+  text contrast and panel legibility passed.
+- The only functional additions outside pure presentation are: glass-enabled
+  defaults (a UI preference), an additive `AppNav(container, initialDrawerOpen)`
+  parameter used only by the debug screenshot host, and a `SideEffect` in
+  `MainActivity` that keeps system-bar icons in sync with the user's
+  Light/Dark/System choice. No navigation destination, repository, schema,
+  provider, agent, tool, permission or API call was changed or removed.
 
 ## 7. Verdict
 
 Backend, database, APIs, integrations, navigation and business rules are
-untouched. The only non-UI files changed are two UI-preference defaults and
-three test expectations that described the old hidden state.
+untouched. Features, settings, routes and callbacks remain intact; the change
+is a replacement of the visual material system only.
