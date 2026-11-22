@@ -73,7 +73,9 @@ jobs:
             mkdir -p screenshots
             # Launch the REAL installed app, no test harness / mockups.
             adb shell am start -n com.hmx.harness.debug/com.hmx.harness.MainActivity || true
-            sleep 8
+            # Cold start on a software emulator is slow; give Compose time to settle.
+            sleep 25
+            adb shell dumpsys activity activities | grep -m2 'mResumedActivity\|topResumedActivity' || true
             adb exec-out screencap -p > screenshots/01-home.png
             # Open the navigation drawer with a left-edge swipe, then capture it.
             adb shell input swipe 4 700 720 700 400 || true
