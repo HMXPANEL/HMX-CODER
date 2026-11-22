@@ -31,6 +31,7 @@ import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Button as M3Button
 import androidx.compose.material3.Checkbox as M3Checkbox
 import androidx.compose.material3.FilledIconButton as M3FilledIconButton
