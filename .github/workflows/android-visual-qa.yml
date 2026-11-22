@@ -70,21 +70,27 @@ jobs:
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
             adb install -r app/build/outputs/apk/debug/app-debug.apk
+            # Show the dark Liquid Glass palette rather than the emulator's light theme.
+            adb shell cmd uimode night yes || true
             mkdir -p screenshots
             # Launch the REAL installed app, no test harness / mockups.
             adb shell am start -n com.hmx.harness.debug/com.hmx.harness.MainActivity || true
             # Cold start on a software emulator is slow; give Compose time to settle.
             sleep 25
             adb shell dumpsys activity activities | grep -m2 'mResumedActivity\|topResumedActivity' || true
-            adb exec-out screencap -p > screenshots/01-home.png
+            adb exec-out screencap -p > screenshots/01-onboarding-dialog.png
+            # Dismiss the runtime notification prompt to reveal the glass onboarding UI.
+            adb shell input tap 540 1420 || true
+            sleep 3
+            adb exec-out screencap -p > screenshots/02-onboarding.png
             # Open the navigation drawer with a left-edge swipe, then capture it.
             adb shell input swipe 4 700 720 700 400 || true
             sleep 2
-            adb exec-out screencap -p > screenshots/02-drawer.png
+            adb exec-out screencap -p > screenshots/03-drawer.png
             # Go back and capture the settled home screen again.
             adb shell input keyevent 4 || true
             sleep 2
-            adb exec-out screencap -p > screenshots/03-home-settled.png
+            adb exec-out screencap -p > screenshots/04-home-settled.png
             echo "=== LOGCAT ERRORS ==="
             adb logcat -d -v threadtime | grep -iE 'FATAL|AndroidRuntime|Exception|prismal|hmx.harness' | tail -80 || true
             find screenshots -type f -name '*.png' -exec ls -lh {} \;
