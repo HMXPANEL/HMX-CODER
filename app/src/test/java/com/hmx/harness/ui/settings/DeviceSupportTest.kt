@@ -12,9 +12,12 @@ class DeviceSupportTest {
         matchingSettingsEntries(query, text).firstOrNull { it.minSdk == minSdk }
 
     @Test
-    fun `unreleased glass controls stay hidden at every Android version`() {
-        assertTrue(matchingSettingsEntries("liquid glass", text).isEmpty())
-        assertTrue(matchingSettingsEntries("frosted glass", text).isEmpty())
+    fun `glass controls stay discoverable and gated by Android version`() {
+        val frosted = matchingSettingsEntries("frosted glass", text).filter { it.minSdk == 31 }.first()
+        val liquid = matchingSettingsEntries("liquid glass", text).filter { it.minSdk == 33 }.first()
+        assertTrue(settingsAvailability(frosted, sdk = 31, hasVibrator = true) is SettingsAvailability.Available)
+        assertTrue(settingsAvailability(liquid, sdk = 31, hasVibrator = true) is SettingsAvailability.NeedsAndroid)
+        assertTrue(settingsAvailability(liquid, sdk = 33, hasVibrator = true) is SettingsAvailability.Available)
     }
 
     @Test

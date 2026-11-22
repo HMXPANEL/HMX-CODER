@@ -72,27 +72,46 @@ jobs:
             adb install -r app/build/outputs/apk/debug/app-debug.apk
             # Show the dark Liquid Glass palette rather than the emulator's light theme.
             adb shell cmd uimode night yes || true
+            # Deterministic frames: no window/animator animations during capture.
+            adb shell settings put global window_animation_scale 0 || true
+            adb shell settings put global transition_animation_scale 0 || true
+            adb shell settings put global animator_duration_scale 0 || true
+            # The onboarding screen only unlocks "Start harness" once storage is granted.
+            adb shell appops set com.hmx.harness.debug MANAGE_EXTERNAL_STORAGE allow || true
+            adb shell pm grant com.hmx.harness.debug android.permission.POST_NOTIFICATIONS || true
             mkdir -p screenshots
-            # Launch the REAL installed app, no test harness / mockups.
-            adb shell am start -n com.hmx.harness.debug/com.hmx.harness.MainActivity || true
-            # Cold start on a software emulator is slow; give Compose time to settle.
+
+            shot() { adb exec-out screencap -p > "screenshots/$1.png"; }
+            # The debug-only host renders the shipped screen composables with the real
+            # AppContainer, repositories and ViewModels. It exists only so a screenshot
+            # run can pick a screen without fragile coordinate automation.
+            showcase() {
+              adb shell am force-stop com.hmx.harness.debug
+              adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen "$1" >/dev/null || true
+              sleep "${2:-14}"
+            }
+
+            # 1. Real shipped entry point: the installed APK launches into onboarding.
+            adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.MainActivity >/dev/null || true
             sleep 25
-            adb shell dumpsys activity activities | grep -m2 'mResumedActivity\|topResumedActivity' || true
-            adb exec-out screencap -p > screenshots/01-onboarding-dialog.png
-            # Dismiss the runtime notification prompt to reveal the glass onboarding UI.
-            adb shell input tap 540 1420 || true
-            sleep 3
-            adb exec-out screencap -p > screenshots/02-onboarding.png
-            # Open the navigation drawer with a left-edge swipe, then capture it.
-            adb shell input swipe 4 700 720 700 400 || true
-            sleep 2
-            adb exec-out screencap -p > screenshots/03-drawer.png
-            # Go back and capture the settled home screen again.
-            adb shell input keyevent 4 || true
-            sleep 2
-            adb exec-out screencap -p > screenshots/04-home-settled.png
+            shot 06-onboarding
+
+            # 2-6. The six required screens, rendered by the app itself.
+            showcase home 16
+            shot 01-home
+            showcase settings 14
+            shot 03-settings
+            showcase providers 14
+            shot 04-providers
+            showcase chat 18
+            shot 05-ai-chat
+            showcase appnav 16
+            adb shell input swipe 4 900 820 900 420 || true
+            sleep 4
+            shot 02-navigation-drawer
+
             echo "=== LOGCAT ERRORS ==="
-            adb logcat -d -v threadtime | grep -iE 'FATAL|AndroidRuntime|Exception|prismal|hmx.harness' | tail -80 || true
+            adb logcat -d -v threadtime | grep -iE 'FATAL|AndroidRuntime|Exception|prismal|hmx.harness' | tail -120 || true
             find screenshots -type f -name '*.png' -exec ls -lh {} \;
 
       - name: Upload screenshots

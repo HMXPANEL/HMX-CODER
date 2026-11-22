@@ -41,14 +41,31 @@ import androidx.compose.ui.unit.dp
  * Cinematic, static background layer. No continuous animation: cheap on low-end
  * GPUs. This is background-only so Prismal can record it as the glass backdrop;
  * app content is drawn as a sibling above it.
+ *
+ * When [base] is supplied the layer reproduces the exact backdrop the kyant
+ * engine paints (theme surface plus two accent glows), so glass sampled by
+ * Prismal matches what the user actually sees instead of an unrelated gradient.
  */
 @Composable
 fun LiquidGlassAmbientBackground(
     modifier: Modifier = Modifier,
+    base: Color? = null,
+    accent: Color = LiquidGlassPalette.ElectricViolet,
+    secondary: Color = LiquidGlassPalette.SoftPurple,
 ) {
     Box(modifier.fillMaxSize().drawBehind {
         val w = size.width
         val h = size.height
+        if (base != null) {
+            drawRect(base)
+            drawRect(Brush.radialGradient(
+                listOf(accent.copy(alpha = .27f), Color.Transparent),
+                center = Offset(w * .12f, h * .12f), radius = size.maxDimension * .7f))
+            drawRect(Brush.radialGradient(
+                listOf(secondary.copy(alpha = .21f), Color.Transparent),
+                center = Offset(w * .95f, h * .7f), radius = size.maxDimension * .6f))
+            return@drawBehind
+        }
         drawRect(Brush.verticalGradient(listOf(
             LiquidGlassPalette.Midnight, LiquidGlassPalette.DeepViolet, LiquidGlassPalette.NightBlue)))
         drawRect(Brush.radialGradient(

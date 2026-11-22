@@ -17,13 +17,14 @@ class HarnessGlassModeTest {
         assertEquals(HarnessGlassMode.LIQUID, HarnessGlassMode.resolve(true, true, 33))
     }
 
-    @Test fun oldSettingsStayOffAndPortableSettingsRetainBothSwitches() {
-        val old = Json.decodeFromString<AppSettings>("{}")
-        assertFalse(old.harnessGlassEnabled)
-        assertFalse(old.harnessLiquidGlass)
-        assertEquals(.5f, old.harnessGlassTransparency)
+    @Test fun freshSettingsEnableTheGlassMaterialAndPortableSettingsRetainBothSwitches() {
+        val fresh = Json.decodeFromString<AppSettings>("{}")
+        // Liquid Glass is the shipped presentation, so a fresh install starts with it on.
+        assertTrue(fresh.harnessGlassEnabled)
+        assertTrue(fresh.harnessLiquidGlass)
+        assertEquals(.5f, fresh.harnessGlassTransparency)
         for (liquid in listOf(false, true)) {
-            val saved = old.copy(harnessGlassEnabled = true, harnessLiquidGlass = liquid, harnessGlassTransparency = .8f)
+            val saved = fresh.copy(harnessGlassEnabled = true, harnessLiquidGlass = liquid, harnessGlassTransparency = .8f)
             val restored = Json.decodeFromString<AppSettings>(Json.encodeToString(saved))
             assertEquals(saved, restored)
         }

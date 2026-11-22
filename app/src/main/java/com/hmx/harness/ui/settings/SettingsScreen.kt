@@ -644,7 +644,7 @@ private fun WorkspaceSection(
     currentProject?.let { current ->
         val desc = container.workspace.describe(current)
         val scheme = MaterialTheme.colorScheme
-        Surface(
+        com.hmx.harness.ui.theme.HarnessGlassSurface(
             color = scheme.surface,
             shape = MaterialTheme.shapes.large,
             border = BorderStroke(1.dp, scheme.primary.copy(alpha = 0.45f)),

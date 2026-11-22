@@ -2,6 +2,7 @@ package com.hmx.harness.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MotionScheme
@@ -95,20 +96,42 @@ fun HarnessTheme(
         LocalHmxGlassBackdrop provides glassBackdrop,
     ) {
         MaterialTheme(
-            colorScheme = if (glass.mode == HarnessGlassMode.OFF) colorScheme else colorScheme.copy(
-                background = androidx.compose.ui.graphics.Color.Transparent,
-                surface = androidx.compose.ui.graphics.Color.Transparent,
-            ),
+            colorScheme = if (glass.mode == HarnessGlassMode.OFF) colorScheme else colorScheme.glassContainers(),
             typography = HarnessTypography,
             shapes = HarnessShapes,
             motionScheme = MotionScheme.standard(),
             content = {
                 Box(Modifier.fillMaxSize()) {
                     LiquidGlassAmbientBackground(
-                        androidx.compose.ui.Modifier.matchParentSize().prismalGlassLayer(glassBackdrop))
+                        androidx.compose.ui.Modifier.matchParentSize().prismalGlassLayer(glassBackdrop),
+                        base = colorScheme.surface,
+                        accent = colorScheme.primary,
+                        secondary = colorScheme.tertiary,
+                    )
                     HarnessGlassRoot(glass, content)
                 }
             },
         )
     }
 }
+
+/**
+ * Liquid Glass makes every surface in the app a translucent material, not just
+ * the components that opted into [HarnessGlassSurface]. Screens that still use
+ * ordinary Material `Surface(color = surfaceContainer…)` then show the recorded
+ * backdrop through their panels instead of an opaque sheet, which is what makes
+ * the whole app read as glass rather than a flat app with a few glass accents.
+ *
+ * The alphas mirror the dark palette already shipped in `Color.kt`; text keeps
+ * its Material roles, so contrast is unchanged on a solid surface. With glass
+ * off, the scheme is returned untouched.
+ */
+internal fun ColorScheme.glassContainers(): ColorScheme = copy(
+    background = androidx.compose.ui.graphics.Color.Transparent,
+    surface = androidx.compose.ui.graphics.Color.Transparent,
+    surfaceContainerLowest = surfaceContainerLowest.copy(alpha = .90f),
+    surfaceContainerLow = surfaceContainerLow.copy(alpha = .80f),
+    surfaceContainer = surfaceContainer.copy(alpha = .77f),
+    surfaceContainerHigh = surfaceContainerHigh.copy(alpha = .77f),
+    surfaceContainerHighest = surfaceContainerHighest.copy(alpha = .77f),
+)

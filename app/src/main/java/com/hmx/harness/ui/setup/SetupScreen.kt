@@ -27,7 +27,6 @@ import androidx.compose.material.icons.outlined.Shield
 import androidx.compose.material.icons.outlined.Terminal
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,7 +50,6 @@ import com.hmx.harness.ui.common.SystemGrants
 import com.hmx.harness.ui.common.ThinLinearProgress
 import com.hmx.harness.ui.common.rememberStorageAccess
 import com.hmx.harness.ui.theme.LocalStatusColors
-import com.hmx.harness.ui.liquidglass.liquidGlass
 import kotlinx.coroutines.launch
 
 import androidx.compose.material.icons.outlined.SdStorage
@@ -287,9 +285,13 @@ private fun SetupStep(
     val uiContext = androidx.compose.ui.platform.LocalContext.current
     val scheme = MaterialTheme.colorScheme
     val success = LocalStatusColors.current.success
-    OutlinedCard(modifier = Modifier.fillMaxWidth().liquidGlass(
-        level = com.hmx.harness.ui.liquidglass.LiquidGlassLevel.LIGHT,
-        shape = RoundedCornerShape(22.dp), cornerRadius = 22.dp)) {
+    com.hmx.harness.ui.theme.HarnessGlassSurface(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(22.dp),
+        color = scheme.surfaceContainerLow,
+        border = androidx.compose.foundation.BorderStroke(
+            1.dp, scheme.outlineVariant.copy(alpha = if (complete) 0f else .45f)),
+    ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(horizontal = 14.dp, vertical = 12.dp),

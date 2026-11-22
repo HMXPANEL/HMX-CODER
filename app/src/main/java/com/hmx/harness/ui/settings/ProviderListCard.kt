@@ -52,7 +52,8 @@ internal fun ProviderListCard(
         stringResource(R.string.settings_provider_select_provider_cd, provider.name)
     else stringResource(R.string.settings_provider_select_cd, provider.name)
     val enableCd = stringResource(R.string.settings_provider_enable_cd, provider.name)
-    Surface(color = if (selected || active && !selectionMode) scheme.secondaryContainer else scheme.surfaceContainerLow,
+    com.hmx.harness.ui.theme.HarnessGlassSurface(
+        color = if (selected || active && !selectionMode) scheme.secondaryContainer else scheme.surfaceContainerLow,
         shape = RoundedCornerShape(16.dp),
         border = BorderStroke(1.dp, if (selected) scheme.primary else scheme.outlineVariant.copy(alpha = .4f)),
         modifier = Modifier.fillMaxWidth()) {

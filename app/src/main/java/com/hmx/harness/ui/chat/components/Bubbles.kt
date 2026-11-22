@@ -99,7 +99,7 @@ internal fun UserBubble(
                     onLongPress = onLongPress,
                 )
             }
-            if (hasBubble) Surface(
+            if (hasBubble) com.hmx.harness.ui.theme.HarnessGlassSurface(
                 color = scheme.surfaceContainerHigh,
                 contentColor = scheme.onSurface,
                 shape = bubbleShape,

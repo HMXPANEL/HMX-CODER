@@ -160,7 +160,7 @@ fun ProvidersScreen(
                 }
                 if (visibleProviders.isEmpty()) {
                     item {
-                        Surface(
+                        com.hmx.harness.ui.theme.HarnessGlassSurface(
                             color = scheme.surfaceContainerLow,
                             shape = RoundedCornerShape(20.dp),
                             modifier = Modifier

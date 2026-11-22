@@ -47,7 +47,8 @@ class SettingsSearchTest {
     }
 
     @Test fun `exact matches never pull in near misses`() {
-        assertTrue(matchingSettingsEntries("glass", english).isEmpty())
+        // Glass is shipped, so its controls are found on their own page only.
+        assertTrue(matchingSettingsEntries("glass", english).all { it.page == SettingsPage.APPEARANCE })
         assertTrue(matchingSettingsEntries("theme", english).none { it.page == SettingsPage.TELEGRAM })
     }
 
