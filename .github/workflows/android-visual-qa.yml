@@ -70,58 +70,71 @@ jobs:
             adb wait-for-device
             adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done'
             adb install -r app/build/outputs/apk/debug/app-debug.apk
-            # Show the dark Liquid Glass palette rather than the emulator's light theme.
             adb shell cmd uimode night yes || true
-            # Deterministic frames: no window/animator animations during capture.
             adb shell settings put global window_animation_scale 0 || true
             adb shell settings put global transition_animation_scale 0 || true
             adb shell settings put global animator_duration_scale 0 || true
-            # The onboarding screen only unlocks "Start harness" once storage is granted.
             adb shell appops set com.hmx.harness.debug MANAGE_EXTERNAL_STORAGE allow || true
             adb shell pm grant com.hmx.harness.debug android.permission.POST_NOTIFICATIONS || true
-            mkdir -p screenshots
+            mkdir -p screenshots logs
+            adb logcat -c || true
 
             # NOTE: android-emulator-runner executes EACH LINE as a separate /bin/sh -c,
             # so no shell functions or multi-line blocks here — only single commands.
+            # Capture via a device-side file + pull: exec-out screencap can close the
+            # adb stream on a software GPU. Nothing is allowed to abort the run early,
+            # so a dead screen still leaves logcat evidence for the others.
 
-            # 1. Real shipped entry point: the installed APK launches into onboarding.
             adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.MainActivity >/dev/null || true
-            sleep 25
-            adb exec-out screencap -p > screenshots/06-onboarding.png
+            sleep 8
+            adb logcat -d -v threadtime > logs/00-onboarding-startup.txt || true
+            sleep 17
+            adb shell screencap -p /sdcard/hmx-shot.png || true
+            adb pull /sdcard/hmx-shot.png screenshots/06-onboarding.png || true
+            adb logcat -d -v threadtime > logs/06-onboarding.txt || true
 
-            # The debug-only host renders the shipped screen composables with the real
-            # AppContainer, repositories and ViewModels. It exists only so a screenshot
-            # run can pick a screen without fragile coordinate automation.
-            adb shell am force-stop com.hmx.harness.debug
+            adb shell am force-stop com.hmx.harness.debug || true
             adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen home >/dev/null || true
-            sleep 16
-            adb exec-out screencap -p > screenshots/01-home.png
+            sleep 8
+            adb logcat -d -v threadtime > logs/01-home-startup.txt || true
+            sleep 8
+            adb shell screencap -p /sdcard/hmx-shot.png || true
+            adb pull /sdcard/hmx-shot.png screenshots/01-home.png || true
+            adb logcat -d -v threadtime > logs/01-home.txt || true
 
-            adb shell am force-stop com.hmx.harness.debug
+            adb shell am force-stop com.hmx.harness.debug || true
             adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen settings >/dev/null || true
             sleep 14
-            adb exec-out screencap -p > screenshots/03-settings.png
+            adb shell screencap -p /sdcard/hmx-shot.png || true
+            adb pull /sdcard/hmx-shot.png screenshots/03-settings.png || true
+            adb logcat -d -v threadtime > logs/03-settings.txt || true
 
-            adb shell am force-stop com.hmx.harness.debug
+            adb shell am force-stop com.hmx.harness.debug || true
             adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen providers >/dev/null || true
             sleep 14
-            adb exec-out screencap -p > screenshots/04-providers.png
+            adb shell screencap -p /sdcard/hmx-shot.png || true
+            adb pull /sdcard/hmx-shot.png screenshots/04-providers.png || true
+            adb logcat -d -v threadtime > logs/04-providers.txt || true
 
-            adb shell am force-stop com.hmx.harness.debug
+            adb shell am force-stop com.hmx.harness.debug || true
             adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen chat >/dev/null || true
             sleep 18
-            adb exec-out screencap -p > screenshots/05-ai-chat.png
+            adb shell screencap -p /sdcard/hmx-shot.png || true
+            adb pull /sdcard/hmx-shot.png screenshots/05-ai-chat.png || true
+            adb logcat -d -v threadtime > logs/05-ai-chat.txt || true
 
-            adb shell am force-stop com.hmx.harness.debug
+            adb shell am force-stop com.hmx.harness.debug || true
             adb shell am start -W -n com.hmx.harness.debug/com.hmx.harness.ui.showcase.GlassShowcaseActivity --es screen appnav >/dev/null || true
             sleep 16
             adb shell input swipe 4 900 820 900 420 || true
             sleep 4
-            adb exec-out screencap -p > screenshots/02-navigation-drawer.png
+            adb shell screencap -p /sdcard/hmx-shot.png || true
+            adb pull /sdcard/hmx-shot.png screenshots/02-navigation-drawer.png || true
+            adb logcat -d -v threadtime > logs/02-drawer.txt || true
 
-            echo "=== LOGCAT ERRORS ==="
-            adb logcat -d -v threadtime | grep -iE 'FATAL|AndroidRuntime|Exception|prismal|hmx.harness' | tail -120 || true
-            find screenshots -type f -name '*.png' -exec ls -lh {} \;
+            adb devices || true
+            find screenshots -type f -name '*.png' -exec ls -lh {} \; || true
+            test -n "$(find screenshots -name '*.png' -size +1k -print -quit)"
 
       - name: Upload screenshots
         if: always()
@@ -129,6 +142,15 @@ jobs:
         with:
           name: hmxharness-liquidglass-screenshots
           path: screenshots/**
+          if-no-files-found: warn
+          retention-days: 90
+
+      - name: Upload capture logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hmxharness-liquidglass-logs
+          path: logs/**
           if-no-files-found: warn
           retention-days: 90
 
