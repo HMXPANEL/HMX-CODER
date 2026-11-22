@@ -81,7 +81,7 @@ class GlassShowcaseActivity : ComponentActivity() {
                         SCREEN_SETTINGS -> SettingsScreen(container, onBack = {})
                         SCREEN_PROVIDERS -> ProvidersScreen(container, onBack = {})
                         SCREEN_CHAT -> ChatShowcase(container, seeded = true)
-                        SCREEN_NAV -> AppNavShowcase(container)
+                        SCREEN_NAV -> AppNavShowcase(container, openDrawer = intent.getStringExtra(EXTRA_DRAWER) == "open")
                         else -> ChatShowcase(container, seeded = false)
                     }
                 }
@@ -110,6 +110,7 @@ class GlassShowcaseActivity : ComponentActivity() {
         const val EXTRA_SCREEN = "screen"
         const val EXTRA_CAPTURE = "capture"
         const val EXTRA_THEME = "theme"
+        const val EXTRA_DRAWER = "drawer"
         const val SCREEN_HOME = "home"
         const val SCREEN_ONBOARDING = "onboarding"
         const val SCREEN_SETTINGS = "settings"
@@ -164,11 +165,11 @@ private suspend fun seedConversation(container: AppContainer): String {
 
 /** Real navigation shell, used to photograph the drawer after an edge swipe. */
 @Composable
-private fun AppNavShowcase(container: AppContainer) {
+private fun AppNavShowcase(container: AppContainer, openDrawer: Boolean = false) {
     var ready by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         runCatching { container.settings.setOnboardingDone(true) }
         ready = true
     }
-    if (ready) AppNav(container)
+    if (ready) AppNav(container, initialDrawerOpen = openDrawer)
 }

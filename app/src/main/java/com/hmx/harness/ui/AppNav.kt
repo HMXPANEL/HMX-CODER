@@ -105,12 +105,12 @@ import com.hmx.harness.ui.common.TextButton
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun AppNav(container: AppContainer) {
+fun AppNav(container: AppContainer, initialDrawerOpen: Boolean = false) {
     androidx.compose.runtime.LaunchedEffect(container) { container.sessions.repairChatTitles() }
     val uiContext = androidx.compose.ui.platform.LocalContext.current
     com.hmx.harness.ui.settings.LocalModelWarningDialog(container.localModels)
     val nav = rememberNavController()
-    val drawerState = rememberDrawerState(DrawerValue.Closed)
+    val drawerState = rememberDrawerState(if (initialDrawerOpen) DrawerValue.Open else DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val focusManager = LocalFocusManager.current
     val sessions by container.sessions.sessions.collectAsStateWithLifecycle(initialValue = emptyList())
