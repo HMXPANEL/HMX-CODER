@@ -11,6 +11,11 @@ on:
         default: all
         type: choice
         options: [all, dark, light]
+      source_run_id:
+        description: 'Optional run id to reuse its APK artifact (skips the build)'
+        required: false
+        default: ''
+        type: string
   push:
     branches:
       - feature/hmxharness-liquid-glass-ui
@@ -42,12 +47,24 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
 
       - name: Install pinned NDK and shader compiler
+        if: github.event_name != 'workflow_dispatch' || inputs.source_run_id == ''
         run: |
           "${ANDROID_HOME:-/usr/local/lib/android/sdk}/cmdline-tools/latest/bin/sdkmanager" --install "ndk;27.2.12479018"
           sudo apt-get update && sudo apt-get install -y glslc
 
       - name: Build debug APK
+        if: github.event_name != 'workflow_dispatch' || inputs.source_run_id == ''
         run: ./gradlew :app:assembleDebug --no-daemon --stacktrace --no-configuration-cache
+
+      - name: Reuse APK from a previous cloud run
+        if: github.event_name == 'workflow_dispatch' && inputs.source_run_id != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p app/build/outputs/apk/debug /tmp/hmx-apk
+          gh run download "${{ inputs.source_run_id }}" -R HMXPANEL/HMXHARNESS -n hmxharness-liquidglass-apk --dir /tmp/hmx-apk
+          cp /tmp/hmx-apk/app-debug.apk app/build/outputs/apk/debug/app-debug.apk
+          ls -lh app/build/outputs/apk/debug/app-debug.apk
 
       - name: Enable KVM for the emulator
         run: |
