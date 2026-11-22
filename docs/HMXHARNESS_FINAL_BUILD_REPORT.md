@@ -102,12 +102,15 @@ GitHub Release: https://github.com/HMXPANEL/HMXHARNESS/releases/tag/v4.0-hmx
 
 | APK | Direct download | Size | Package | Signature |
 |---|---|---|---|---|
-| Release (primary) | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-release.apk | 38,386,431 bytes | `com.hmx.harness` | v2 scheme valid; CN=Android Debug, SHA-256 `f7521b5e…4743` |
-| Debug | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-debug.apk | 76,020,215 bytes | `com.hmx.harness.debug` | v2 scheme valid, same debug key |
+| Release (primary) | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-release.apk | 69,035,844 bytes | `com.hmx.harness` | v2 scheme valid; CN=Android Debug |
+| Debug | https://github.com/HMXPANEL/HMXHARNESS/releases/download/v4.0-hmx/HMXHARNESS-debug.apk | 107,112,544 bytes | `com.hmx.harness.debug` | v2 scheme valid, same debug key |
 
-The APKs above were refreshed after the Donate/Discord removal and final
-rebrand (commit `15216622`, green CI run `44925864589`). See
-`docs/HMXHARNESS_UI_AND_REBRANDING_REPORT.md` for the component-level detail.
+The APKs above are the **native-enabled** build from the Liquid Glass work
+(green CI run `44991926620`, commit `c088014f`): 40 `.so` files are packaged,
+label `HMXHARNESS`, ZIP integrity OK. JNI symbols were corrected from
+`Java_com_hmx_harness_app_*` to `Java_com_hmx_harness_*` after the package
+rename. See `docs/HMXHARNESS_UI_AND_REBRANDING_REPORT.md` and
+`docs/HMXHARNESS_LIQUID_GLASS_VISUAL_REPORT.md` for details.
 
 Verification performed with `aapt2 dump badging`, `unzip -t`, and `apksigner verify
 --verbose --print-certs` on the downloaded artifacts:
