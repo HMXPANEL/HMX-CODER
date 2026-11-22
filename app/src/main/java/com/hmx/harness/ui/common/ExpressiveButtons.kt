@@ -1,6 +1,9 @@
 package com.hmx.harness.ui.common
 
 import com.hmx.harness.ui.liquidglass.LiquidGlassPalette
+import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
+import com.hmx.harness.ui.liquidglass.liquidGlass
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.PaddingValues
@@ -84,7 +87,7 @@ internal fun Button(
     shapes: ButtonShapes? = null,
     content: @Composable RowScope.() -> Unit,
 ) = ExpressiveMotion {
-    M3Button(onClick, resolveButtonShapes(shape, shapes), modifier, enabled, colors, elevation, border, contentPadding, interactionSource, content)
+    M3Button(onClick, resolveButtonShapes(shape, shapes), modifier.liquidGlass(LiquidGlassLevel.FOCUS, shape ?: RoundedCornerShape(18.dp)), enabled, colors, elevation, border, contentPadding, interactionSource, content)
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -104,7 +107,7 @@ internal fun FilledTonalButton(
     shapes: ButtonShapes? = null,
     content: @Composable RowScope.() -> Unit,
 ) = ExpressiveMotion {
-    M3FilledTonalButton(onClick, resolveButtonShapes(shape, shapes), modifier, enabled, colors, elevation, border, contentPadding, interactionSource, content)
+    M3FilledTonalButton(onClick, resolveButtonShapes(shape, shapes), modifier.liquidGlass(LiquidGlassLevel.STANDARD, shape ?: RoundedCornerShape(18.dp)), enabled, colors, elevation, border, contentPadding, interactionSource, content)
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
@@ -123,7 +126,7 @@ internal fun OutlinedButton(
     shapes: ButtonShapes? = null,
     content: @Composable RowScope.() -> Unit,
 ) = ExpressiveMotion {
-    M3OutlinedButton(onClick, resolveButtonShapes(shape, shapes), modifier, enabled, colors, elevation, border, contentPadding, interactionSource, content)
+    M3OutlinedButton(onClick, resolveButtonShapes(shape, shapes), modifier.liquidGlass(LiquidGlassLevel.LIGHT, shape ?: RoundedCornerShape(18.dp)), enabled, colors, elevation, border, contentPadding, interactionSource, content)
 }
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
