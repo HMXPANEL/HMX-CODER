@@ -47,10 +47,25 @@ class GlassShowcaseActivity : ComponentActivity() {
         val container = (application as HarnessApp).container
         val screen = intent.getStringExtra(EXTRA_SCREEN) ?: SCREEN_HOME
         val capture = intent.getStringExtra(EXTRA_CAPTURE)
+        val forcedTheme = intent.getStringExtra(EXTRA_THEME)?.let {
+            runCatching { com.hmx.harness.data.ThemeMode.valueOf(it.uppercase()) }.getOrNull()
+        }
         setContent {
             val settings by container.settings.settings.collectAsStateWithLifecycle(initialValue = AppSettings())
+            val themeMode = forcedTheme ?: settings.themeMode
+            val dark = when (themeMode) {
+                com.hmx.harness.data.ThemeMode.LIGHT -> false
+                com.hmx.harness.data.ThemeMode.DARK,
+                com.hmx.harness.data.ThemeMode.AMOLED -> true
+                else -> androidx.compose.foundation.isSystemInDarkTheme()
+            }
+            androidx.compose.runtime.SideEffect {
+                val controller = androidx.core.view.WindowCompat.getInsetsController(window, window.decorView)
+                controller.isAppearanceLightStatusBars = !dark
+                controller.isAppearanceLightNavigationBars = !dark
+            }
             HarnessTheme(
-                themeMode = settings.themeMode,
+                themeMode = themeMode,
                 dynamicColor = settings.dynamicColor,
                 progressBarStyle = settings.progressBarStyle,
                 colorPalette = settings.colorPalette,
@@ -94,6 +109,7 @@ class GlassShowcaseActivity : ComponentActivity() {
     companion object {
         const val EXTRA_SCREEN = "screen"
         const val EXTRA_CAPTURE = "capture"
+        const val EXTRA_THEME = "theme"
         const val SCREEN_HOME = "home"
         const val SCREEN_ONBOARDING = "onboarding"
         const val SCREEN_SETTINGS = "settings"

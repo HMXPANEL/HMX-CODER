@@ -54,17 +54,21 @@ internal data class GlassDepth(
     val elevation: Float,
 )
 
-internal fun depthOf(level: LiquidGlassLevel): GlassDepth = when (level) {
+internal fun depthOf(level: LiquidGlassLevel, tokens: GlassTokens): GlassDepth = when (level) {
     LiquidGlassLevel.LIGHT -> GlassDepth(
-        LiquidGlassPalette.GlassWhite, LiquidGlassPalette.GlassLavender,
-        fillAlpha = .075f, borderAlpha = .16f, highlightAlpha = .26f, elevation = 2f)
+        tokens.surfaceTint, tokens.surfaceTint,
+        fillAlpha = tokens.fillAlpha * .55f, borderAlpha = tokens.edgeAlpha * .75f,
+        highlightAlpha = tokens.specularAlpha * .55f, elevation = 2f)
     LiquidGlassLevel.STANDARD -> GlassDepth(
-        LiquidGlassPalette.GlassWhite, LiquidGlassPalette.GlassBlueViolet,
-        fillAlpha = .11f, borderAlpha = .22f, highlightAlpha = .34f, elevation = 6f)
+        tokens.surfaceTint, tokens.surfaceTint,
+        fillAlpha = tokens.fillAlpha, borderAlpha = tokens.edgeAlpha,
+        highlightAlpha = tokens.specularAlpha, elevation = 5f)
     LiquidGlassLevel.DEEP -> GlassDepth(
-        LiquidGlassPalette.DeepViolet, LiquidGlassPalette.GlassLavender,
-        fillAlpha = .22f, borderAlpha = .28f, highlightAlpha = .30f, elevation = 14f)
+        tokens.surfaceStrong, tokens.surfaceTint,
+        fillAlpha = tokens.strongFillAlpha * .82f, borderAlpha = tokens.edgeAlpha * 1.15f,
+        highlightAlpha = tokens.specularAlpha * .9f, elevation = 12f)
     LiquidGlassLevel.FOCUS -> GlassDepth(
-        LiquidGlassPalette.SoftPurple, LiquidGlassPalette.IcyBlue,
-        fillAlpha = .20f, borderAlpha = .60f, highlightAlpha = .52f, elevation = 18f)
+        tokens.surfaceTint, tokens.surfaceTint,
+        fillAlpha = tokens.fillAlpha * 1.08f, borderAlpha = tokens.edgeAlpha * 1.45f,
+        highlightAlpha = tokens.specularAlpha * 1.15f, elevation = 16f)
 }

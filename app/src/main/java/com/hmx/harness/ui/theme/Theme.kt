@@ -13,18 +13,15 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.Modifier
 import com.hmx.harness.data.ThemeMode
 import com.hmx.harness.data.ProgressBarStyle
 import com.hmx.harness.data.ThemePalette
-import com.hmx.harness.ui.liquidglass.LiquidGlassAmbientBackground
 import com.hmx.harness.ui.liquidglass.LocalLiquidGlassQuality
 import com.hmx.harness.ui.liquidglass.LocalHmxGlassBackdrop
+import com.hmx.harness.ui.liquidglass.LocalGlassTokens
 import com.hmx.harness.ui.liquidglass.LiquidGlassQuality
+import com.hmx.harness.ui.liquidglass.glassTokensFor
 import com.styropyr0.prismal.sources.rememberPrismalGlassLayer
-import com.styropyr0.prismal.sources.prismalGlassLayer
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 
 val LocalProgressBarStyle = staticCompositionLocalOf { ProgressBarStyle.FLAT }
 
@@ -85,32 +82,27 @@ fun HarnessTheme(
         if (Runtime.getRuntime().maxMemory() < 320L * 1024 * 1024) LiquidGlassQuality.LITE
         else LiquidGlassQuality.FULL
     }
-    // PrismalAGSL records ONLY this background layer. Glass surfaces sample it;
-    // app content is a sibling above, so glass never samples itself.
+    // PrismalAGSL records ONLY the ambient background layer. Glass surfaces
+    // sample it; app content is a sibling above, so glass never samples itself.
     val glassBackdrop = rememberPrismalGlassLayer()
+    val glassTokens = remember(dark) { glassTokensFor(dark) }
     CompositionLocalProvider(
         LocalStatusColors provides (if (dark) StatusDark else StatusLight),
         LocalProgressBarStyle provides progressBarStyle,
         LocalMotionBlur provides MotionBlurStyle(motionBlurEnabled, motionBlurIntensity),
         LocalLiquidGlassQuality provides glassQuality,
         LocalHmxGlassBackdrop provides glassBackdrop,
+        LocalGlassTokens provides glassTokens,
     ) {
         MaterialTheme(
             colorScheme = if (glass.mode == HarnessGlassMode.OFF) colorScheme else colorScheme.glassContainers(),
             typography = HarnessTypography,
             shapes = HarnessShapes,
             motionScheme = MotionScheme.standard(),
-            content = {
-                Box(Modifier.fillMaxSize()) {
-                    LiquidGlassAmbientBackground(
-                        androidx.compose.ui.Modifier.matchParentSize().prismalGlassLayer(glassBackdrop),
-                        base = colorScheme.surface,
-                        accent = colorScheme.primary,
-                        secondary = colorScheme.tertiary,
-                    )
-                    HarnessGlassRoot(glass, content)
-                }
-            },
+            // A single ambient painter: both glass engines record and sample
+            // this exact layer, so refraction matches the visible background
+            // and the old double-painted (hazy) backdrop is gone.
+            content = { HarnessGlassRoot(glass, glassBackdrop, content) },
         )
     }
 }
@@ -129,9 +121,9 @@ fun HarnessTheme(
 internal fun ColorScheme.glassContainers(): ColorScheme = copy(
     background = androidx.compose.ui.graphics.Color.Transparent,
     surface = androidx.compose.ui.graphics.Color.Transparent,
-    surfaceContainerLowest = surfaceContainerLowest.copy(alpha = .90f),
-    surfaceContainerLow = surfaceContainerLow.copy(alpha = .80f),
-    surfaceContainer = surfaceContainer.copy(alpha = .77f),
-    surfaceContainerHigh = surfaceContainerHigh.copy(alpha = .77f),
-    surfaceContainerHighest = surfaceContainerHighest.copy(alpha = .77f),
+    surfaceContainerLowest = surfaceContainerLowest.copy(alpha = .88f),
+    surfaceContainerLow = surfaceContainerLow.copy(alpha = .74f),
+    surfaceContainer = surfaceContainer.copy(alpha = .66f),
+    surfaceContainerHigh = surfaceContainerHigh.copy(alpha = .66f),
+    surfaceContainerHighest = surfaceContainerHighest.copy(alpha = .66f),
 )

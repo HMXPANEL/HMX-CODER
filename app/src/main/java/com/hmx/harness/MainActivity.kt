@@ -13,6 +13,7 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import com.hmx.harness.ui.common.BiometricAuth
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -97,6 +99,21 @@ class MainActivity : AppCompatActivity() {
             val settings by container.settings.settings
                 .collectAsStateWithLifecycle(initialValue = null)
             val currentSettings = settings ?: return@setContent
+
+            // Follow the user's Light/Dark/System choice for system bar icons,
+            // not just the OS setting, so a forced light theme stays readable.
+            val systemDark = isSystemInDarkTheme()
+            val appDark = when (currentSettings.themeMode) {
+                com.hmx.harness.data.ThemeMode.LIGHT -> false
+                com.hmx.harness.data.ThemeMode.DARK,
+                com.hmx.harness.data.ThemeMode.AMOLED -> true
+                else -> systemDark
+            }
+            SideEffect {
+                val controller = androidx.core.view.WindowCompat.getInsetsController(window, window.decorView)
+                controller.isAppearanceLightStatusBars = !appDark
+                controller.isAppearanceLightNavigationBars = !appDark
+            }
 
             HarnessTheme(
                 themeMode = currentSettings.themeMode,

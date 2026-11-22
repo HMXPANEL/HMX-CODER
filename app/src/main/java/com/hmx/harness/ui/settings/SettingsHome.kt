@@ -331,7 +331,8 @@ internal fun ThemeChoice(
         com.hmx.harness.data.ThemeMode.AMOLED -> stringResource(R.string.settings_theme_amoled)
     }
     val corner by animateDpAsState(if (selected) 28.dp else 16.dp, MaterialTheme.motionScheme.fastSpatialSpec(), label = "themeChoiceCorner")
-    val fill by animateColorAsState(if (selected) colors.secondaryContainer else colors.surfaceContainerHigh,
+    val fill by animateColorAsState(
+        if (selected) colors.secondaryContainer.copy(alpha = .58f) else colors.surfaceContainerHigh,
         MaterialTheme.motionScheme.defaultEffectsSpec(), label = "themeChoiceFill")
     Surface(
         onClick = onClick,
@@ -339,7 +340,7 @@ internal fun ThemeChoice(
         shape = RoundedCornerShape(corner.coerceAtLeast(0.dp)),
         color = fill,
         contentColor = if (selected) colors.onSecondaryContainer else colors.onSurface,
-        border = if (selected) BorderStroke(2.dp, colors.primary) else null,
+        border = if (selected) BorderStroke(1.dp, colors.primary.copy(alpha = .7f)) else null,
     ) {
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
             val swatch = when (mode) {

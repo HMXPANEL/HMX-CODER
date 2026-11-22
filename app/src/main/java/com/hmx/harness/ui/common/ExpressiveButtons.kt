@@ -1,6 +1,5 @@
 package com.hmx.harness.ui.common
 
-import com.hmx.harness.ui.liquidglass.LiquidGlassPalette
 import com.hmx.harness.ui.liquidglass.LiquidGlassLevel
 import com.hmx.harness.ui.liquidglass.liquidGlass
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -79,8 +78,8 @@ internal fun Button(
     enabled: Boolean = true,
     shape: Shape? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(
-        containerColor = LiquidGlassPalette.ElectricViolet,
-        contentColor = LiquidGlassPalette.TextPrimary),
+        containerColor = MaterialTheme.colorScheme.primary.copy(alpha = .20f),
+        contentColor = MaterialTheme.colorScheme.onSurface),
     elevation: ButtonElevation? = ButtonDefaults.buttonElevation(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
@@ -99,8 +98,8 @@ internal fun FilledTonalButton(
     enabled: Boolean = true,
     shape: Shape? = null,
     colors: ButtonColors = ButtonDefaults.filledTonalButtonColors(
-        containerColor = LiquidGlassPalette.SoftPurple.copy(alpha = .24f),
-        contentColor = LiquidGlassPalette.TextPrimary),
+        containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = .45f),
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer),
     elevation: ButtonElevation? = ButtonDefaults.filledTonalButtonElevation(),
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
@@ -119,7 +118,7 @@ internal fun OutlinedButton(
     enabled: Boolean = true,
     shape: Shape? = null,
     colors: ButtonColors = ButtonDefaults.outlinedButtonColors(
-        contentColor = LiquidGlassPalette.TextPrimary),
+        contentColor = MaterialTheme.colorScheme.onSurface),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = ButtonDefaults.outlinedButtonBorder(enabled),
     contentPadding: PaddingValues = ButtonDefaults.ContentPadding,
@@ -138,7 +137,7 @@ internal fun TextButton(
     enabled: Boolean = true,
     shape: Shape? = null,
     colors: ButtonColors = ButtonDefaults.textButtonColors(
-        contentColor = LiquidGlassPalette.IcyBlue),
+        contentColor = MaterialTheme.colorScheme.primary),
     elevation: ButtonElevation? = null,
     border: BorderStroke? = null,
     contentPadding: PaddingValues = ButtonDefaults.TextButtonContentPadding,

@@ -14,6 +14,7 @@ import com.styropyr0.prismal.shapes.PrismalCapsule
 import com.styropyr0.prismal.shapes.PrismalRoundedRectangle
 import com.styropyr0.prismal.sources.PrismalGlassLayer
 import com.styropyr0.prismal.specular.PrismalSpecular
+import com.styropyr0.prismal.specular.PrismalSpecularStyle
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
@@ -55,8 +56,9 @@ fun Modifier.liquidGlass(
 ): Modifier = composed {
     val backdrop = LocalHmxGlassBackdrop.current
     val density = LocalDensity.current
-    val depth = depthOf(level)
-    val tint = accent.takeOrElse { LiquidGlassPalette.GlassWhite }
+    val tokens = LocalGlassTokens.current
+    val depth = depthOf(level, tokens)
+    val tint = accent.takeOrElse { tokens.surfaceTint }
     val lift = elevation ?: depth.elevation.dp
     val quality = LocalLiquidGlassQuality.current
 
@@ -68,30 +70,33 @@ fun Modifier.liquidGlass(
             if (shape == CircleShape) ({ PrismalCapsule() })
             else ({ PrismalRoundedRectangle(cornerRadius) })
         val blurPx = when (level) {
-            LiquidGlassLevel.LIGHT -> 6.dp
-            LiquidGlassLevel.STANDARD -> 12.dp
-            LiquidGlassLevel.DEEP -> 16.dp
-            LiquidGlassLevel.FOCUS -> 10.dp
+            LiquidGlassLevel.LIGHT -> 5.dp
+            LiquidGlassLevel.STANDARD -> 10.dp
+            LiquidGlassLevel.DEEP -> 13.dp
+            LiquidGlassLevel.FOCUS -> 9.dp
         }
         val lensHeight = when (level) {
-            LiquidGlassLevel.LIGHT -> 8.dp
-            LiquidGlassLevel.STANDARD -> 14.dp
-            LiquidGlassLevel.DEEP -> 18.dp
-            LiquidGlassLevel.FOCUS -> 20.dp
+            LiquidGlassLevel.LIGHT -> 7.dp
+            LiquidGlassLevel.STANDARD -> 12.dp
+            LiquidGlassLevel.DEEP -> 15.dp
+            LiquidGlassLevel.FOCUS -> 17.dp
         }
         val lensAmount = when (level) {
-            LiquidGlassLevel.LIGHT -> 14.dp
-            LiquidGlassLevel.STANDARD -> 26.dp
-            LiquidGlassLevel.DEEP -> 32.dp
-            LiquidGlassLevel.FOCUS -> 38.dp
+            LiquidGlassLevel.LIGHT -> 12.dp
+            LiquidGlassLevel.STANDARD -> 22.dp
+            LiquidGlassLevel.DEEP -> 27.dp
+            LiquidGlassLevel.FOCUS -> 30.dp
         }
-        val dispersion = if (level == LiquidGlassLevel.FOCUS) 0.32f else 0.18f
+        val dispersion = if (level == LiquidGlassLevel.FOCUS) 0.24f else 0.14f
         val surfaceAlpha = when (level) {
-            LiquidGlassLevel.LIGHT -> .05f
-            LiquidGlassLevel.STANDARD -> .08f
-            LiquidGlassLevel.DEEP -> .14f
-            LiquidGlassLevel.FOCUS -> .18f
+            LiquidGlassLevel.LIGHT -> .035f
+            LiquidGlassLevel.STANDARD -> .05f
+            LiquidGlassLevel.DEEP -> .075f
+            LiquidGlassLevel.FOCUS -> .09f
         }
+        // Low-intensity neutral specular: a faint slate rim in dark mode and a
+        // soft neutral sheen in light mode. Never a bright white outline.
+        val specularAlpha = if (tokens.dark) .20f else .34f
         return@composed this.drawPrismalGlass(
             backdrop = backdrop,
             shape = glassShape,
@@ -104,15 +109,26 @@ fun Modifier.liquidGlass(
                     refractionHeightPx = with(density) { lensHeight.toPx() },
                     refractionAmountPx = with(density) { lensAmount.toPx() },
                     chromaticAberration = dispersion,
-                    brightness = .06f,
-                    saturation = 1.35f,
+                    brightness = 0f,
+                    saturation = 1.12f,
                 )
             },
-            specular = { PrismalSpecular.Default },
-            depthShadow = { PrismalDepthShadow.Default },
+            specular = {
+                PrismalSpecular(
+                    width = .6.dp,
+                    alpha = specularAlpha,
+                    style = PrismalSpecularStyle.Default(
+                        color = tokens.edge.copy(alpha = .55f), falloff = 1.5f),
+                )
+            },
+            depthShadow = {
+                PrismalDepthShadow(
+                    radius = 16.dp,
+                    color = tokens.shadow.copy(alpha = tokens.shadowAlpha * .28f),
+                )
+            },
             onDrawSurface = {
-                val overlay = if (accent == Color.Unspecified) tint else accent
-                drawRect(overlay.copy(alpha = surfaceAlpha))
+                drawRect(tint.copy(alpha = surfaceAlpha))
             },
         )
     }
@@ -121,41 +137,40 @@ fun Modifier.liquidGlass(
     // without an available backdrop (no offscreen texture, no shader).
     this
         .shadow(lift, shape, clip = false,
-            ambientColor = LiquidGlassPalette.Shadow.copy(alpha = .45f),
-            spotColor = LiquidGlassPalette.Shadow.copy(alpha = .30f))
+            ambientColor = tokens.shadow.copy(alpha = tokens.shadowAlpha * .55f),
+            spotColor = tokens.shadow.copy(alpha = tokens.shadowAlpha * .35f))
         .drawBehind {
             val w = size.width
             val h = size.height
             if (w <= 0f || h <= 0f) return@drawBehind
 
-            // 1. Body: translucent tint shifting from cool white to lavender.
+            // 1. Body: neutral translucent tint, slightly darker at the base.
             drawRoundShape(shape, Brush.verticalGradient(
-                0f to tint.copy(alpha = depth.fillAlpha * 1.25f),
-                .55f to depth.bottomTint.copy(alpha = depth.fillAlpha),
-                1f to depth.bottomTint.copy(alpha = depth.fillAlpha * .55f)))
+                0f to tint.copy(alpha = depth.fillAlpha * 1.1f),
+                .55f to tint.copy(alpha = depth.fillAlpha),
+                1f to tokens.surfaceStrong.copy(alpha = depth.fillAlpha * .72f)))
 
-            // 2. Specular light sweeping the top edge — the glass "shine".
+            // 2. Specular light sweeping the top edge — faint, not a white cap.
             drawRoundShape(shape, Brush.verticalGradient(
-                0f to LiquidGlassPalette.Specular.copy(alpha = depth.highlightAlpha),
+                0f to tokens.specular.copy(alpha = depth.highlightAlpha),
                 .16f to Color.Transparent))
 
-            // 3. Refracted light pool offset toward a corner.
+            // 3. A barely visible neutral refraction pool.
             drawRoundShape(shape, Brush.radialGradient(
-                listOf(LiquidGlassPalette.IcyBlue.copy(alpha = .10f), Color.Transparent),
+                listOf(tokens.specular.copy(alpha = .045f), Color.Transparent),
                 center = Offset(w * .82f, h * .12f), radius = maxOf(w, h) * .9f))
 
-            // 4. Luminous border; FOCUS level adopts the brighter edge light.
-            val edge = if (level == LiquidGlassLevel.FOCUS) LiquidGlassPalette.EdgeLight else tint
+            // 4. Hairline edge: neutral, low alpha, never a glowing white border.
             drawRoundShape(shape, Brush.linearGradient(
-                0f to edge.copy(alpha = depth.borderAlpha),
-                .5f to LiquidGlassPalette.Specular.copy(alpha = depth.borderAlpha * .6f),
-                1f to LiquidGlassPalette.GlassLavender.copy(alpha = depth.borderAlpha)),
-                stroke = Stroke(width = if (quality == LiquidGlassQuality.FULL) 1.1f else .8f))
+                0f to tokens.edge.copy(alpha = depth.borderAlpha),
+                .5f to tokens.edge.copy(alpha = depth.borderAlpha * .55f),
+                1f to tokens.edge.copy(alpha = depth.borderAlpha * .8f)),
+                stroke = Stroke(width = if (quality == LiquidGlassQuality.FULL) .8f else .6f))
 
             // 5. Inner hairline: a second, tighter reflection.
             if (quality == LiquidGlassQuality.FULL) {
-                drawRoundShape(shape, SolidColor(LiquidGlassPalette.Specular.copy(alpha = depth.highlightAlpha * .35f)),
-                    stroke = Stroke(width = .6f), inset = 1.5f)
+                drawRoundShape(shape, SolidColor(tokens.specular.copy(alpha = depth.highlightAlpha * .22f)),
+                    stroke = Stroke(width = .5f), inset = 1.5f)
             }
         }
 }

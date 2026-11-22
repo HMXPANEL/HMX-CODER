@@ -40,6 +40,9 @@ import com.kyant.backdrop.effects.lens
 import com.kyant.backdrop.highlight.Highlight
 import com.kyant.backdrop.highlight.HighlightStyle
 import com.kyant.backdrop.shadow.Shadow
+import com.hmx.harness.ui.liquidglass.LocalGlassTokens
+import com.styropyr0.prismal.sources.PrismalGlassLayer
+import com.styropyr0.prismal.sources.prismalGlassLayer
 
 internal enum class HarnessGlassMode {
     OFF, FROSTED, LIQUID;
@@ -199,24 +202,42 @@ internal fun rememberGlassContentBackdrop(base: Backdrop?, content: Backdrop?, s
 
 /** Ambient wallpaper and popup captures stay separate, so glass never samples itself. */
 @Composable
-internal fun HarnessGlassRoot(style: HarnessGlassStyle, content: @Composable () -> Unit) {
+internal fun HarnessGlassRoot(
+    style: HarnessGlassStyle,
+    prismalLayer: PrismalGlassLayer? = null,
+    content: @Composable () -> Unit,
+) {
     val backdrop = if (style.mode != HarnessGlassMode.OFF) rememberLayerBackdrop() else null
     val scene = if (backdrop != null) rememberCaptureScene(demandDriven = true) else null
     val overlay = rememberGlassContentBackdrop(if (style.mode == HarnessGlassMode.LIQUID) scene?.background ?: backdrop else backdrop,
         scene, if (style.mode == HarnessGlassMode.LIQUID) .26f else 1f)
     val colors = MaterialTheme.colorScheme
+    val tokens = LocalGlassTokens.current
     val accent = colors.primary
     val secondary = colors.tertiary
-    val surface = style.surface
     Box(Modifier.fillMaxSize()) {
         if (backdrop != null) {
-            Box(Modifier.fillMaxSize().layerBackdrop(backdrop).drawWithCache {
-                val primaryGlow = Brush.radialGradient(listOf(accent.copy(alpha = .27f), Color.Transparent),
-                    center = Offset(size.width * .12f, size.height * .12f), radius = size.maxDimension * .7f)
-                val secondaryGlow = Brush.radialGradient(listOf(secondary.copy(alpha = .21f), Color.Transparent),
-                    center = Offset(size.width * .95f, size.height * .7f), radius = size.maxDimension * .6f)
-                onDrawBehind { drawRect(surface); drawRect(primaryGlow); drawRect(secondaryGlow) }
-            })
+            // One painter feeds both engines: the kyant LayerBackdrop and the
+            // Prismal GlassLayer record the exact same pixels the user sees.
+            // Repainting the ambient background twice used to lift the glass
+            // with a milky film, especially in light mode.
+            Box(Modifier.fillMaxSize()
+                .layerBackdrop(backdrop)
+                .then(if (prismalLayer != null) Modifier.prismalGlassLayer(prismalLayer) else Modifier)
+                .drawWithCache {
+                    val base = Brush.verticalGradient(listOf(tokens.backgroundTop, tokens.backgroundBottom))
+                    val primaryGlow = Brush.radialGradient(
+                        listOf(accent.copy(alpha = if (tokens.dark) .13f else .09f), Color.Transparent),
+                        center = Offset(size.width * .1f, size.height * .1f), radius = size.maxDimension * .72f)
+                    val secondaryGlow = Brush.radialGradient(
+                        listOf(secondary.copy(alpha = if (tokens.dark) .09f else .07f), Color.Transparent),
+                        center = Offset(size.width * .96f, size.height * .74f), radius = size.maxDimension * .64f)
+                    onDrawBehind {
+                        drawRect(base)
+                        drawRect(primaryGlow)
+                        drawRect(secondaryGlow)
+                    }
+                })
         }
         CompositionLocalProvider(LocalHarnessGlass provides style,
             LocalHarnessGlassBackdrop provides backdrop,
@@ -235,37 +256,47 @@ internal fun Modifier.harnessGlass(color: Color, shape: Shape = RoundedCornerSha
     centerOpacityFloor: Float = 0f): Modifier {
     val style = LocalHarnessGlass.current
     if (style.mode == HarnessGlassMode.OFF || backdrop == null) return background(color, shape)
+    val tokens = LocalGlassTokens.current
     val captureActive = overlay || LocalHarnessGlassCaptureActive.current
     val outline = if (shape == RectangleShape) RoundedCornerShape(0.dp) else shape
     val liquid = style.mode == HarnessGlassMode.LIQUID
-    val tint = if (color.alpha == 0f) style.surface else color.copy(alpha = 1f)
+    val tint = if (color.alpha == 0f) tokens.surfaceTint else color.copy(alpha = 1f)
     // Retain enough of a colored control's fill for its semantic foreground color.
     val colored = kotlin.math.abs(tint.red - tint.green) + kotlin.math.abs(tint.green - tint.blue) > .16f
-    val baseOpacity = if (colored) { if (tint.luminance() < .3f && style.surface.luminance() > .5f) .84f else if (liquid) .48f else .62f } else if (liquid) { if (overlay) .18f else .20f } else .54f
+    val baseOpacity = when {
+        colored -> if (tint.luminance() < .3f && !tokens.dark) .80f else if (liquid) .46f else .58f
+        overlay -> tokens.strongFillAlpha
+        liquid -> tokens.fillAlpha
+        else -> .54f
+    }
     val opacity = ((if (liquid) liquidGlassOpacity(baseOpacity, style.transparency) else baseOpacity) * (if (color.alpha > 0f) color.alpha else 1f)).coerceAtLeast(minimumOpacity)
-    val centerOpacity = liquidGlassOpacity(.14f, style.transparency).coerceAtLeast(centerOpacityFloor)
+    val centerOpacity = liquidGlassOpacity(if (tokens.dark) .12f else .20f, style.transparency).coerceAtLeast(centerOpacityFloor)
     return then(GlassCaptureElement(backdrop, captureActive)).then(remember(backdrop, outline, liquid, tint, colored, opacity, centerOpacity, centerOpacityFloor,
-        overlay, blurRadius, exportedBackdrop) {
+        overlay, blurRadius, exportedBackdrop, tokens) {
         val fill = tint.copy(alpha = opacity)
         val centerTint = Brush.verticalGradient(
             0f to tint.copy(alpha = 0f), (if (centerOpacityFloor > 0f) .06f else .22f) to tint.copy(alpha = centerOpacity),
             (if (centerOpacityFloor > 0f) .94f else .78f) to tint.copy(alpha = centerOpacity), 1f to tint.copy(alpha = 0f))
-        val gloss = Brush.verticalGradient(0f to Color.White.copy(alpha = .10f),
-            .3f to Color.Transparent, .7f to Color.Transparent, 1f to Color.Black.copy(alpha = .06f))
+        // A restrained directional sweep, not a white sheet. Dark glass gets a
+        // nearly invisible cool reflection; light glass gets a soft top sheen.
+        val gloss = Brush.verticalGradient(0f to tokens.specular.copy(alpha = if (liquid) tokens.specularAlpha * .55f else .05f),
+            .3f to Color.Transparent, .7f to Color.Transparent, 1f to tokens.shadow.copy(alpha = .08f))
+        val edgeColor = tokens.edge.copy(alpha = .62f)
         Modifier.drawBackdrop(
             backdrop = backdrop,
             exportedBackdrop = exportedBackdrop,
             shape = { outline },
             effects = {
-                if (!liquid) blur((blurRadius ?: 20.dp).toPx())
+                if (!liquid) blur((blurRadius ?: 18.dp).toPx())
                 if (liquid && outline is CornerBasedShape) {
-                    lens(minOf((if (overlay) 20.dp else 16.dp).toPx(), size.minDimension * .35f),
-                        minOf(32.dp.toPx(), size.minDimension * .65f), depthEffect = true, chromaticAberration = size.minDimension <= 44.dp.toPx())
+                    lens(minOf((if (overlay) 18.dp else 14.dp).toPx(), size.minDimension * .35f),
+                        minOf(26.dp.toPx(), size.minDimension * .6f), depthEffect = true, chromaticAberration = size.minDimension <= 44.dp.toPx())
                 }
             },
-            highlight = { Highlight(width = if (liquid) 1.dp else .75f.dp, alpha = if (liquid) .85f else .3f,
-                style = if (outline is CornerBasedShape) HighlightStyle.Default() else HighlightStyle.Plain()) },
-            shadow = if (overlay) { { Shadow(radius = 12.dp, color = Color.Black.copy(alpha = .16f)) } } else null,
+            highlight = { Highlight(width = if (liquid) .6f.dp else .6f.dp,
+                alpha = if (liquid) tokens.specularAlpha + .06f else .16f,
+                style = if (outline is CornerBasedShape) HighlightStyle.Default(color = edgeColor, falloff = 1.5f) else HighlightStyle.Plain(color = edgeColor)) },
+            shadow = if (overlay) { { Shadow(radius = 14.dp, color = tokens.shadow.copy(alpha = tokens.shadowAlpha * .35f)) } } else null,
             onDrawSurface = {
                 drawRect(fill)
                 if (liquid && (!colored || centerOpacityFloor > 0f)) {
@@ -292,8 +323,8 @@ internal fun Modifier.harnessGlassChrome(color: Color, shape: Shape, centerOpaci
 @Composable
 internal fun Modifier.harnessGlassOverlay(shape: Shape, exportedBackdrop: LayerBackdrop? = null): Modifier = harnessGlass(LocalHarnessGlass.current.surface, shape,
     backdrop = LocalHarnessGlassOverlayBackdrop.current ?: LocalHarnessGlassBackdrop.current,
-    overlay = true, minimumOpacity = if (LocalHarnessGlass.current.mode == HarnessGlassMode.LIQUID) .65f else .5f,
-    blurRadius = 20.dp, exportedBackdrop = exportedBackdrop)
+    overlay = true, minimumOpacity = if (LocalHarnessGlass.current.mode == HarnessGlassMode.LIQUID) .58f else .5f,
+    blurRadius = 18.dp, exportedBackdrop = exportedBackdrop)
 
 /** Small inline controls keep their original Material appearance outside the experiment. */
 @Composable

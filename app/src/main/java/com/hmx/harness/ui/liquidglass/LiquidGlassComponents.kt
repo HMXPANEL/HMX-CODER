@@ -50,33 +50,33 @@ import androidx.compose.ui.unit.dp
 fun LiquidGlassAmbientBackground(
     modifier: Modifier = Modifier,
     base: Color? = null,
-    accent: Color = LiquidGlassPalette.ElectricViolet,
-    secondary: Color = LiquidGlassPalette.SoftPurple,
+    accent: Color? = null,
+    secondary: Color? = null,
 ) {
+    val tokens = LocalGlassTokens.current
+    val resolvedBase = base
+    val resolvedAccent = accent ?: MaterialTheme.colorScheme.primary
+    val resolvedSecondary = secondary ?: MaterialTheme.colorScheme.tertiary
     Box(modifier.fillMaxSize().drawBehind {
         val w = size.width
         val h = size.height
-        if (base != null) {
-            drawRect(base)
+        if (resolvedBase != null) {
+            drawRect(resolvedBase)
             drawRect(Brush.radialGradient(
-                listOf(accent.copy(alpha = .27f), Color.Transparent),
+                listOf(resolvedAccent.copy(alpha = .14f), Color.Transparent),
                 center = Offset(w * .12f, h * .12f), radius = size.maxDimension * .7f))
             drawRect(Brush.radialGradient(
-                listOf(secondary.copy(alpha = .21f), Color.Transparent),
+                listOf(resolvedSecondary.copy(alpha = .10f), Color.Transparent),
                 center = Offset(w * .95f, h * .7f), radius = size.maxDimension * .6f))
             return@drawBehind
         }
-        drawRect(Brush.verticalGradient(listOf(
-            LiquidGlassPalette.Midnight, LiquidGlassPalette.DeepViolet, LiquidGlassPalette.NightBlue)))
+        drawRect(Brush.verticalGradient(listOf(tokens.backgroundTop, tokens.backgroundBottom)))
         drawRect(Brush.radialGradient(
-            listOf(LiquidGlassPalette.ElectricViolet.copy(alpha = .24f), Color.Transparent),
-            center = Offset(w * .12f, h * .08f), radius = maxOf(w, h) * .85f))
+            listOf(resolvedAccent.copy(alpha = if (tokens.dark) .13f else .09f), Color.Transparent),
+            center = Offset(w * .1f, h * .1f), radius = maxOf(w, h) * .75f))
         drawRect(Brush.radialGradient(
-            listOf(LiquidGlassPalette.IcyBlue.copy(alpha = .14f), Color.Transparent),
-            center = Offset(w * .92f, h * .72f), radius = maxOf(w, h) * .7f))
-        drawRect(Brush.radialGradient(
-            listOf(LiquidGlassPalette.SoftPurple.copy(alpha = .12f), Color.Transparent),
-            center = Offset(w * .55f, h * 1.02f), radius = maxOf(w, h) * .6f))
+            listOf(resolvedSecondary.copy(alpha = if (tokens.dark) .09f else .07f), Color.Transparent),
+            center = Offset(w * .95f, h * .74f), radius = maxOf(w, h) * .65f))
     })
 }
 
@@ -144,7 +144,7 @@ fun LiquidGlassButton(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
         content = {
-            CompositionLocalProvider(LocalContentColor provides LiquidGlassPalette.TextPrimary) {
+            CompositionLocalProvider(LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
                 ProvideTextStyle(MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.SemiBold)) {
                     content()
                 }
@@ -195,7 +195,7 @@ fun LiquidGlassChip(
         contentAlignment = Alignment.Center,
     ) {
         CompositionLocalProvider(LocalContentColor provides
-            if (selected) LiquidGlassPalette.TextPrimary else MaterialTheme.colorScheme.onSurfaceVariant) {
+            if (selected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant) {
             ProvideTextStyle(MaterialTheme.typography.labelLarge) { content() }
         }
     }
@@ -244,7 +244,7 @@ fun LiquidGlassSectionHeader(
     Row(modifier.fillMaxWidth().padding(horizontal = 4.dp, vertical = 6.dp),
         verticalAlignment = Alignment.CenterVertically) {
         Text(text, style = MaterialTheme.typography.titleSmall.copy(fontWeight = FontWeight.SemiBold),
-            color = LiquidGlassPalette.TextSecondary, modifier = Modifier.weight(1f))
+            color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.weight(1f))
         trailing?.invoke()
     }
 }
@@ -261,7 +261,7 @@ fun LiquidGlassStatusPill(
         .clip(RoundedCornerShape(50))
         .padding(horizontal = 10.dp, vertical = 4.dp)) {
         Text(text, style = MaterialTheme.typography.labelSmall,
-            color = if (active) LiquidGlassPalette.TextPrimary else MaterialTheme.colorScheme.onSurfaceVariant)
+            color = if (active) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant)
     }
 }
 

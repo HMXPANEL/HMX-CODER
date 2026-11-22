@@ -21,6 +21,7 @@ import com.hmx.harness.AppContainer
 import com.hmx.harness.R
 import com.hmx.harness.router.*
 import com.hmx.harness.ui.common.AppLinearProgressIndicator
+import com.hmx.harness.ui.theme.HarnessGlassSurface
 import kotlinx.coroutines.delay
 import com.hmx.harness.ui.common.Button
 import com.hmx.harness.ui.common.FilledTonalButton
@@ -54,7 +55,7 @@ internal fun NineRouterPanel(
     var confirmRemove by remember { mutableStateOf(false) }
     val tint by animateColorAsState(if (running) MaterialTheme.colorScheme.tertiaryContainer else MaterialTheme.colorScheme.primaryContainer, label = "Router status")
     MaterialTheme(motionScheme = MotionScheme.expressive()) {
-        Surface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surfaceContainerLow,
+        HarnessGlassSurface(shape = RoundedCornerShape(28.dp), color = MaterialTheme.colorScheme.surfaceContainerLow,
             modifier = Modifier.fillMaxWidth().animateContentSize(spring())) {
             Column(Modifier.padding(20.dp), verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(14.dp)) {
