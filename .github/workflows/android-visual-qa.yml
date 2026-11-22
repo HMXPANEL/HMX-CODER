@@ -61,6 +61,8 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: pixel_5
+          cores: 2
+          ram-size: 4096M
           apk-path: app/build/outputs/apk/debug/app-debug.apk
           disable-animations: false
           emulator-boot-timeout: 1800
@@ -73,6 +75,8 @@ jobs:
             timeout 900 adb shell 'while [ -z "$(getprop sys.boot_completed)" ]; do sleep 2; done' || true
             timeout 180 adb install -r app/build/outputs/apk/debug/app-debug.apk || true
             timeout 30 adb shell cmd uimode night yes || true
+            timeout 30 adb shell wm size 540x960 || true
+            timeout 30 adb shell wm density 240 || true
             timeout 30 adb shell settings put global window_animation_scale 0 || true
             timeout 30 adb shell settings put global transition_animation_scale 0 || true
             timeout 30 adb shell settings put global animator_duration_scale 0 || true
