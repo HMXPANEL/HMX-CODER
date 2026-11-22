@@ -4,6 +4,13 @@ name: HMXHARNESS Visual QA (cloud emulator screenshots)
 # All compilation happens here; no device or local Android Studio is required.
 on:
   workflow_dispatch:
+    inputs:
+      scope:
+        description: 'Which theme palette to capture'
+        required: true
+        default: all
+        type: choice
+        options: [all, dark, light]
   push:
     branches:
       - feature/hmxharness-liquid-glass-ui
@@ -53,6 +60,7 @@ jobs:
       # unstable; this disposable emulator warms the AVD shader cache before
       # either theme is captured.
       - name: Warm up emulator shader cache
+        if: github.event_name != 'workflow_dispatch' || github.event.inputs.scope == 'all'
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_I_WANT_MY_TCG: 'yes'
@@ -80,6 +88,7 @@ jobs:
       # Two fresh emulator instances: SwiftShader gradually leaks GPU memory
       # across repeated Compose launches, so each theme gets its own emulator.
       - name: Capture dark theme screenshots
+        if: github.event_name != 'workflow_dispatch' || github.event.inputs.scope != 'light'
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_I_WANT_MY_TCG: 'yes'
@@ -152,6 +161,7 @@ jobs:
             find screenshots -type f -name '*.png' -exec ls -lh {} \; || true
 
       - name: Capture light theme screenshots
+        if: github.event_name != 'workflow_dispatch' || github.event.inputs.scope != 'dark'
         uses: reactivecircus/android-emulator-runner@v2
         env:
           ANDROID_I_WANT_MY_TCG: 'yes'
