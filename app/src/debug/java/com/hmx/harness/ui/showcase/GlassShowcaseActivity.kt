@@ -5,6 +5,9 @@ import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import java.io.File
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
@@ -43,6 +46,7 @@ class GlassShowcaseActivity : ComponentActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         val container = (application as HarnessApp).container
         val screen = intent.getStringExtra(EXTRA_SCREEN) ?: SCREEN_HOME
+        val capture = intent.getStringExtra(EXTRA_CAPTURE)
         setContent {
             val settings by container.settings.settings.collectAsStateWithLifecycle(initialValue = AppSettings())
             HarnessTheme(
@@ -68,10 +72,28 @@ class GlassShowcaseActivity : ComponentActivity() {
                 }
             }
         }
+        // Debug-only capture: draw the real view hierarchy into a bitmap instead of
+        // asking the system screencap service (which kills SwiftShader emulators).
+        if (!capture.isNullOrBlank()) {
+            window.decorView.postDelayed({
+                runCatching {
+                    val view = window.decorView
+                    if (view.width <= 0 || view.height <= 0) return@runCatching
+                    val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+                    view.draw(Canvas(bitmap))
+                    val dir = File(getExternalFilesDir(null), "liquidglass-screenshots").apply { mkdirs() }
+                    File(dir, "$capture.png").outputStream().use {
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, it)
+                    }
+                    android.util.Log.i("GlassShowcase", "captured $capture ${view.width}x${view.height}")
+                }.onFailure { android.util.Log.w("GlassShowcase", "capture failed for $capture", it) }
+            }, 4000)
+        }
     }
 
     companion object {
         const val EXTRA_SCREEN = "screen"
+        const val EXTRA_CAPTURE = "capture"
         const val SCREEN_HOME = "home"
         const val SCREEN_ONBOARDING = "onboarding"
         const val SCREEN_SETTINGS = "settings"
